@@ -160,7 +160,6 @@
   .hero{ position:relative }
   .hero-inner{ position:relative; z-index:2 }
 
-// FILE: ./styles/hero.css
 /* CTA interaction refinements scoped to hero */
 .hero .cta .btn-primary{
   color:#fff;
