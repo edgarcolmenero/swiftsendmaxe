@@ -9,9 +9,16 @@ const mobile = document.getElementById('mobileMenu');
 const closeBtn = mobile?.querySelector('.overlay-close');
 const hero = document.querySelector('.hero');
 
+const HEADER_FADE_MIN = 120;   // never add fade before this scroll distance
+const HEADER_FADE_MAX = 220;   // keep the veil subtle even if threshold changes
+const HEADER_FADE_THRESHOLD = 220; // existing logic target
+const HEADER_FADE_SAFE = Math.min(Math.max(HEADER_FADE_THRESHOLD, HEADER_FADE_MIN), HEADER_FADE_MAX);
+
 // -------- Header blend logic --------
 function applyHeaderBlend() {
   if (!header) return;
+
+  const y = window.scrollY || document.documentElement.scrollTop;
 
   // If the hero is still beneath the header, keep it transparent.
   if (hero) {
@@ -23,10 +30,14 @@ function applyHeaderBlend() {
     }
   }
 
+  // Guard so the veil never appears during the initial tiny scroll.
+  if (y <= HEADER_FADE_MIN) {
+    header.classList.remove('header-fade');
+    return;
+  }
+
   // Only after we’re well past the hero, add a faint veil.
-  const y = window.scrollY || document.documentElement.scrollTop;
-  const THRESHOLD = 220; // generous threshold to avoid looking like a dark bar
-  header.classList.toggle('header-fade', y > THRESHOLD);
+  header.classList.toggle('header-fade', y > HEADER_FADE_SAFE);
 }
 
 // Initialize + listeners
