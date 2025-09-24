@@ -1,80 +1,81 @@
 (() => {
   'use strict';
-
   const section = document.getElementById('services');
   if (!section) return;
 
-  const highlight = section.querySelector('.highlight-ring');
   const cards = Array.from(section.querySelectorAll('.service-card'));
-  if (!highlight || cards.length === 0) return;
+  if (cards.length === 0) return;
+
+  section.classList.add('is-enhanced');
 
   const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let prefersReduced = reduceMotionQuery.matches;
 
-  const positioningRoot = highlight.offsetParent instanceof HTMLElement
-    ? highlight.offsetParent
-    : section;
+  const revealCard = (card) => {
+    if (card.classList.contains('is-inview')) return;
+    card.classList.add('is-inview');
+    card.classList.add('underline-active');
+    card.style.removeProperty('--card-delay');
 
-  let activeCard = null;
-
-  const isElement = (value) => value instanceof Element;
-
-  const setPosition = (card) => {
-    const cardRect = card.getBoundingClientRect();
-    const rootRect = positioningRoot.getBoundingClientRect();
-    const x = cardRect.left + cardRect.width / 2 - rootRect.left;
-    const y = cardRect.top + cardRect.height / 2 - rootRect.top;
-
-    highlight.style.setProperty('--x', `${x}px`);
-    highlight.style.setProperty('--y', `${y}px`);
+    window.setTimeout(() => {
+      card.classList.remove('underline-active');
+    }, 480);
   };
 
-  const showHighlight = (card) => {
-    activeCard = card;
-    setPosition(card);
-    highlight.classList.add('is-active');
-    highlight.removeAttribute('aria-hidden');
+  cards.forEach((card, index) => {
+    card.style.setProperty('--card-delay', `${index * 80}ms`);
+  });
+
+  const activateUnderline = (card, state) => {
+    card.classList.toggle('underline-active', state);
   };
 
-  const hideHighlight = () => {
-    activeCard = null;
-    highlight.classList.remove('is-active');
-    highlight.setAttribute('aria-hidden', 'true');
+  cards.forEach((card) => {
+    card.addEventListener('mouseenter', () => activateUnderline(card, true));
+    card.addEventListener('mouseleave', () => activateUnderline(card, false));
+    card.addEventListener('focus', () => activateUnderline(card, true));
+    card.addEventListener('blur', () => activateUnderline(card, false));
+  });
+
+  let observer = null;
+
+  const startObserving = () => {
+    if (observer) return;
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealCard(entry.target);
+          observer && observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.4, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    cards.forEach((card) => {
+      if (!card.classList.contains('is-inview')) {
+        observer.observe(card);
+      }
+    });
   };
 
-  const handleEnter = (event) => {
-    if (prefersReduced && event.type === 'mouseenter') return;
-    showHighlight(event.currentTarget);
+  const stopObserving = () => {
+    if (!observer) return;
+    observer.disconnect();
+    observer = null;
   };
 
-  const handleLeave = (event) => {
-    const nextTarget = event.relatedTarget;
-    if (isElement(nextTarget) && (nextTarget === highlight || nextTarget.closest('.service-card')))
-      return;
-
-    hideHighlight();
-  };
-
-  const handleBlur = (event) => {
-    const next = event.relatedTarget;
-    if (isElement(next) && next.closest('.service-card')) return;
-
-    hideHighlight();
-  };
+  if (reduceMotionQuery.matches) {
+    cards.forEach(revealCard);
+  } else {
+    startObserving();
+  }
 
   const handleMotionChange = (event) => {
-    prefersReduced = event.matches;
-
-    if (prefersReduced) {
-      if (!section.querySelector('.service-card:focus')) hideHighlight();
-      return;
-    }
-
-    const focusedCard = section.querySelector('.service-card:focus');
-    if (focusedCard) {
-      showHighlight(focusedCard);
-    } else if (activeCard) {
-      showHighlight(activeCard);
+    if (event.matches) {
+      stopObserving();
+      cards.forEach(revealCard);
+    } else {
+      startObserving();
     }
   };
 
@@ -83,20 +84,4 @@
   } else if (typeof reduceMotionQuery.addListener === 'function') {
     reduceMotionQuery.addListener(handleMotionChange);
   }
-
-  cards.forEach((card) => {
-    card.addEventListener('mouseenter', handleEnter);
-    card.addEventListener('focus', handleEnter);
-    card.addEventListener('mouseleave', handleLeave);
-    card.addEventListener('blur', handleBlur);
-  });
-
-  section.addEventListener('mouseleave', (event) => {
-    const nextTarget = event.relatedTarget;
-    if (isElement(nextTarget) && section.contains(nextTarget)) return;
-
-    hideHighlight();
-  });
-
-  hideHighlight();
 })();
