@@ -1,0 +1,95 @@
+/* ===========================
+   SwiftSend Max 3.0 — Global
+   Base, tokens, typography
+   =========================== */
+
+/* ---------- Reset ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font:500 16px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color:#fff;
+  background:#120b1f; /* hero gradient will overlay */
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+img,svg,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+
+/* ---------- Tokens ---------- */
+:root{
+  /* Gradients */
+  --grad: linear-gradient(135deg,#ff7a18 0%,#d63cff 60%,#7a5cff 100%);
+
+  /* Surfaces */
+  --glass-1: rgba(255,255,255,.08);
+  --glass-2: rgba(255,255,255,.12);
+  --border-1: rgba(255,255,255,.10);
+
+  /* Effects */
+  --blur: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius-xl: 22px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+
+  /* Motion */
+  --dur: .25s;
+  --ease: cubic-bezier(.2,.8,.2,1);
+
+  /* Layout */
+  --container: 1200px;
+}
+
+/* ---------- Utilities ---------- */
+.container{width:min(var(--container), calc(100% - 32px)); margin-inline:auto}
+
+/* Headings & type */
+.display{
+  font-weight:700;              /* slimmer bold */
+  letter-spacing:-.015em;
+  font-size:clamp(40px,6vw,76px);
+  line-height:1.08;
+  margin:0 0 .4rem;
+}
+.lede{
+  color:#dcd6ee;
+  max-width:80ch;
+  margin:.8rem auto 1.4rem;
+  font-size:clamp(16px,2.2vw,20px);
+}
+
+/* Brand */
+.brand{display:flex;align-items:center;gap:.55rem}
+.brand-badge{
+  display:inline-grid;place-items:center;aspect-ratio:1/1;width:32px;border-radius:10px;
+  background:var(--grad);
+  box-shadow:0 0 20px rgba(214,60,255,.3);
+  font-weight:800;text-transform:lowercase
+}
+.brand-text{font-weight:700;letter-spacing:.2px}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.9rem 1.2rem;
+  border-radius:999px;
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease)
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--grad);box-shadow:0 0 26px rgba(214,60,255,.38)}
+.btn-primary:hover{box-shadow:0 0 36px rgba(214,60,255,.55)}
+.btn-ghost{padding:.9rem 0 .4rem;border-radius:12px}
+
+/* Sequential underline (thin) */
+.underline-seq{position:relative}
+.underline-seq::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+  background:linear-gradient(90deg,#ff7a18,#d63cff);
+  border-radius:999px;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .45s var(--ease)
+}
+.underline-seq:hover::after{transform:scaleX(1)}

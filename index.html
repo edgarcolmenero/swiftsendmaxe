@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwiftSend — Your Software. Your Stack. Your Savings.</title>
+  <meta name="theme-color" content="#d63cff" />
+  <link rel="stylesheet" href="./styles/global.css" />
+  <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="./styles/hero.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="ss-header" data-header>
+    <div class="container header-row">
+      <a href="#home" class="brand" aria-label="SwiftSend">
+        <span class="brand-badge">S</span>
+        <span class="brand-text">SwiftSend</span>
+      </a>
+
+      <!-- Desktop nav: text-only links with thin underline -->
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#home" class="nav-pill is-active"><span>Home</span></a>
+        <a href="#services" class="nav-pill"><span>Services</span></a>
+        <a href="#work" class="nav-pill"><span>Work</span></a>
+        <a href="#labs" class="nav-pill"><span>Labs</span></a>
+        <a href="#packs" class="nav-pill"><span>Packs</span></a>
+        <a href="#about" class="nav-pill"><span>About</span></a>
+        <a href="#contact" class="nav-pill"><span>Contact</span></a>
+      </nav>
+
+      <div class="header-icons">
+        <!-- search -->
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- phone (fixed: full handset path) -->
+        <a class="icon-btn" aria-label="Call" href="tel:+1">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2 4.11 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.2a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </a>
+
+        <!-- profile -->
+        <button class="icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 21a8 8 0 1 0-16 0"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <!-- Mobile toggle -->
+        <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div id="mobileMenu" class="mobile-overlay" hidden>
+      <div class="overlay-panel">
+        <div class="overlay-top">
+          <span class="brand-badge">S</span>
+          <button class="overlay-close" aria-label="Close menu">✕</button>
+        </div>
+
+        <nav class="overlay-nav" aria-label="Mobile">
+          <a href="#home">Home</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#labs">Labs</a>
+          <a href="#packs">Packs</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="overlay-icons">
+          <!-- search -->
+          <button class="icon-btn" aria-label="Search (mobile)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <!-- phone (fixed: full handset path) -->
+          <a class="icon-btn" aria-label="Call (mobile)" href="tel:+1">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2 4.11 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.2a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </a>
+
+          <!-- profile -->
+          <button class="icon-btn" aria-label="Account (mobile)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20 21a8 8 0 1 0-16 0"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <canvas id="fx-stars" aria-hidden="true"></canvas>
+    <div class="spark-field" data-spark-field aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="tile-wrap" aria-hidden="true">
+        <div class="tile">
+          <span class="tile-s">s</span>
+          <span class="orbit o1"></span>
+          <span class="orbit o2"></span>
+          <span class="orbit o3"></span>
+        </div>
+      </div>
+
+      <h1 class="display">
+        Your Software.<br />
+        <span class="grad-word">Your</span> Stack.<br />
+        Your Savings.
+      </h1>
+
+      <p class="lede">
+        We craft software, engineer data, automate with AI, and grow digital presence — clean, modern, and fee-smart.
+      </p>
+
+      <div class="cta">
+        <a href="#contact" class="btn btn-primary">
+          <span>Start a Build</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" class="cta-arrow" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a href="#work" class="btn btn-ghost underline-seq">See Our Work</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="./scripts/header.js" type="module"></script>
+  <script src="./scripts/hero.js" type="module"></script>
+</body>
+</html>

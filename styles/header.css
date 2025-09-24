@@ -1,0 +1,126 @@
+/* ===========================
+   SwiftSend Max 3.0 — Header (overlay, transparent, non-sticky)
+   =========================== */
+
+   .ss-header{
+    /* Overlay the hero so its gradient shows through the transparent header */
+    position:absolute; top:0; left:0; right:0;
+    z-index:50;
+    width:100%;
+    background: transparent !important;   /* no bar */
+    border: none;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1);
+  }
+  
+  /* If JS adds .header-fade after long scroll, keep it barely visible */
+  .ss-header.header-fade{
+    background: linear-gradient(90deg, rgba(25,16,40,.04), rgba(100,28,102,.04)) !important;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.65rem 0;
+  }
+  
+  /* Brand */
+  .brand{display:flex;align-items:center;gap:.55rem}
+  .brand-badge{
+    display:inline-grid;place-items:center;aspect-ratio:1/1;width:32px;border-radius:10px;
+    background:linear-gradient(135deg,#ff7a18 0%,#d63cff 60%,#7a5cff 100%);
+    box-shadow:0 0 18px rgba(214,60,255,.28);
+    font-weight:800;text-transform:lowercase
+  }
+  .brand-text{font-weight:700;letter-spacing:.2px}
+  
+  /* ===========================
+     Desktop navigation — text-only, thinner
+     =========================== */
+  .nav-desktop{display:none; gap:1.4rem; align-items:center}
+  @media (min-width:960px){ .nav-desktop{display:flex} }
+  
+  /* Use existing .nav-pill anchors; render as bare links */
+  .nav-desktop .nav-pill{
+    position:relative; display:inline-block;
+    padding:0; margin:0; background:transparent; border-radius:0; line-height:1;
+    font-weight:500;        /* sleek */
+    letter-spacing:.05px;
+    color:#f6f3fd;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .nav-desktop .nav-pill:hover{opacity:.92; transform:translateY(-1px)}
+  
+  /* Thin gradient underline close under the text */
+  .nav-desktop .nav-pill::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px;
+    background:linear-gradient(90deg,#ff7a18,#d63cff);
+    border-radius:999px; transform:scaleX(0); transform-origin:left;
+    transition:transform .32s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-desktop .nav-pill:hover::after,
+  .nav-desktop .nav-pill.is-active::after{ transform:scaleX(1) }
+  
+  /* ===========================
+     Header icons — simple, no pills
+     =========================== */
+  .header-icons{display:flex;align-items:center;gap:.6rem}
+  .icon-btn{
+    display:grid;place-items:center;width:36px;height:36px;
+    color:#f6f3fd; background:transparent; border-radius:8px;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .icon-btn:hover{opacity:.85; transform:translateY(-1px)}
+  .icon-btn svg{stroke:#ffffff; opacity:.95}
+  
+  /* Hamburger — minimal */
+  .hamburger{
+    display:inline-grid; gap:4px; margin-left:.25rem; width:38px; height:38px; place-items:center;
+    border-radius:10px; background:transparent;
+  }
+  .hamburger span{display:block; width:18px; height:2px; background:#fff; border-radius:3px}
+  @media (min-width:960px){ .hamburger{display:none} }
+  
+  /* ===========================
+     Mobile overlay — soft veil
+     =========================== */
+  .mobile-overlay[hidden]{display:none}
+  .mobile-overlay{
+    position:fixed; inset:8px; z-index:100; border-radius:24px; overflow:hidden;
+    background:
+      radial-gradient(1200px 800px at 20% 0%, rgba(214,60,255,.16), transparent 60%),
+      radial-gradient(1200px 800px at 100% 100%, rgba(255,122,24,.14), transparent 60%),
+      rgba(20,12,36,.56);
+    -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+    animation: fadeUp .28s cubic-bezier(.2,.8,.2,1);
+    box-shadow: 0 10px 28px rgba(0,0,0,.28);
+  }
+  @keyframes fadeUp{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
+  
+  .overlay-panel{display:flex; flex-direction:column; height:100%; padding:14px}
+  .overlay-top{display:flex; align-items:center; justify-content:space-between}
+  .overlay-close{
+    width:38px; height:38px; border-radius:12px; background:rgba(255,255,255,.08); color:#fff; font-size:18px;
+  }
+  
+  .overlay-nav{display:grid; gap:22px; place-content:center; text-align:center; height:100%}
+  .overlay-nav a{
+    font-size:22px; font-weight:600; color:#fff; text-decoration:none; position:relative;
+    letter-spacing:.1px;
+  }
+  .overlay-nav a::after{
+    content:""; position:absolute; left:50%; transform:translateX(-50%) scaleX(0);
+    bottom:-8px; width:72px; height:2px; border-radius:999px;
+    background:linear-gradient(90deg,#ff7a18,#d63cff);
+    transition:transform .32s cubic-bezier(.2,.8,.2,1);
+  }
+  .overlay-nav a:hover::after{ transform:translateX(-50%) scaleX(1) }
+  
+  .overlay-icons{
+    display:flex; gap:10px; align-items:center; justify-content:center; padding-bottom:16px
+  }
+  
+  /* Keep active link readable */
+  .nav-pill.is-active{color:#fff}
+  
