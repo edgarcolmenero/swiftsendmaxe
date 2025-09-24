@@ -159,4 +159,51 @@
   /* ensure layering with your existing rules */
   .hero{ position:relative }
   .hero-inner{ position:relative; z-index:2 }
-  
+
+// FILE: ./styles/hero.css
+/* CTA interaction refinements scoped to hero */
+.hero .cta .btn-primary{
+  color:#fff;
+}
+.hero .cta .btn-primary .cta-arrow{
+  stroke:#fff;
+}
+
+/* hover/focus glow + hop */
+.hero .cta .btn-primary:hover,
+.hero .cta .btn-primary:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 18px rgba(255,122,24,.4),
+    0 0 28px rgba(122,92,255,.42),
+    0 12px 30px rgba(0,0,0,.3);
+}
+
+/* active: gentler hop */
+.hero .cta .btn-primary:active{
+  transform:translateY(-1px);
+}
+
+/* ghost link always white + hop */
+.hero .cta .btn-ghost{
+  color:#fff;
+}
+.hero .cta .btn-ghost:hover,
+.hero .cta .btn-ghost:focus-visible{
+  transform:translateY(-2px);
+}
+.hero .cta .btn-ghost:active{
+  transform:translateY(-1px);
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .hero .cta .btn-primary:hover,
+  .hero .cta .btn-primary:focus-visible,
+  .hero .cta .btn-primary:active,
+  .hero .cta .btn-ghost:hover,
+  .hero .cta .btn-ghost:focus-visible,
+  .hero .cta .btn-ghost:active{
+    transform:none;
+  }
+}
