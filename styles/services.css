@@ -1,0 +1,85 @@
+/* ===========================
+   SwiftSend Max 3.0 — Services (shell)
+   All rules are namespaced to #services so nothing leaks.
+   We’ll fill out the cards/hover/glow next.
+   =========================== */
+
+   #services{
+    position: relative;
+    padding: clamp(64px, 10vw, 100px) 0;
+    background: transparent; /* hero gradient continues; section has no own bg */
+  }
+  
+  .services-inner{
+    width: min(var(--container), calc(100% - 32px));
+    margin-inline: auto;
+  }
+  
+  .services-head{
+    text-align: center;
+    margin-bottom: clamp(24px, 4vw, 36px);
+  }
+  
+  .services-title{
+    font-weight: 750;
+    letter-spacing: -.01em;
+    font-size: clamp(28px, 4.8vw, 44px);
+    margin: 0 0 .5rem;
+  }
+  
+  .services-sub{
+    color: #dcd6ee;
+    max-width: 80ch;
+    margin: 0 auto;
+    font-size: clamp(15px, 2.2vw, 18px);
+  }
+  
+  /* grid shell (no visual impact until markup exists) */
+  .services-grid{
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(14px, 2.4vw, 22px);
+  }
+  
+  @media (max-width: 960px){
+    .services-grid{
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Card base (kept minimal for now; fully styled in next step) */
+  .service-card{
+    grid-column: span 4;
+    min-height: 180px;
+    border-radius: var(--radius-xl, 22px);
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    -webkit-backdrop-filter: blur(var(--blur, 18px));
+    backdrop-filter: blur(var(--blur, 18px));
+    box-shadow: var(--shadow, 0 10px 30px rgba(0,0,0,.35));
+    padding: clamp(18px, 2.6vw, 28px);
+    transition: transform var(--dur, .25s) var(--ease, cubic-bezier(.2,.8,.2,1)),
+                box-shadow var(--dur, .25s) var(--ease, cubic-bezier(.2,.8,.2,1));
+  }
+  
+  @media (max-width: 1200px){
+    .service-card{ grid-column: span 6; }
+  }
+  @media (max-width: 960px){
+    .service-card{ grid-column: 1/-1; }
+  }
+  
+  /* placeholders for icon + text blocks */
+  .service-icon{ width: 52px; height: 52px; border-radius: 14px; background: var(--grad); margin-bottom: 16px; }
+  .service-title{ font-weight: 700; font-size: clamp(18px, 2.6vw, 22px); margin: 0 0 8px; }
+  .service-desc{ color: #dcd6ee; margin: 0; font-size: 16px; }
+  
+  /* subtle lift on hover (full glow, underline, etc. will be added later) */
+  .service-card:hover{ transform: translateY(-2px); }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .service-card{ transition: none; }
+    .service-card:hover{ transform: none; }
+  }
+  
