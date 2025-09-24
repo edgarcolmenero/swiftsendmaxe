@@ -2,23 +2,26 @@
    SwiftSend Max 3.0 — Header (overlay, transparent, non-sticky)
    =========================== */
 
-   .ss-header{
-    /* Overlay the hero so its gradient shows through the transparent header */
-    position:absolute; top:0; left:0; right:0;
-    z-index:50;
-    width:100%;
-    background: transparent !important;   /* no bar */
-    border: none;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    transition: background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1);
-  }
-  
-  /* If JS adds .header-fade after long scroll, keep it barely visible */
-  .ss-header.header-fade{
-    background: linear-gradient(90deg, rgba(25,16,40,.04), rgba(100,28,102,.04)) !important;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-  }
+.ss-header{
+  /* Overlay the hero so its gradient shows through the transparent header */
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:50;
+  width:100%;
+  background:transparent !important;   /* no bar */
+  border:none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition:background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1);
+}
+
+/* If JS adds .header-fade after long scroll, keep it barely visible */
+.ss-header.header-fade{
+  background:linear-gradient(90deg, rgba(25,16,40,.035), rgba(100,28,102,.035)) !important;
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
   
   .header-row{
     display:flex; align-items:center; justify-content:space-between;
