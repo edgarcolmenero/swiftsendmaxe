@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles/hero.css" />
   <!-- Services styles (scoped, safe even before the section exists) -->
   <link rel="stylesheet" href="./styles/services.css" />
+  <link rel="stylesheet" href="./styles/portfolio.css" />
 </head>
 <body>
   <!-- Header -->
@@ -231,9 +232,81 @@
     </div>
   </section>
 
+  <section id="portfolio" class="portfolio" aria-labelledby="portfolio-title">
+    <div class="portfolio__inner">
+      <header class="portfolio__head">
+        <h2 id="portfolio-title" class="portfolio__title">Work That <span class="grad">Stands Out</span></h2>
+        <p class="portfolio__lede">Real projects, real results, real impact.</p>
+      </header>
+
+      <div class="portfolio__grid">
+        <!-- RealtorDemo -->
+        <article class="pf-card" data-key="realtor" style="--bar-progress:0.90;">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-realtor.jpg" alt="Real estate platform interface" loading="lazy">
+            <span class="pf-card__pill">Real Estate Platform</span>
+            <button class="pf-card__ext" aria-label="Open RealtorDemo case study" tabindex="-1">
+              <!-- external icon: simple box-with-arrow glyph via inline SVG -->
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">RealtorDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Traditional MLS listings with poor lead generation</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Modern property search with integrated lead capture system</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> <span>+32% leads</span> <span class="pf-card__trend" aria-hidden="true">▲</span></p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+
+        <!-- NailTechDemo -->
+        <article class="pf-card" data-key="nailtech" style="--bar-progress:0.88;">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-nailtech.jpg" alt="Beauty & wellness booking environment" loading="lazy">
+            <span class="pf-card__pill">Beauty & Wellness</span>
+            <button class="pf-card__ext" aria-label="Open NailTechDemo case study" tabindex="-1">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">NailTechDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Manual booking process losing potential clients</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Sleek booking system with integrated payments</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> Dark elegance meets functionality</p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+
+        <!-- PhotographerDemo -->
+        <article class="pf-card" data-key="photographer" style="--bar-progress:0.86;">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-photographer.jpg" alt="Professional camera and lens" loading="lazy">
+            <span class="pf-card__pill">Creative Services</span>
+            <button class="pf-card__ext" aria-label="Open PhotographerDemo case study" tabindex="-1">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">PhotographerDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Cumbersome photo proofing and booking workflow</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Streamlined gallery with integrated booking system</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> Creative-driven user experience</p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="portfolio__cta">
+        <a class="portfolio__link" href="#">View All Projects</a>
+        <div class="portfolio__cta-underline"><span class="fill"></span></div>
+      </div>
+    </div>
+  </section>
+
   <script src="./scripts/header.js" type="module"></script>
   <script src="./scripts/hero.js" type="module"></script>
   <!-- Services interactions -->
   <script src="./scripts/services.js" type="module"></script>
+  <script src="./scripts/portfolio.js" type="module"></script>
 </body>
 </html>
