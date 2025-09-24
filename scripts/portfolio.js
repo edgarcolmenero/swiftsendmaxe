@@ -1,43 +1,36 @@
-const section = document.querySelector('#portfolio');
-
-if (!section) {
-  // Section not present on this page; nothing to enhance.
-} else {
+(function () {
   const initPortfolio = () => {
-    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const cards = Array.from(section.querySelectorAll('.pf-card'));
-    const head = section.querySelector('.portfolio__head');
-    const cta = section.querySelector('.portfolio__cta');
-    const revealables = [head, ...cards, cta].filter(Boolean);
+    const section = document.getElementById('portfolio');
+    if (!section) return;
 
-    if (!revealables.length) {
-      return;
-    }
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const prefersReducedMotion = () => reduceMotionQuery.matches;
+
+    const cards = Array.from(section.querySelectorAll('.pf-card'));
+    const title = section.querySelector('.portfolio__title');
+    const lede = section.querySelector('.portfolio__lede');
+    const revealables = [title, lede, ...cards].filter(Boolean);
+
+    if (!revealables.length) return;
 
     section.classList.add('is-enhanced');
 
-    const STAGGER = 0.08;
+    const STAGGER_STEP = 0.07; // seconds
     revealables.forEach((element, index) => {
-      const delay = Math.min(index * STAGGER, 0.56);
-      element.style.setProperty('--io-delay', `${delay.toFixed(2)}s`);
+      element.style.setProperty('--io-delay', `${(index * STAGGER_STEP).toFixed(2)}s`);
     });
 
-    cards.forEach((card) => {
+    cards.forEach((card, index) => {
       if (!card.hasAttribute('tabindex')) {
         card.tabIndex = 0;
       }
       card.setAttribute('role', 'group');
+      card.dataset.fillDelay = String(Math.min(index * 70, 120));
     });
 
     const pending = new Set(revealables);
 
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px 0px -12% 0px',
-      threshold: 0.35,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
+    const handleIntersection = (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
 
@@ -45,37 +38,56 @@ if (!section) {
         target.classList.add('is-inview');
         pending.delete(target);
         observer.unobserve(target);
+
+        if (target.classList.contains('pf-card')) {
+          const card = target;
+          if (card.classList.contains('is-filled')) return;
+
+          if (prefersReducedMotion()) {
+            card.classList.add('is-filled');
+          } else {
+            const delay = Number(card.dataset.fillDelay || 0);
+            window.setTimeout(() => {
+              card.classList.add('is-filled');
+            }, delay);
+          }
+        }
       });
-    }, observerOptions);
 
-    pending.forEach((element) => observer.observe(element));
-
-    const handleVisibility = () => {
-      if (document.hidden) {
+      if (!pending.size) {
         observer.disconnect();
-      } else {
-        pending.forEach((element) => observer.observe(element));
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibility, { passive: true });
+    const createObserver = () => new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: '0px 0px -12% 0px',
+      threshold: 0.35,
+    });
 
-    const handleMotionChange = () => {
-      // Reserved for future motion-specific hooks; CSS currently handles the visuals.
+    let observer = createObserver();
+
+    const observePending = () => {
+      pending.forEach((element) => observer.observe(element));
     };
 
-    if (typeof reduceMotionQuery.addEventListener === 'function') {
-      reduceMotionQuery.addEventListener('change', handleMotionChange);
-    } else if (typeof reduceMotionQuery.addListener === 'function') {
-      reduceMotionQuery.addListener(handleMotionChange);
-    }
+    observePending();
+
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        if (document.hidden) {
+          observer.disconnect();
+        } else if (pending.size) {
+          observer = createObserver();
+          observePending();
+        }
+      },
+      { passive: true }
+    );
 
     const toggleHot = (card, state) => {
-      if (state) {
-        card.classList.add('is-hot');
-      } else {
-        card.classList.remove('is-hot');
-      }
+      card.classList.toggle('is-hot', state);
     };
 
     cards.forEach((card) => {
@@ -90,7 +102,28 @@ if (!section) {
         }
       });
     });
+
+    const fillExisting = () => {
+      if (!prefersReducedMotion()) return;
+      cards.forEach((card) => {
+        if (card.classList.contains('is-inview')) {
+          card.classList.add('is-filled');
+        }
+      });
+    };
+
+    if (typeof reduceMotionQuery.addEventListener === 'function') {
+      reduceMotionQuery.addEventListener('change', fillExisting);
+    } else if (typeof reduceMotionQuery.addListener === 'function') {
+      reduceMotionQuery.addListener(fillExisting);
+    }
+
+    fillExisting();
   };
 
-  initPortfolio();
-}
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPortfolio, { once: true });
+  } else {
+    initPortfolio();
+  }
+})();
