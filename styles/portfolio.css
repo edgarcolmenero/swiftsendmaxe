@@ -106,8 +106,9 @@
   --bloom-opacity-hot: 0.75;
   --bloom-from: rgba(90, 141, 255, 0.78);
   --bloom-to: rgba(177, 102, 255, 0.78);
-  --tint-from: rgba(90, 141, 255, 0.78);
-  --tint-to: rgba(177, 102, 255, 0.78);
+  --media-tint: linear-gradient(140deg, rgba(90, 141, 255, 0.78), rgba(177, 102, 255, 0.78));
+  --tint-base-opacity: 0.5;
+  --tint-hover-opacity: 0.7;
   --bar-fill: linear-gradient(90deg, #5f8eff 0%, #b573ff 100%);
   --card-radius: 24px;
 
@@ -120,7 +121,7 @@
   isolation: isolate;
   transform: translateY(0);
   transition:
-    transform 0.55s var(--ease),
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.55s var(--ease),
     border-color 0.55s var(--ease),
     background 0.55s var(--ease);
@@ -169,7 +170,7 @@
 }
 
 #portfolio .pf-card:is(:hover, :focus-visible) {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 #portfolio .pf-card:active {
@@ -200,7 +201,7 @@
   display: block;
   transform: none;
   transform-origin: center;
-  transition: transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 #portfolio .pf-card__media::after {
@@ -208,13 +209,13 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(140deg, var(--tint-from), var(--tint-to));
+  background: var(--media-tint);
   opacity: 0;
-  transition: opacity 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 #portfolio .pf-card.is-inview .pf-card__media::after {
-  opacity: 0.5;
+  opacity: var(--tint-base-opacity);
 }
 
 #portfolio .pf-card.is-hot .pf-card__media img {
@@ -230,7 +231,7 @@
 }
 
 #portfolio .pf-card:is(:hover, :focus-visible) .pf-card__media::after {
-  opacity: 0.7;
+  opacity: var(--tint-hover-opacity);
 }
 
 #portfolio .pf-card__pill {
@@ -348,7 +349,7 @@
   background: var(--bar-fill);
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform 1400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 2100ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 #portfolio .pf-card.is-filled .pf-card__fill {
@@ -364,24 +365,21 @@
 #portfolio .pf-card[data-key="realtor"] {
   --bloom-from: rgba(79, 139, 255, 0.68);
   --bloom-to: rgba(166, 106, 255, 0.7);
-  --tint-from: rgba(84, 142, 255, 0.76);
-  --tint-to: rgba(161, 94, 255, 0.74);
+  --media-tint: linear-gradient(135deg, rgba(87, 146, 255, 0.94), rgba(140, 94, 255, 0.92));
   --bar-fill: linear-gradient(90deg, #4f8bff 0%, #a86aff 100%);
 }
 
 #portfolio .pf-card[data-key="nailtech"] {
   --bloom-from: rgba(255, 94, 150, 0.7);
   --bloom-to: rgba(214, 36, 76, 0.72);
-  --tint-from: rgba(255, 104, 178, 0.78);
-  --tint-to: rgba(204, 26, 62, 0.8);
+  --media-tint: linear-gradient(140deg, rgba(255, 111, 176, 0.94), rgba(204, 28, 64, 0.92));
   --bar-fill: linear-gradient(90deg, #ff406d 0%, #d6244c 100%);
 }
 
 #portfolio .pf-card[data-key="photographer"] {
   --bloom-from: rgba(255, 193, 78, 0.68);
   --bloom-to: rgba(255, 126, 36, 0.7);
-  --tint-from: rgba(255, 193, 78, 0.82);
-  --tint-to: rgba(255, 126, 36, 0.82);
+  --media-tint: linear-gradient(135deg, rgba(255, 199, 88, 0.92), rgba(255, 126, 36, 0.9));
   --bar-fill: linear-gradient(90deg, #ffcf58 0%, #ff7a1e 100%);
 }
 
@@ -473,7 +471,8 @@
 
   #portfolio .pf-card::before,
   #portfolio .pf-card.is-inview::before { opacity: var(--bloom-opacity) !important; }
-  #portfolio .pf-card__media::after { opacity: 0.5 !important; }
+  #portfolio .pf-card__media::after { opacity: var(--tint-base-opacity) !important; }
   #portfolio .pf-card__media img { transform: none !important; }
-  #portfolio .pf-card__fill { transform: scaleX(1) !important; }
+  #portfolio .pf-card:is(:hover, :focus-visible) .pf-card__media::after { opacity: var(--tint-base-opacity) !important; }
+  #portfolio .pf-card.is-inview .pf-card__fill { transform: scaleX(1) !important; }
 }
