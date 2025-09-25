@@ -139,8 +139,64 @@
     section.classList.add('is-enhanced');
 
     const runner = section.querySelector('[data-process-runner]');
+    const baseline = section.querySelector('.process-baseline');
     const baselineFill = section.querySelector('[data-process-baseline-fill], .process-baseline__fill');
     const baselineTrack = baselineFill ? baselineFill.parentElement : null;
+    let bubble = baseline ? baseline.querySelector('.process-bubble') : null;
+    if (baseline && !bubble) {
+      bubble = document.createElement('span');
+      bubble.className = 'process-bubble';
+      bubble.setAttribute('aria-hidden', 'true');
+      baseline.appendChild(bubble);
+    }
+    const bubbleCooldown = 600;
+    let lastBubbleEmit = 0;
+    let bubbleRAF = 0;
+    const measureAndEmitBubble = (index, { allowEmit = true } = {}) => {
+      if (!baseline || !bubble || !steps[index]) return;
+
+      const baselineRect = baseline.getBoundingClientRect();
+      const targetRect = steps[index].getBoundingClientRect();
+      const hasBaseline = baselineRect.width || baselineRect.height;
+      if (!hasBaseline) return;
+
+      const isVertical = baselineRect.height > baselineRect.width;
+      if (isVertical) {
+        const centerY = targetRect.top + targetRect.height / 2;
+        const offsetY = clamp(centerY - baselineRect.top, 0, baselineRect.height || 0);
+        bubble.style.setProperty('--bubble-x', `${offsetY.toFixed(2)}px`);
+      } else {
+        const centerX = targetRect.left + targetRect.width / 2;
+        const offsetX = clamp(centerX - baselineRect.left, 0, baselineRect.width || 0);
+        bubble.style.setProperty('--bubble-x', `${offsetX.toFixed(2)}px`);
+      }
+
+      const referenceSize = isVertical ? targetRect.height : targetRect.width;
+      const nextScale = clamp(referenceSize / 28, 7, 9);
+      bubble.style.setProperty('--bubble-scale', nextScale.toFixed(2));
+
+      if (!allowEmit) return;
+
+      const now = typeof performance !== 'undefined' && typeof performance.now === 'function' ? performance.now() : Date.now();
+      if (now - lastBubbleEmit < bubbleCooldown) {
+        return;
+      }
+
+      lastBubbleEmit = now;
+      bubble.classList.remove('process-bubble-emit');
+      // Force reflow so the animation can restart when the class is re-added.
+      void bubble.offsetWidth;
+      bubble.classList.add('process-bubble-emit');
+    };
+
+    const scheduleBubbleUpdate = (index, { allowEmit = true } = {}) => {
+      if (!baseline || !bubble || !steps[index]) return;
+      window.cancelAnimationFrame(bubbleRAF);
+      bubbleRAF = window.requestAnimationFrame(() => {
+        bubbleRAF = 0;
+        measureAndEmitBubble(index, { allowEmit });
+      });
+    };
     const panels = steps.map((button) => {
       const controlled = button.getAttribute('aria-controls');
       return controlled ? document.getElementById(controlled) : null;
@@ -181,7 +237,17 @@
       if (!baselineFill || !baselineTrack || !steps[index]) return;
       const trackRect = baselineTrack.getBoundingClientRect();
       const targetRect = steps[index].getBoundingClientRect();
+      const isVertical = trackRect.height > trackRect.width;
+      if (isVertical) {
+        const height = clamp(targetRect.top + targetRect.height / 2 - trackRect.top, 0, trackRect.height || 0);
+        baselineFill.style.height = `${Math.round(height)}px`;
+        baselineFill.style.width = '100%';
+        baselineFill.style.setProperty('--process-baseline-fill', `${Math.round(height)}px`);
+        return;
+      }
+
       const width = clamp(targetRect.left + targetRect.width / 2 - trackRect.left, 0, trackRect.width || 0);
+      baselineFill.style.height = '100%';
       baselineFill.style.width = `${Math.round(width)}px`;
       baselineFill.style.setProperty('--process-baseline-fill', `${Math.round(width)}px`);
     };
@@ -191,6 +257,7 @@
       resizeRAF = window.requestAnimationFrame(() => {
         updateBaselineFill(activeIndex);
         applyRunnerPosition(activeIndex, options);
+        measureAndEmitBubble(activeIndex, { allowEmit: false });
       });
     };
 
@@ -199,6 +266,7 @@
       const nextIndex = ((index % steps.length) + steps.length) % steps.length;
       if (activeIndex === nextIndex && !immediate) {
         if (focus) steps[nextIndex].focus();
+        scheduleBubbleUpdate(nextIndex, { allowEmit: true });
         return;
       }
 
@@ -231,6 +299,7 @@
       activeIndex = nextIndex;
       section.setAttribute('data-process-active-index', String(activeIndex));
       refreshGeometry({ immediate });
+      scheduleBubbleUpdate(nextIndex, { allowEmit: !immediate });
 
       if (focus) {
         nextButton.focus();
@@ -336,6 +405,7 @@
     const handleResize = () => {
       scheduleStarRender();
       refreshGeometry({ immediate: true });
+      scheduleBubbleUpdate(activeIndex, { allowEmit: false });
     };
 
     window.addEventListener('resize', handleResize, { signal });
@@ -348,6 +418,7 @@
     const handleReduceMotionChange = () => {
       scheduleStarRender({ force: true });
       refreshGeometry({ immediate: true });
+      scheduleBubbleUpdate(activeIndex, { allowEmit: false });
     };
 
     if (typeof reduceMotionQuery.addEventListener === 'function') {
@@ -368,6 +439,7 @@
       if (revealObserver) {
         revealObserver.disconnect();
       }
+      window.cancelAnimationFrame(bubbleRAF);
     };
 
     window.addEventListener('pagehide', cleanup, { once: true });
