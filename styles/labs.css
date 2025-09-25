@@ -198,7 +198,7 @@
   bottom: 12px;
   height: 2px;
   border-radius: 999px;
-  background: var(--labs-brand-gradient);
+  background: #ffffff;
   transform: scaleX(0);
   transform-origin: left;
   opacity: 0;
