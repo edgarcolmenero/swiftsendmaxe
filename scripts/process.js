@@ -10,27 +10,92 @@
     const prefersReducedMotion = () => reduceMotionQuery.matches;
 
     const randomInRange = (min, max) => Math.random() * (max - min) + min;
+    const randomIntInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-    const starsHost = section.querySelector('[data-process-stars]');
-    if (starsHost) {
-      const starCount = Number(starsHost.getAttribute('data-process-star-count') || 64);
+    const starsHost = section.querySelector('.process-stars');
+    let starsRenderPending = false;
+    let pendingForceStars = false;
+    let lastStarsConfigKey = '';
+
+    const renderStars = (force = false) => {
+      if (!starsHost) return;
+
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth || 0;
+      const isCompact = viewportWidth < 768;
+      const reducedMotion = prefersReducedMotion();
+      const configKey = `${isCompact ? 'compact' : 'full'}|${reducedMotion ? 'reduce' : 'motion'}`;
+      if (!force && configKey === lastStarsConfigKey) {
+        return;
+      }
+      lastStarsConfigKey = configKey;
+
+      const baseStars = randomIntInRange(192, 288);
+      const baseGlows = randomIntInRange(32, 48);
+      const totalStars = isCompact ? Math.max(24, Math.round(baseStars / 2)) : baseStars;
+      const totalGlows = isCompact ? Math.max(8, Math.round(baseGlows / 2)) : baseGlows;
+
+      const shouldAnimate = !reducedMotion;
       const fragment = document.createDocumentFragment();
       starsHost.innerHTML = '';
-      for (let i = 0; i < starCount; i += 1) {
+
+      for (let i = 0; i < totalStars; i += 1) {
         const star = document.createElement('span');
         star.className = 'process-star';
         star.style.setProperty('--x', `${randomInRange(0, 100).toFixed(2)}%`);
         star.style.setProperty('--y', `${randomInRange(0, 100).toFixed(2)}%`);
-        star.style.setProperty('--size', `${randomInRange(1.5, 3.6).toFixed(2)}px`);
-        star.style.setProperty('--twinkle-duration', `${randomInRange(6, 14).toFixed(2)}s`);
-        star.style.setProperty('--twinkle-delay', `${randomInRange(0, 8).toFixed(2)}s`);
-        if (Math.random() < 0.25) {
-          star.classList.add('is-accent');
+        const size = randomInRange(1.4, 3.4);
+        star.style.setProperty('--size', `${size.toFixed(2)}px`);
+        const opacity = randomInRange(0.42, 0.95);
+        star.style.setProperty('--opacity', opacity.toFixed(2));
+
+        if (shouldAnimate && Math.random() > 0.28) {
+          star.classList.add('process-star--twinkle');
+          star.style.setProperty('--twinkle-duration', `${randomInRange(2.5, 5).toFixed(2)}s`);
+          star.style.setProperty('--twinkle-delay', `${randomInRange(0, 5).toFixed(2)}s`);
         }
+
         fragment.appendChild(star);
       }
+
+      for (let i = 0; i < totalGlows; i += 1) {
+        const glow = document.createElement('span');
+        glow.className = 'process-star process-star--glow';
+        glow.style.setProperty('--x', `${randomInRange(0, 100).toFixed(2)}%`);
+        glow.style.setProperty('--y', `${randomInRange(0, 100).toFixed(2)}%`);
+        const size = randomInRange(16, 34);
+        const opacity = randomInRange(0.22, 0.48);
+        glow.style.setProperty('--size', `${size.toFixed(2)}px`);
+        glow.style.setProperty('--glow-opacity', opacity.toFixed(2));
+        glow.style.setProperty('--opacity', opacity.toFixed(2));
+
+        if (shouldAnimate && Math.random() > 0.45) {
+          glow.classList.add('process-star--twinkle');
+          glow.style.setProperty('--twinkle-duration', `${randomInRange(2.5, 5).toFixed(2)}s`);
+          glow.style.setProperty('--twinkle-delay', `${randomInRange(0, 5).toFixed(2)}s`);
+        }
+
+        fragment.appendChild(glow);
+      }
+
       starsHost.appendChild(fragment);
+    };
+
+    const scheduleStarRender = ({ force = false } = {}) => {
+      if (!starsHost) return;
+      pendingForceStars = pendingForceStars || force;
+      if (starsRenderPending) return;
+      starsRenderPending = true;
+      window.requestAnimationFrame(() => {
+        starsRenderPending = false;
+        const shouldForce = pendingForceStars;
+        pendingForceStars = false;
+        renderStars(shouldForce);
+      });
+    };
+
+    if (starsHost) {
+      scheduleStarRender({ force: true });
     }
 
     const revealables = Array.from(section.querySelectorAll('[data-process-reveal]'));
@@ -268,7 +333,10 @@
       }
     });
 
-    const handleResize = () => refreshGeometry({ immediate: true });
+    const handleResize = () => {
+      scheduleStarRender();
+      refreshGeometry({ immediate: true });
+    };
 
     window.addEventListener('resize', handleResize, { signal });
     window.addEventListener(
@@ -278,6 +346,7 @@
     );
 
     const handleReduceMotionChange = () => {
+      scheduleStarRender({ force: true });
       refreshGeometry({ immediate: true });
     };
 
