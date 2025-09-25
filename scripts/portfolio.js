@@ -49,6 +49,7 @@
           const delay = Number(card.dataset.fillDelay || 0);
 
           if (prefersReducedMotion()) {
+            card.classList.remove('is-hot');
             card.classList.add('is-filled');
           } else {
             window.setTimeout(() => {
