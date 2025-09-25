@@ -144,10 +144,7 @@ if (labsSection) {
       cta.textContent = 'Learn More';
 
       const rail = document.createElement('div');
-      rail.className = 'labs-rail';
-      const railDot = document.createElement('span');
-      railDot.className = 'labs-rail-dot';
-      rail.appendChild(railDot);
+      rail.className = 'labs-rail labs-rail--comet';
 
       body.append(title, blurb, cta, rail);
 
@@ -159,8 +156,115 @@ if (labsSection) {
     grid.appendChild(fragment);
   }
 
+  const starsContainer = labsSection.querySelector('.labs-stars');
+
+  if (starsContainer && !starsContainer.dataset.built) {
+    const orbNode = starsContainer.querySelector('.labs-orb');
+    const fragment = document.createDocumentFragment();
+
+    const randomBetween = (min, max) => Math.random() * (max - min) + min;
+    const starColors = [
+      'rgba(255, 228, 255, 0.88)',
+      'rgba(182, 140, 255, 0.92)',
+      'rgba(255, 186, 232, 0.94)',
+      'rgba(214, 192, 255, 0.9)'
+    ];
+    const glowColors = [
+      'rgba(255, 160, 220, 0.34)',
+      'rgba(198, 144, 255, 0.32)',
+      'rgba(255, 190, 150, 0.28)'
+    ];
+
+    const createPoint = (className, options) => {
+      const el = document.createElement('span');
+      el.className = className;
+      el.style.setProperty('--left', `${options.left.toFixed(2)}%`);
+      el.style.setProperty('--top', `${options.top.toFixed(2)}%`);
+      el.style.setProperty('--size', `${options.size.toFixed(2)}px`);
+      el.style.setProperty('--twinkle-duration', `${options.duration.toFixed(2)}s`);
+      el.style.setProperty('--twinkle-delay', `${options.delay.toFixed(2)}s`);
+      el.style.setProperty('--twinkle-min', options.twinkleMin.toFixed(2));
+      el.style.setProperty('--twinkle-max', options.twinkleMax.toFixed(2));
+      if (options.color) {
+        el.style.setProperty('--color', options.color);
+      }
+      if (options.glowColor) {
+        el.style.setProperty('--glow-color', options.glowColor);
+      }
+      if (options.blur) {
+        el.style.setProperty('--blur', `${options.blur.toFixed(2)}px`);
+      }
+      fragment.appendChild(el);
+    };
+
+    const starCount = Math.floor(randomBetween(48, 73));
+    for (let i = 0; i < starCount; i += 1) {
+      const minOpacity = randomBetween(0.32, 0.52);
+      const maxOpacity = Math.min(minOpacity + randomBetween(0.18, 0.32), 0.95);
+      createPoint('labs-star', {
+        left: randomBetween(-4, 104),
+        top: randomBetween(-6, 106),
+        size: randomBetween(1, 2.2),
+        duration: randomBetween(2.5, 5),
+        delay: randomBetween(0, 4),
+        twinkleMin: minOpacity,
+        twinkleMax: maxOpacity,
+        color: starColors[Math.floor(Math.random() * starColors.length)]
+      });
+    }
+
+    const glowCount = Math.floor(randomBetween(8, 13));
+    for (let i = 0; i < glowCount; i += 1) {
+      const minOpacity = randomBetween(0.18, 0.32);
+      const maxOpacity = Math.min(minOpacity + randomBetween(0.16, 0.28), 0.78);
+      createPoint('labs-glow', {
+        left: randomBetween(-8, 108),
+        top: randomBetween(-12, 112),
+        size: randomBetween(3.2, 6.4),
+        duration: randomBetween(2.8, 4.8),
+        delay: randomBetween(0, 3.6),
+        twinkleMin: minOpacity,
+        twinkleMax: maxOpacity,
+        glowColor: glowColors[Math.floor(Math.random() * glowColors.length)],
+        blur: randomBetween(4, 8)
+      });
+    }
+
+    requestAnimationFrame(() => {
+      if (orbNode) {
+        starsContainer.insertBefore(fragment, orbNode);
+      } else {
+        starsContainer.appendChild(fragment);
+      }
+      starsContainer.dataset.built = 'true';
+    });
+  }
+
+  const isRailStatic = labsSection.classList.contains('rail-static');
   const revealItems = Array.from(labsSection.querySelectorAll('[data-reveal]'));
   const seen = new WeakSet();
+  const cometCooldowns = new WeakMap();
+  const COMET_COOLDOWN = 2000;
+
+  const canPlayComet = () => !isRailStatic && !isReducedMotion.matches;
+
+  const playComet = (rail) => {
+    if (!rail || !canPlayComet()) return;
+    rail.classList.remove('is-playing');
+    requestAnimationFrame(() => {
+      if (!canPlayComet()) return;
+      rail.classList.add('is-playing');
+    });
+  };
+
+  const attemptComet = (card, rail, force = false) => {
+    if (!rail || !canPlayComet()) return;
+    const now = performance.now();
+    const last = cometCooldowns.get(card) || 0;
+    if (!force && now - last < COMET_COOLDOWN) return;
+    cometCooldowns.set(card, now);
+    playComet(rail);
+  };
 
   if (revealItems.length) {
     const observer = new IntersectionObserver((entries) => {
@@ -177,6 +281,11 @@ if (labsSection) {
         requestAnimationFrame(() => {
           window.setTimeout(() => {
             entry.target.classList.add('is-in');
+            if (entry.target.classList.contains('labs-card')) {
+              entry.target.classList.add('has-seen');
+              const rail = entry.target.querySelector('.labs-rail--comet');
+              attemptComet(entry.target, rail, true);
+            }
           }, delay);
         });
       });
@@ -193,10 +302,43 @@ if (labsSection) {
 
   const cards = Array.from(labsSection.querySelectorAll('.labs-card'));
   cards.forEach((card) => {
-    card.addEventListener('pointerenter', () => card.classList.add('is-hovered'));
-    card.addEventListener('pointerleave', () => card.classList.remove('is-hovered'));
-    card.addEventListener('focusin', () => card.classList.add('is-hovered'));
-    card.addEventListener('focusout', () => card.classList.remove('is-hovered'));
+    const rail = card.querySelector('.labs-rail--comet');
+
+    if (rail) {
+      rail.addEventListener('animationend', (event) => {
+        if (event.animationName === 'labs-comet-pass') {
+          rail.classList.remove('is-playing');
+        }
+      });
+    }
+
+    card.addEventListener('pointerenter', () => {
+      card.classList.add('is-hovered');
+      attemptComet(card, rail);
+    });
+
+    card.addEventListener('pointerleave', () => {
+      card.classList.remove('is-hovered');
+    });
+
+    card.addEventListener('focusin', () => {
+      card.classList.add('is-hovered');
+      attemptComet(card, rail);
+    });
+
+    card.addEventListener('focusout', () => {
+      card.classList.remove('is-hovered');
+    });
+  });
+
+  isReducedMotion.addEventListener('change', () => {
+    if (!isReducedMotion.matches) return;
+    cards.forEach((card) => {
+      const rail = card.querySelector('.labs-rail--comet');
+      if (rail) {
+        rail.classList.remove('is-playing');
+      }
+    });
   });
 
   const orb = labsSection.querySelector('[data-labs-orb]');
@@ -214,8 +356,8 @@ if (labsSection) {
     const rect = labsSection.getBoundingClientRect();
     const viewportHeight = window.innerHeight || 1;
     const progress = Math.min(Math.max(1 - (rect.top + rect.height * 0.5) / (viewportHeight + rect.height), -1), 1);
-    const offsetY = Math.max(Math.min(progress * 40, 34), -34);
-    const offsetX = Math.max(Math.min(progress * 18, 16), -16);
+    const offsetY = Math.max(Math.min(progress * 12, 10), -10);
+    const offsetX = Math.max(Math.min(progress * 6, 5), -5);
     orb.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
   };
 
