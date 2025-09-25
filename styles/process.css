@@ -66,6 +66,10 @@
   animation: processStarTwinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0s) infinite;
 }
 
+.process:not(.is-visible) .process-star--twinkle {
+  animation-play-state: paused;
+}
+
 @keyframes processStarTwinkle {
   0%,
   100% {

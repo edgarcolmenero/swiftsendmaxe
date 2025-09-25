@@ -17,6 +17,10 @@
     let starsRenderPending = false;
     let pendingForceStars = false;
     let lastStarsConfigKey = '';
+    const toggleSectionVisibility = (isVisible) => {
+      section.classList.toggle('is-visible', Boolean(isVisible));
+    };
+    let sectionVisibilityObserver;
 
     const renderStars = (force = false) => {
       if (!starsHost) return;
@@ -30,10 +34,10 @@
       }
       lastStarsConfigKey = configKey;
 
-      const baseStars = randomIntInRange(192, 288);
-      const baseGlows = randomIntInRange(32, 48);
-      const totalStars = isCompact ? Math.max(24, Math.round(baseStars / 2)) : baseStars;
-      const totalGlows = isCompact ? Math.max(8, Math.round(baseGlows / 2)) : baseGlows;
+      const starsRange = isCompact ? [48, 72] : [96, 144];
+      const glowsRange = isCompact ? [8, 12] : [16, 24];
+      const totalStars = randomIntInRange(starsRange[0], starsRange[1]);
+      const totalGlows = randomIntInRange(glowsRange[0], glowsRange[1]);
 
       const shouldAnimate = !reducedMotion;
       const fragment = document.createDocumentFragment();
@@ -96,6 +100,31 @@
 
     if (starsHost) {
       scheduleStarRender({ force: true });
+    }
+
+    const computeInitialVisibility = () => {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+      return rect.bottom > 0 && rect.right > 0 && rect.top < viewportHeight && rect.left < viewportWidth;
+    };
+
+    if (typeof IntersectionObserver === 'function') {
+      sectionVisibilityObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target !== section) return;
+            toggleSectionVisibility(entry.isIntersecting);
+          });
+        },
+        {
+          threshold: 0.2,
+        }
+      );
+      sectionVisibilityObserver.observe(section);
+      toggleSectionVisibility(computeInitialVisibility());
+    } else {
+      toggleSectionVisibility(true);
     }
 
     const stepData = new Map([
@@ -675,6 +704,9 @@
       }
       if (revealObserver) {
         revealObserver.disconnect();
+      }
+      if (sectionVisibilityObserver) {
+        sectionVisibilityObserver.disconnect();
       }
       window.cancelAnimationFrame(bubbleRAF);
     };
