@@ -174,6 +174,9 @@ if (labsSection) {
       'rgba(198, 144, 255, 0.32)',
       'rgba(255, 190, 150, 0.28)'
     ];
+    const baseStarRange = { min: 48, max: 72 };
+    const baseGlowRange = { min: 8, max: 12 };
+    const densityMultiplier = desktopMedia.matches ? 4 : 2;
 
     const createPoint = (className, options) => {
       const el = document.createElement('span');
@@ -197,7 +200,9 @@ if (labsSection) {
       fragment.appendChild(el);
     };
 
-    const starCount = Math.floor(randomBetween(48, 73));
+    const starMin = baseStarRange.min * densityMultiplier;
+    const starMax = baseStarRange.max * densityMultiplier;
+    const starCount = Math.floor(randomBetween(starMin, starMax + 1));
     for (let i = 0; i < starCount; i += 1) {
       const minOpacity = randomBetween(0.32, 0.52);
       const maxOpacity = Math.min(minOpacity + randomBetween(0.18, 0.32), 0.95);
@@ -206,14 +211,16 @@ if (labsSection) {
         top: randomBetween(-6, 106),
         size: randomBetween(1, 2.2),
         duration: randomBetween(2.5, 5),
-        delay: randomBetween(0, 4),
+        delay: randomBetween(0, 3),
         twinkleMin: minOpacity,
         twinkleMax: maxOpacity,
         color: starColors[Math.floor(Math.random() * starColors.length)]
       });
     }
 
-    const glowCount = Math.floor(randomBetween(8, 13));
+    const glowMin = baseGlowRange.min * densityMultiplier;
+    const glowMax = baseGlowRange.max * densityMultiplier;
+    const glowCount = Math.floor(randomBetween(glowMin, glowMax + 1));
     for (let i = 0; i < glowCount; i += 1) {
       const minOpacity = randomBetween(0.18, 0.32);
       const maxOpacity = Math.min(minOpacity + randomBetween(0.16, 0.28), 0.78);
@@ -221,8 +228,8 @@ if (labsSection) {
         left: randomBetween(-8, 108),
         top: randomBetween(-12, 112),
         size: randomBetween(3.2, 6.4),
-        duration: randomBetween(2.8, 4.8),
-        delay: randomBetween(0, 3.6),
+        duration: randomBetween(3, 5.4),
+        delay: randomBetween(0, 3),
         twinkleMin: minOpacity,
         twinkleMax: maxOpacity,
         glowColor: glowColors[Math.floor(Math.random() * glowColors.length)],
