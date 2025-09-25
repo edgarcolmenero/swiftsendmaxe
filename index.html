@@ -11,6 +11,7 @@
   <!-- Services styles (scoped, safe even before the section exists) -->
   <link rel="stylesheet" href="./styles/services.css" />
   <link rel="stylesheet" href="./styles/portfolio.css" />
+  <link rel="stylesheet" href="./styles/labs.css" />
 </head>
 <body>
   <!-- Header -->
@@ -303,10 +304,29 @@
     </div>
   </section>
 
+  <section id="labs" class="labs-section" aria-labelledby="labs-title">
+    <div class="labs-backdrop" aria-hidden="true"></div>
+    <div class="labs-orb" data-labs-orb aria-hidden="true"></div>
+    <div class="labs-inner">
+      <header class="labs-head">
+        <h2 id="labs-title" class="labs-title" data-reveal data-reveal-index="0">
+          SwiftSend <span class="labs-title-gradient">Labs</span>
+        </h2>
+        <div class="labs-subtitle" data-reveal data-reveal-index="1">
+          <p>Affordable, Personalized, Innovative</p>
+          <p>Labs = testing ground for affordable experiments clients can actually use.</p>
+        </div>
+      </header>
+
+      <ul class="labs-grid" role="list" data-labs-grid></ul>
+    </div>
+  </section>
+
   <script src="./scripts/header.js" type="module"></script>
   <script src="./scripts/hero.js" type="module"></script>
   <!-- Services interactions -->
   <script src="./scripts/services.js" type="module"></script>
   <script src="./scripts/portfolio.js" type="module"></script>
+  <script src="./scripts/labs.js" type="module"></script>
 </body>
 </html>
