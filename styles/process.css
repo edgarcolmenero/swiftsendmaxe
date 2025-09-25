@@ -69,30 +69,28 @@
 
 .process__intro {
   display: grid;
-  gap: clamp(12px, 1.6vw, 16px);
+  gap: clamp(16px, 2.6vw, 20px);
   max-width: 720px;
-}
-
-.process__eyebrow {
-  font-size: clamp(14px, 1.4vw, 16px);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: rgba(246, 240, 255, 0.62);
+  text-align: center;
+  justify-items: center;
+  margin-inline: auto;
 }
 
 .process__title {
   margin: 0;
-  font-size: clamp(38px, 6vw, 60px);
+  font-size: clamp(38px, 5.4vw, 58px);
+  font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.02em;
-  color: #fcf7ff;
+  color: #ffffff;
 }
 
 .process__lede {
   margin: 0;
-  font-size: clamp(17px, 2.2vw, 20px);
+  font-size: clamp(17px, 2.6vw, 20px);
   line-height: 1.55;
   color: rgba(244, 236, 255, 0.72);
+  max-width: 48ch;
 }
 
 .process__grid {
