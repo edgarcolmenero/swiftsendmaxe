@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./styles/services.css" />
   <link rel="stylesheet" href="./styles/portfolio.css" />
   <link rel="stylesheet" href="./styles/labs.css" />
+  <link rel="stylesheet" href="./styles/process.css" />
 </head>
 <body>
   <!-- Header -->
@@ -328,11 +329,100 @@
     </div>
   </section>
 
+  <section id="process" class="process-section" aria-labelledby="process-title">
+    <div class="process-glow" aria-hidden="true"></div>
+    <div class="process-inner">
+      <header class="process-head">
+        <p class="process-eyebrow">Process</p>
+        <h2 id="process-title" class="process-title">How SwiftSend Ships Software</h2>
+        <p class="process-lede">Every engagement runs through a transparent playbook that keeps strategy, build, and launch tightly aligned.</p>
+      </header>
+
+      <div class="process-body">
+        <div class="process-track" role="tablist" aria-label="SwiftSend delivery process" data-process-track>
+          <button class="process-node is-active" type="button" role="tab" aria-selected="true" aria-controls="process-panel-discover" id="process-tab-discover" data-process-node="discover">
+            <span class="process-node__index">01</span>
+            <span class="process-node__label">Discover</span>
+          </button>
+          <button class="process-node" type="button" role="tab" aria-selected="false" aria-controls="process-panel-design" id="process-tab-design" data-process-node="design">
+            <span class="process-node__index">02</span>
+            <span class="process-node__label">Design</span>
+          </button>
+          <button class="process-node" type="button" role="tab" aria-selected="false" aria-controls="process-panel-build" id="process-tab-build" data-process-node="build">
+            <span class="process-node__index">03</span>
+            <span class="process-node__label">Build</span>
+          </button>
+          <button class="process-node" type="button" role="tab" aria-selected="false" aria-controls="process-panel-launch" id="process-tab-launch" data-process-node="launch">
+            <span class="process-node__index">04</span>
+            <span class="process-node__label">Launch</span>
+          </button>
+          <button class="process-node" type="button" role="tab" aria-selected="false" aria-controls="process-panel-optimize" id="process-tab-optimize" data-process-node="optimize">
+            <span class="process-node__index">05</span>
+            <span class="process-node__label">Optimize</span>
+          </button>
+        </div>
+
+        <div class="process-panels" data-process-panels>
+          <article class="process-panel is-active" role="tabpanel" id="process-panel-discover" aria-labelledby="process-tab-discover" data-process-panel="discover">
+            <h3 class="process-panel__title">Discover &amp; Align</h3>
+            <p class="process-panel__body">Stakeholder interviews, system audits, and success metrics give us a 360° view. We scope intelligently and align the engagement around measurable outcomes.</p>
+            <ul class="process-panel__list">
+              <li>Business goals + constraints mapping</li>
+              <li>Technical + data audit</li>
+              <li>Roadmap + estimate buy-in</li>
+            </ul>
+          </article>
+
+          <article class="process-panel" role="tabpanel" id="process-panel-design" aria-labelledby="process-tab-design" hidden data-process-panel="design">
+            <h3 class="process-panel__title">Design the Experience</h3>
+            <p class="process-panel__body">We translate requirements into flows, wireframes, and interface systems that feel fast and intuitive. Content, UX, and dev collaborate in real time.</p>
+            <ul class="process-panel__list">
+              <li>Service blueprints &amp; user journeys</li>
+              <li>Interactive prototypes</li>
+              <li>Feedback loops with stakeholders</li>
+            </ul>
+          </article>
+
+          <article class="process-panel" role="tabpanel" id="process-panel-build" aria-labelledby="process-tab-build" hidden data-process-panel="build">
+            <h3 class="process-panel__title">Build in Sprints</h3>
+            <p class="process-panel__body">Engineers ship in short sprint cycles, pairing with QA to ensure quality. Automation, data wiring, and infrastructure land together.</p>
+            <ul class="process-panel__list">
+              <li>Agile sprints with demo-ready drops</li>
+              <li>Automated testing &amp; observability</li>
+              <li>Integrated data + AI layers</li>
+            </ul>
+          </article>
+
+          <article class="process-panel" role="tabpanel" id="process-panel-launch" aria-labelledby="process-tab-launch" hidden data-process-panel="launch">
+            <h3 class="process-panel__title">Launch with Confidence</h3>
+            <p class="process-panel__body">We prep infrastructure, train teams, and execute the go-live plan. Performance is monitored so we can react quickly.</p>
+            <ul class="process-panel__list">
+              <li>Playbooks for deployment &amp; rollback</li>
+              <li>Support + training sessions</li>
+              <li>Performance dashboards</li>
+            </ul>
+          </article>
+
+          <article class="process-panel" role="tabpanel" id="process-panel-optimize" aria-labelledby="process-tab-optimize" hidden data-process-panel="optimize">
+            <h3 class="process-panel__title">Optimize &amp; Grow</h3>
+            <p class="process-panel__body">We stay on to analyze data, run experiments, and keep the product evolving. Feedback drives the next round of improvements.</p>
+            <ul class="process-panel__list">
+              <li>Post-launch analytics &amp; insights</li>
+              <li>Experimentation pipeline</li>
+              <li>Growth + retention initiatives</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script src="./scripts/header.js" type="module"></script>
   <script src="./scripts/hero.js" type="module"></script>
   <!-- Services interactions -->
   <script src="./scripts/services.js" type="module"></script>
   <script src="./scripts/portfolio.js" type="module"></script>
   <script src="./scripts/labs.js" type="module"></script>
+  <script src="./scripts/process.js" type="module"></script>
 </body>
 </html>
