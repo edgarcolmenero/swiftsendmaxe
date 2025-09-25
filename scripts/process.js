@@ -98,6 +98,86 @@
       scheduleStarRender({ force: true });
     }
 
+    const stepData = new Map([
+      [
+        'discover',
+        {
+          number: '01',
+          label: 'Discover & Align',
+          title: 'Align on the mission',
+          body:
+            'Stakeholder interviews, system audits, and success metrics give us a 360° view. We scope intelligently and align the engagement around measurable outcomes.',
+          copy: 'Stakeholder interviews, metrics, and constraints shape an achievable roadmap.',
+          bullets: [
+            'Business goals + constraints mapping',
+            'Technical + data audit',
+            'Roadmap + estimate buy-in',
+          ],
+          accent: 'discover',
+          badge: 'Discover',
+        },
+      ],
+      [
+        'design',
+        {
+          number: '02',
+          label: 'Design the Experience',
+          title: 'Design the experience',
+          body:
+            'We translate requirements into flows, wireframes, and interface systems that feel fast and intuitive. Content, UX, and dev collaborate in real time.',
+          copy: 'Flows, prototypes, and system design make the product tangible fast.',
+          bullets: [
+            'Service blueprints & user journeys',
+            'Interactive prototypes',
+            'Feedback loops with stakeholders',
+          ],
+          accent: 'design',
+          badge: 'Design',
+        },
+      ],
+      [
+        'build',
+        {
+          number: '03',
+          label: 'Build in Sprints',
+          title: 'Ship in integrated sprints',
+          body:
+            'Engineers ship in short sprint cycles, pairing with QA to ensure quality. Automation, data wiring, and infrastructure land together.',
+          copy: 'Full-stack teams deliver production-ready slices with QA and automation baked in.',
+          bullets: [
+            'Agile sprints with demo-ready drops',
+            'Automated testing & observability',
+            'Integrated data + AI layers',
+          ],
+          accent: 'build',
+          badge: 'Build',
+        },
+      ],
+      [
+        'launch',
+        {
+          number: '04',
+          label: 'Launch with Confidence',
+          title: 'Launch & optimize',
+          body:
+            'We prep infrastructure, train teams, and execute the go-live plan. Performance is monitored so we can react quickly.',
+          copy: 'We orchestrate go-live, train teams, and monitor performance to iterate quickly.',
+          bullets: [
+            'Playbooks for deployment & rollback',
+            'Support + training sessions',
+            'Performance dashboards',
+          ],
+          accent: 'launch',
+          badge: 'Launch',
+        },
+      ],
+    ]);
+
+    const isCompactViewport = () => {
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth || 0;
+      return viewportWidth < 768;
+    };
+
     const revealables = Array.from(section.querySelectorAll('[data-process-reveal]'));
     const revealDelayStep = Number(section.getAttribute('data-process-reveal-step') || 0.09);
 
@@ -136,6 +216,150 @@
       return;
     }
 
+    const detail = section.querySelector('.process-detail');
+    if (detail && !detail.hasAttribute('aria-live')) {
+      detail.setAttribute('aria-live', 'polite');
+    }
+
+    const stepSlugs = steps.map((button, index) => {
+      const identifier = button.id || '';
+      const match = identifier.match(/process-step-(.+)/);
+      return match ? match[1] : `step-${index}`;
+    });
+
+    const slugToIndex = new Map();
+    stepSlugs.forEach((slug, index) => {
+      if (!slugToIndex.has(slug)) {
+        slugToIndex.set(slug, index);
+      }
+    });
+
+    const detailAccentModifiers = Array.from(
+      new Set(
+        Array.from(stepData.values())
+          .map((entry) => (entry && entry.accent ? `is-${entry.accent}` : null))
+          .filter(Boolean)
+      )
+    );
+
+    const accordionEntries = stepSlugs.map((slug) => {
+      if (!slug) {
+        return { slug: '', trigger: null, panel: null, item: null };
+      }
+      const trigger = detail ? detail.querySelector(`#process-accordion-${slug}`) : null;
+      const panelId = trigger ? trigger.getAttribute('aria-controls') : null;
+      const panel = panelId ? document.getElementById(panelId) : null;
+      const item = trigger ? trigger.closest('[data-process-accordion-item], .process-accordion-item') : null;
+      return { slug, trigger, panel, item };
+    });
+
+    const accordionBySlug = new Map();
+    accordionEntries.forEach((entry) => {
+      if (!entry || !entry.slug) return;
+      accordionBySlug.set(entry.slug, entry);
+      if (entry.trigger) {
+        const expanded = entry.item ? entry.item.classList.contains('is-active') : false;
+        entry.trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      }
+    });
+
+    const populateStepContent = (slug, button) => {
+      if (!button) return;
+      const data = stepData.get(slug);
+      if (!data) return;
+
+      const badge = button.querySelector('.process-step__badge');
+      if (badge) {
+        badge.innerHTML = '';
+        const icon = document.createElement('span');
+        icon.className = 'process-step__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = data.number || '';
+        badge.appendChild(icon);
+        badge.appendChild(document.createTextNode(` ${data.badge || data.label || ''}`));
+      }
+
+      const titleEl = button.querySelector('.process-step__title');
+      if (titleEl && data.title) {
+        titleEl.textContent = data.title;
+      }
+
+      const copyEl = button.querySelector('.process-step__copy');
+      if (copyEl && data.copy) {
+        copyEl.textContent = data.copy;
+      }
+    };
+
+    const populateDetailContent = (slug) => {
+      const data = stepData.get(slug);
+      const entry = slug ? accordionBySlug.get(slug) : null;
+      if (!data || !entry) return;
+
+      if (entry.trigger) {
+        const numberEl = entry.trigger.querySelector('.process-accordion-number');
+        if (numberEl) {
+          numberEl.textContent = data.number || '';
+        }
+        const titleEl = entry.trigger.querySelector('.process-accordion-title');
+        if (titleEl && data.label) {
+          titleEl.textContent = data.label;
+        }
+      }
+
+      if (entry.panel) {
+        const panelTitle = entry.panel.querySelector('.process-panel__title');
+        if (panelTitle && data.label) {
+          panelTitle.textContent = data.label;
+        }
+        const panelBody = entry.panel.querySelector('.process-panel__body');
+        if (panelBody && data.body) {
+          panelBody.textContent = data.body;
+        }
+        const list = entry.panel.querySelector('.process-panel__list');
+        if (list && Array.isArray(data.bullets)) {
+          list.innerHTML = '';
+          data.bullets.forEach((bullet) => {
+            const item = document.createElement('li');
+            item.textContent = bullet;
+            list.appendChild(item);
+          });
+        }
+      }
+    };
+
+    const applyDetailAccent = (slug) => {
+      if (!detail) return;
+      detailAccentModifiers.forEach((className) => {
+        detail.classList.remove(className);
+      });
+      const data = stepData.get(slug);
+      if (data && data.accent) {
+        detail.classList.add(`is-${data.accent}`);
+      }
+    };
+
+    const toggleAccordionState = (slug) => {
+      accordionEntries.forEach((entry) => {
+        if (!entry || !entry.slug) return;
+        const isActive = entry.slug === slug;
+        if (entry.item) {
+          entry.item.classList.toggle('is-active', isActive);
+        }
+        if (entry.panel) {
+          entry.panel.hidden = !isActive;
+          entry.panel.classList.toggle('is-active', isActive);
+        }
+        if (entry.trigger) {
+          entry.trigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        }
+      });
+    };
+
+    stepSlugs.forEach((slug, index) => {
+      populateStepContent(slug, steps[index]);
+      populateDetailContent(slug);
+    });
+
     section.classList.add('is-enhanced');
 
     const runner = section.querySelector('[data-process-runner]');
@@ -153,7 +377,7 @@
     let lastBubbleEmit = 0;
     let bubbleRAF = 0;
     const measureAndEmitBubble = (index, { allowEmit = true } = {}) => {
-      if (!baseline || !bubble || !steps[index]) return;
+      if (!baseline || !bubble || !steps[index] || isCompactViewport()) return;
 
       const baselineRect = baseline.getBoundingClientRect();
       const targetRect = steps[index].getBoundingClientRect();
@@ -190,25 +414,21 @@
     };
 
     const scheduleBubbleUpdate = (index, { allowEmit = true } = {}) => {
-      if (!baseline || !bubble || !steps[index]) return;
+      if (!baseline || !bubble || !steps[index] || isCompactViewport()) return;
       window.cancelAnimationFrame(bubbleRAF);
       bubbleRAF = window.requestAnimationFrame(() => {
         bubbleRAF = 0;
         measureAndEmitBubble(index, { allowEmit });
       });
     };
-    const panels = steps.map((button) => {
-      const controlled = button.getAttribute('aria-controls');
-      return controlled ? document.getElementById(controlled) : null;
-    });
-
     let activeIndex = steps.findIndex((button) => button.getAttribute('aria-current') === 'step' || button.classList.contains('is-active'));
     if (activeIndex < 0) activeIndex = 0;
 
     let resizeRAF = 0;
+    let previousCompact = isCompactViewport();
 
     const applyRunnerPosition = (index, { immediate = false } = {}) => {
-      if (!runner || !steps[index]) return;
+      if (!runner || !steps[index] || isCompactViewport()) return;
 
       const parent = runner.parentElement || section;
       const parentRect = parent.getBoundingClientRect();
@@ -234,7 +454,7 @@
     };
 
     const updateBaselineFill = (index) => {
-      if (!baselineFill || !baselineTrack || !steps[index]) return;
+      if (!baselineFill || !baselineTrack || !steps[index] || isCompactViewport()) return;
       const trackRect = baselineTrack.getBoundingClientRect();
       const targetRect = steps[index].getBoundingClientRect();
       const isVertical = trackRect.height > trackRect.width;
@@ -254,6 +474,10 @@
 
     const refreshGeometry = (options = {}) => {
       window.cancelAnimationFrame(resizeRAF);
+      if (isCompactViewport()) {
+        resizeRAF = 0;
+        return;
+      }
       resizeRAF = window.requestAnimationFrame(() => {
         updateBaselineFill(activeIndex);
         applyRunnerPosition(activeIndex, options);
@@ -264,42 +488,47 @@
     const setActiveStep = (index, { focus = false, immediate = false } = {}) => {
       if (!steps.length) return;
       const nextIndex = ((index % steps.length) + steps.length) % steps.length;
+      const compact = isCompactViewport();
       if (activeIndex === nextIndex && !immediate) {
         if (focus) steps[nextIndex].focus();
-        scheduleBubbleUpdate(nextIndex, { allowEmit: true });
+        if (!compact) {
+          scheduleBubbleUpdate(nextIndex, { allowEmit: true });
+        }
         return;
       }
 
       const previousButton = steps[activeIndex];
-      const previousPanel = panels[activeIndex];
       if (previousButton) {
         previousButton.classList.remove('is-active');
         previousButton.removeAttribute('aria-current');
         previousButton.tabIndex = -1;
-        const stepItem = previousButton.closest('[data-process-step], .process-step');
-        if (stepItem) stepItem.classList.remove('is-active');
-      }
-      if (previousPanel) {
-        previousPanel.classList.remove('is-active');
-        previousPanel.hidden = true;
+        const previousStepItem = previousButton.closest('[data-process-step], .process-step');
+        if (previousStepItem) previousStepItem.classList.remove('is-active');
       }
 
       const nextButton = steps[nextIndex];
-      const nextPanel = panels[nextIndex];
+      const nextSlug = stepSlugs[nextIndex];
+
+      if (detail) {
+        populateDetailContent(nextSlug);
+        applyDetailAccent(nextSlug);
+      }
+
+      toggleAccordionState(nextSlug);
+
       nextButton.classList.add('is-active');
       nextButton.setAttribute('aria-current', 'step');
       nextButton.tabIndex = 0;
       const nextStepItem = nextButton.closest('[data-process-step], .process-step');
       if (nextStepItem) nextStepItem.classList.add('is-active');
-      if (nextPanel) {
-        nextPanel.hidden = false;
-        nextPanel.classList.add('is-active');
-      }
 
       activeIndex = nextIndex;
       section.setAttribute('data-process-active-index', String(activeIndex));
-      refreshGeometry({ immediate });
-      scheduleBubbleUpdate(nextIndex, { allowEmit: !immediate });
+
+      if (!compact) {
+        refreshGeometry({ immediate });
+        scheduleBubbleUpdate(nextIndex, { allowEmit: !immediate });
+      }
 
       if (focus) {
         nextButton.focus();
@@ -391,19 +620,27 @@
       );
     });
 
-    panels.forEach((panel, index) => {
-      if (!panel) return;
-      if (index === activeIndex) {
-        panel.hidden = false;
-        panel.classList.add('is-active');
-      } else {
-        panel.hidden = true;
-        panel.classList.remove('is-active');
-      }
+    accordionEntries.forEach((entry) => {
+      if (!entry || !entry.trigger || !entry.slug) return;
+      const targetIndex = slugToIndex.get(entry.slug);
+      if (typeof targetIndex !== 'number') return;
+      entry.trigger.addEventListener(
+        'click',
+        (event) => {
+          if (event.defaultPrevented) return;
+          setActiveStep(targetIndex, { focus: false });
+        },
+        { signal }
+      );
     });
 
     const handleResize = () => {
       scheduleStarRender();
+      const compact = isCompactViewport();
+      if (compact !== previousCompact) {
+        previousCompact = compact;
+        setActiveStep(activeIndex, { immediate: true });
+      }
       refreshGeometry({ immediate: true });
       scheduleBubbleUpdate(activeIndex, { allowEmit: false });
     };
