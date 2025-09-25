@@ -121,7 +121,7 @@
   isolation: isolate;
   transform: translateY(0);
   transition:
-    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 330ms cubic-bezier(0.28, 0.82, 0.32, 1.12),
     box-shadow 0.55s var(--ease),
     border-color 0.55s var(--ease),
     background 0.55s var(--ease);
@@ -170,7 +170,7 @@
 }
 
 #portfolio .pf-card:is(:hover, :focus-visible) {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
 }
 
 #portfolio .pf-card:active {
@@ -192,6 +192,8 @@
   border-top-right-radius: var(--card-radius);
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+  isolation: isolate;
+  z-index: 0;
 }
 
 #portfolio .pf-card__media img {
@@ -209,9 +211,13 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: var(--media-tint);
+  background:
+    linear-gradient(150deg, rgba(10, 4, 24, 0.18), rgba(6, 2, 16, 0.48)),
+    var(--media-tint);
   opacity: 0;
-  transition: opacity 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  mix-blend-mode: multiply;
+  z-index: 1;
 }
 
 #portfolio .pf-card.is-inview .pf-card__media::after {
@@ -232,6 +238,11 @@
 
 #portfolio .pf-card:is(:hover, :focus-visible) .pf-card__media::after {
   opacity: var(--tint-hover-opacity);
+}
+
+#portfolio .pf-card__pill,
+#portfolio .pf-card__ext {
+  z-index: 2;
 }
 
 #portfolio .pf-card__pill {
@@ -283,6 +294,8 @@
   display: grid;
   gap: clamp(12px, 2vw, 16px);
   padding: clamp(22px, 2.4vw, 28px);
+  position: relative;
+  z-index: 1;
 }
 
 #portfolio .pf-card__title {
@@ -349,7 +362,7 @@
   background: var(--bar-fill);
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform 2100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 3150ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 #portfolio .pf-card.is-filled .pf-card__fill {
