@@ -20,12 +20,15 @@
       element.style.setProperty('--io-delay', `${(index * STAGGER_STEP).toFixed(2)}s`);
     });
 
+    const FILL_BASE_DELAY = 140;
+    const FILL_STAGGER_MS = 70;
+
     cards.forEach((card, index) => {
       if (!card.hasAttribute('tabindex')) {
         card.tabIndex = 0;
       }
       card.setAttribute('role', 'group');
-      card.dataset.fillDelay = String(Math.min(index * 70, 120));
+      card.dataset.fillDelay = String(index * FILL_STAGGER_MS);
     });
 
     const pending = new Set(revealables);
@@ -43,13 +46,14 @@
           const card = target;
           if (card.classList.contains('is-filled')) return;
 
+          const delay = Number(card.dataset.fillDelay || 0);
+
           if (prefersReducedMotion()) {
             card.classList.add('is-filled');
           } else {
-            const delay = Number(card.dataset.fillDelay || 0);
             window.setTimeout(() => {
               card.classList.add('is-filled');
-            }, delay);
+            }, FILL_BASE_DELAY + delay);
           }
         }
       });
@@ -87,13 +91,18 @@
     );
 
     const toggleHot = (card, state) => {
+      if (prefersReducedMotion()) {
+        if (!state) {
+          card.classList.remove('is-hot');
+        }
+        return;
+      }
       card.classList.toggle('is-hot', state);
     };
 
     cards.forEach((card) => {
-      card.addEventListener('pointerenter', () => toggleHot(card, true));
-      card.addEventListener('pointerleave', () => toggleHot(card, false));
-      card.addEventListener('pointercancel', () => toggleHot(card, false));
+      card.addEventListener('mouseenter', () => toggleHot(card, true));
+      card.addEventListener('mouseleave', () => toggleHot(card, false));
 
       card.addEventListener('focusin', () => toggleHot(card, true));
       card.addEventListener('focusout', (event) => {
@@ -106,6 +115,7 @@
     const fillExisting = () => {
       if (!prefersReducedMotion()) return;
       cards.forEach((card) => {
+        card.classList.remove('is-hot');
         if (card.classList.contains('is-inview')) {
           card.classList.add('is-filled');
         }
