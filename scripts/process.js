@@ -14,6 +14,9 @@
       accent: 'discover',
       accentRgb: '45, 139, 255',
       accentRgbAlt: '29, 229, 255',
+      accentStart: '#2d8bff',
+      accentEnd: '#1de5ff',
+      accentInk: '#ffffff',
     },
     design: {
       num: '02',
@@ -29,6 +32,9 @@
       accent: 'design',
       accentRgb: '162, 72, 255',
       accentRgbAlt: '255, 100, 242',
+      accentStart: '#a248ff',
+      accentEnd: '#ff64f2',
+      accentInk: '#ffffff',
     },
     build: {
       num: '03',
@@ -44,6 +50,9 @@
       accent: 'build',
       accentRgb: '255, 138, 60',
       accentRgbAlt: '255, 69, 84',
+      accentStart: '#ff8a3c',
+      accentEnd: '#ff4554',
+      accentInk: '#ffffff',
     },
     launch: {
       num: '04',
@@ -59,11 +68,13 @@
       accent: 'launch',
       accentRgb: '68, 242, 141',
       accentRgbAlt: '30, 203, 121',
+      accentStart: '#44f28d',
+      accentEnd: '#1ecb79',
+      accentInk: '#082819',
     },
   };
 
   const STAGGER_STEP = 0.08;
-  const ACCENT_CLASSES = Object.keys(PROCESS_DATA).map((slug) => `is-${slug}`);
 
   const initProcess = () => {
     const section = document.getElementById('process') || document.querySelector('[data-process-section]');
@@ -81,7 +92,7 @@
 
     const isCompactViewport = () => {
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || section.clientWidth || 0;
-      return viewportWidth < 768;
+      return viewportWidth < 1024;
     };
 
     const starsHost = section.querySelector('.process-stars');
@@ -234,6 +245,9 @@
       const data = PROCESS_DATA[slug];
       if (!data || !button) return;
       article.classList.add(`process-step--${slug}`);
+      if (!article.hasAttribute('data-step')) {
+        article.setAttribute('data-step', String(index + 1));
+      }
       const badgeNum = button.querySelector('.process-step__badge-num');
       if (badgeNum) badgeNum.textContent = data.num || '';
       const badgeLabel = button.querySelector('.process-step__badge-label');
@@ -242,6 +256,15 @@
       if (titleEl) titleEl.textContent = data.title || '';
       const copyEl = button.querySelector('.process-step__copy');
       if (copyEl) copyEl.textContent = data.copy || data.body || '';
+      button.setAttribute('role', 'tab');
+      button.setAttribute('tabindex', '-1');
+      button.setAttribute('aria-selected', 'false');
+      if (!button.id) {
+        button.id = `process-step-${slug}`;
+      }
+      if (card && card.id) {
+        button.setAttribute('aria-controls', card.id);
+      }
     });
 
     const card = section.querySelector('[data-process-detail]');
@@ -259,6 +282,17 @@
     const baselineFill = section.querySelector('[data-process-baseline-fill], .process-baseline__fill');
     const runner = section.querySelector('[data-process-runner]');
     const stepsHost = section.querySelector('.process-steps');
+
+    if (stepsHost) {
+      stepsHost.classList.add('is-square');
+      stepsHost.setAttribute('role', 'tablist');
+      stepsHost.setAttribute('aria-orientation', 'horizontal');
+    }
+
+    if (card) {
+      card.setAttribute('role', 'tabpanel');
+      card.setAttribute('tabindex', '0');
+    }
     let bubble = baseline ? baseline.querySelector('.process-bubble') : null;
     if (baseline && !bubble) {
       bubble = document.createElement('span');
@@ -293,10 +327,22 @@
 
     const applyCardAccent = (slug) => {
       if (!card) return;
-      ACCENT_CLASSES.forEach((className) => card.classList.remove(className));
       const data = PROCESS_DATA[slug];
-      if (data && data.accent) {
-        card.classList.add(`is-${data.accent}`);
+      if (!data) return;
+      if (data.accentRgb) {
+        card.style.setProperty('--step-accent-rgb', data.accentRgb);
+      }
+      if (data.accentRgbAlt) {
+        card.style.setProperty('--step-accent-rgb-alt', data.accentRgbAlt);
+      }
+      if (data.accentStart) {
+        card.style.setProperty('--step-accent-start', data.accentStart);
+      }
+      if (data.accentEnd) {
+        card.style.setProperty('--step-accent-end', data.accentEnd);
+      }
+      if (data.accentInk) {
+        card.style.setProperty('--step-accent-ink', data.accentInk);
       }
     };
 
@@ -318,7 +364,7 @@
     const playCardSwap = (skipAnimation) => {
       if (!card) return;
       card.classList.remove('is-swapping');
-      if (skipAnimation) return;
+      if (skipAnimation || prefersReducedMotion()) return;
       void card.offsetWidth;
       card.classList.add('is-swapping');
     };
@@ -411,13 +457,17 @@
     const setAriaCurrent = (index) => {
       buttons.forEach((button, idx) => {
         if (!button) return;
-        button.setAttribute('aria-current', idx === index ? 'step' : 'false');
+        const isActive = idx === index;
+        button.setAttribute('aria-current', isActive ? 'step' : 'false');
+        button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        button.setAttribute('tabindex', isActive ? '0' : '-1');
       });
     };
 
     const stepsHostScroll = stepsHost;
     const scrollActiveIntoView = (index) => {
       if (!stepsHostScroll || !isCompactViewport()) return;
+      if (stepsHostScroll.scrollWidth <= stepsHostScroll.clientWidth + 4) return;
       const article = stepArticles[index];
       if (!article) return;
       const behavior = prefersReducedMotion() ? 'auto' : 'smooth';
@@ -445,6 +495,22 @@
       applyAccentVariables(slug);
       updateDetailCard(slug);
       applyCardAccent(slug);
+      if (card) {
+        const activeButton = buttons[nextIndex];
+        if (activeButton) {
+          const labelIds = [];
+          if (activeButton.id) {
+            labelIds.push(activeButton.id);
+          }
+          const heading = card.querySelector('.process-detail-title');
+          if (heading && heading.id) {
+            labelIds.push(heading.id);
+          }
+          if (labelIds.length) {
+            card.setAttribute('aria-labelledby', labelIds.join(' '));
+          }
+        }
+      }
       playCardSwap(immediate || previousIndex === nextIndex);
       updateBaselineFill(nextIndex);
       if (!isCompactViewport()) {
@@ -507,6 +573,7 @@
         'pointerdown',
         (event) => {
           if (!isCompactViewport()) return;
+          if (stepsHostScroll.scrollWidth <= stepsHostScroll.clientWidth + 4) return;
           if (event.pointerType && event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
           swipeState = {
             id: event.pointerId,
