@@ -63,11 +63,18 @@
     };
   
     const STAGGER_STEP = 0.08;
+    const STEP_HUES = {
+      discover: 210,
+      design: 276,
+      build: 28,
+      launch: 148,
+    };
     const ACCENT_CLASSES = Object.keys(PROCESS_DATA).map((slug) => `is-${slug}`);
   
     const initProcess = () => {
       const section = document.getElementById('process') || document.querySelector('[data-process-section]');
       if (!section) return;
+      section.classList.add('is-squares');
   
       const controller = typeof AbortController === 'function' ? new AbortController() : null;
       const signal = controller ? controller.signal : undefined;
@@ -205,6 +212,14 @@
       });
   
       const stepArticles = Array.from(section.querySelectorAll('[data-process-step]'));
+      const tilesHost = section.querySelector('[data-process-steps], .process-steps');
+      if (tilesHost) {
+        tilesHost.classList.add('process__tiles');
+        tilesHost.setAttribute('role', 'tablist');
+        tilesHost.setAttribute('aria-orientation', 'horizontal');
+      } else {
+        console.warn('[process] Expected a tiles host to layout process steps.');
+      }
       const buttons = stepArticles.map((article) => article.querySelector('.process-step-button')).filter(Boolean);
       if (!buttons.length) {
         if (controller) controller.abort();
@@ -233,6 +248,20 @@
         const button = buttons[index];
         const data = PROCESS_DATA[slug];
         if (!data || !button) return;
+        article.classList.add('process__tile');
+        if (!article.hasAttribute('data-step')) {
+          article.setAttribute('data-step', String(index + 1));
+        }
+        const hue = STEP_HUES[slug];
+        if (typeof hue === 'number') {
+          article.style.setProperty('--step-hue', String(hue));
+        }
+        button.setAttribute('role', 'tab');
+        button.setAttribute('tabindex', '-1');
+        button.setAttribute('aria-selected', 'false');
+        if (!button.id) {
+          button.id = `process-tab-${index + 1}`;
+        }
         article.classList.add(`process-step--${slug}`);
         const badgeNum = button.querySelector('.process-step__badge-num');
         if (badgeNum) badgeNum.textContent = data.num || '';
@@ -245,6 +274,12 @@
       });
   
       const card = section.querySelector('[data-process-detail]');
+      if (!card) {
+        console.warn('[process] Detail card container not found.');
+      } else {
+        card.setAttribute('role', 'tabpanel');
+        card.setAttribute('tabindex', '0');
+      }
       const cardElements = card
         ? {
             badgeNum: card.querySelector('.process-badge-num'),
@@ -280,7 +315,9 @@
         if (cardElements.title) cardElements.title.textContent = data.title || '';
         if (cardElements.body) cardElements.body.textContent = data.body || '';
         if (cardElements.list) {
-          cardElements.list.innerHTML = '';
+          while (cardElements.list.firstChild) {
+            cardElements.list.removeChild(cardElements.list.firstChild);
+          }
           if (Array.isArray(data.bullets)) {
             data.bullets.forEach((bullet) => {
               const item = document.createElement('li');
@@ -297,6 +334,16 @@
         const data = PROCESS_DATA[slug];
         if (data && data.accent) {
           card.classList.add(`is-${data.accent}`);
+        }
+      };
+
+      const applyCardHue = (slug) => {
+        if (!card) return;
+        const hue = STEP_HUES[slug];
+        if (typeof hue === 'number') {
+          card.style.setProperty('--step-hue', String(hue));
+        } else {
+          card.style.removeProperty('--step-hue');
         }
       };
   
@@ -442,9 +489,23 @@
         });
         setAriaCurrent(nextIndex);
         const slug = slugForIndex[nextIndex];
+        buttons.forEach((button, idx) => {
+          if (!button) return;
+          const isActive = idx === nextIndex;
+          button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          button.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+        if (card && buttons[nextIndex]) {
+          const labelIds = [buttons[nextIndex].id];
+          if (cardElements && cardElements.title && cardElements.title.id) {
+            labelIds.push(cardElements.title.id);
+          }
+          card.setAttribute('aria-labelledby', labelIds.join(' '));
+        }
         applyAccentVariables(slug);
         updateDetailCard(slug);
         applyCardAccent(slug);
+        applyCardHue(slug);
         playCardSwap(immediate || previousIndex === nextIndex);
         updateBaselineFill(nextIndex);
         if (!isCompactViewport()) {
@@ -658,6 +719,7 @@
       applyAccentVariables(initialSlug);
       updateDetailCard(initialSlug);
       applyCardAccent(initialSlug);
+      applyCardHue(initialSlug);
       setAriaCurrent(activeIndex);
       setActiveStep(activeIndex, { immediate: true });
       refreshGeometry({ immediate: true });
