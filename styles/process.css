@@ -427,7 +427,124 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 4px rgba(20, 8, 36, 0.5);
   }
-  
+
+  .process.is-squares {
+    --step-hue: 265;
+  }
+
+  .process.is-squares .process__grid {
+    gap: clamp(28px, 4.6vw, 38px);
+  }
+
+  .process.is-squares .process__rail {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 3.2vw, 24px);
+    padding-bottom: clamp(36px, 6vw, 48px);
+  }
+
+  .process.is-squares .process__tiles {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(16px, 2.6vw, 22px);
+    padding: clamp(14px, 3.6vw, 20px);
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .process.is-squares .process__tile {
+    --tile-ring: hsla(var(--step-hue, 265), 95%, 72%, 0.65);
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(17, 8, 36, 0.78);
+    box-shadow:
+      0 20px 40px rgba(8, 2, 26, 0.45),
+      0 0 28px rgba(20, 10, 44, 0.32);
+    overflow: hidden;
+    transition:
+      transform 260ms cubic-bezier(0.22, 0.84, 0.3, 1),
+      border-color 260ms cubic-bezier(0.22, 0.84, 0.3, 1),
+      box-shadow 260ms cubic-bezier(0.22, 0.84, 0.3, 1),
+      background 260ms cubic-bezier(0.22, 0.84, 0.3, 1);
+  }
+
+  .process.is-squares .process__tile::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    background: radial-gradient(120% 120% at 50% 50%, hsla(var(--step-hue, 265), 86%, 72%, 0.48), transparent 70%);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 260ms cubic-bezier(0.22, 0.84, 0.3, 1), transform 260ms cubic-bezier(0.22, 0.84, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .process.is-squares .process__tile .process-step-button {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: clamp(12px, 2.4vw, 18px);
+    padding: clamp(18px, 4.2vw, 26px);
+    border-radius: inherit;
+    background: none;
+    color: inherit;
+    text-align: left;
+  }
+
+  .process.is-squares .process__tile .process-step__badge {
+    margin: 0;
+  }
+
+  .process.is-squares .process__tile .process-step__title {
+    margin-top: auto;
+    font-size: clamp(18px, 3.2vw, 22px);
+  }
+
+  .process.is-squares .process-step__copy {
+    display: none;
+  }
+
+  .process.is-squares .process__tile:where(:hover, :focus-within) {
+    transform: translateY(-6px);
+    border-color: var(--tile-ring);
+    box-shadow:
+      0 26px 52px rgba(8, 2, 26, 0.46),
+      0 0 34px hsla(var(--step-hue, 265), 84%, 70%, 0.32);
+  }
+
+  .process.is-squares .process__tile:where(:hover, :focus-within)::after {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+
+  .process.is-squares .process__tile.is-active {
+    transform: translateY(-8px);
+    border-color: var(--tile-ring);
+    box-shadow:
+      0 30px 60px rgba(8, 2, 26, 0.52),
+      0 0 44px hsla(var(--step-hue, 265), 86%, 72%, 0.46);
+  }
+
+  .process.is-squares .process__tile.is-active::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .process.is-squares .process__tile .process-step-button:focus-visible {
+    outline: 3px solid hsla(var(--step-hue, 265), 96%, 74%, 0.85);
+    outline-offset: 4px;
+  }
+
   .process-step--discover {
     --process-accent-1: #2d8bff;
     --process-accent-2: #1de5ff;
@@ -510,6 +627,23 @@
       radial-gradient(160% 200% at 80% 0%, rgba(var(--accent-rgb), 0.16), transparent 68%);
     opacity: 0.7;
     pointer-events: none;
+  }
+
+  .process.is-squares .process-detail-card {
+    border-color: hsla(var(--step-hue, 265), 72%, 70%, 0.42);
+    box-shadow:
+      0 32px 58px rgba(6, 1, 20, 0.5),
+      0 0 48px hsla(var(--step-hue, 265), 82%, 70%, 0.38);
+  }
+
+  .process.is-squares .process-detail-card::before {
+    background: linear-gradient(150deg, hsla(var(--step-hue, 265), 78%, 68%, 0.32), hsla(var(--step-hue, 265), 92%, 72%, 0.16));
+  }
+
+  .process.is-squares .process-detail-card::after {
+    background:
+      radial-gradient(120% 160% at 12% 12%, rgba(255, 255, 255, 0.12), transparent 64%),
+      radial-gradient(160% 210% at 84% 0%, hsla(var(--step-hue, 265), 78%, 68%, 0.26), transparent 74%);
   }
   
   .process-detail-header {
@@ -747,7 +881,13 @@
     animation: processCtaUnderline 0.6s var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
     opacity: 1;
   }
-  
+
+  @media (max-width: 420px) {
+    .process.is-squares .process__tiles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   @media (min-width: 768px) {
     .process {
       padding: clamp(70px, 9vw, 96px) 0 clamp(68px, 10vw, 104px);
@@ -794,15 +934,38 @@
       bottom: clamp(12px, 2vw, 18px);
     }
   }
-  
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .process.is-squares .process__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .process.is-squares .process__rail {
+      padding-bottom: clamp(32px, 6vw, 46px);
+    }
+  }
+
   @media (min-width: 1024px) {
     .process-step {
       gap: clamp(16px, 2.2vw, 20px);
       padding: clamp(28px, 3vw, 34px);
     }
-  
+
     .process-detail-card {
       padding: clamp(32px, 3.6vw, 40px);
+    }
+
+    .process.is-squares .process__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: stretch;
+    }
+
+    .process.is-squares .process__tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .process.is-squares .process__rail {
+      padding-bottom: clamp(28px, 4vw, 38px);
     }
   }
   
@@ -826,7 +989,18 @@
     .process-step.is-active {
       transform: translateY(0);
     }
-  
+
+    .process.is-squares .process__tile,
+    .process.is-squares .process__tile:where(:hover, :focus-within),
+    .process.is-squares .process__tile.is-active {
+      transform: translateY(0);
+      transition: none;
+    }
+
+    .process.is-squares .process__tile::after {
+      transition: none;
+    }
+
     .process-runner {
       transition-duration: 0.01ms;
     }
