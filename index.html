@@ -337,76 +337,82 @@
         <p class="process__lede">A streamlined process designed for efficiency and excellence</p>
       </header>
 
-      <div class="process__grid">
-        <div class="process__rail" data-reveal data-process-track role="tablist" aria-label="SwiftSend delivery process">
-          <div class="process-baseline" aria-hidden="true">
-            <div class="process-baseline__fill" data-process-baseline-fill></div>
+      <div class="process__layout" data-reveal>
+        <div class="process__progress" aria-hidden="true">
+          <div class="process__progress-head">
+            <span class="process__progress-label">Progress</span>
+            <span class="process__progress-value" data-process-progress-value>0%</span>
           </div>
-          <span class="process-runner" data-process-runner aria-hidden="true"></span>
-
-          <div class="process-steps" data-process-steps>
-            <article class="process-step process-step--discover is-active" data-process-step data-step-slug="discover" data-reveal>
-              <button class="process-step-button" id="process-step-discover" aria-controls="process-detail-card" aria-current="step" type="button">
-                <span class="process-step__badge">
-                  <span class="process-step__badge-num" aria-hidden="true">01</span>
-                  <span class="process-step__badge-label">Discover</span>
-                </span>
-                <span class="process-step__title">Align on the mission</span>
-                <span class="process-step__copy">Stakeholder interviews, metrics, and constraints shape an achievable roadmap.</span>
-              </button>
-            </article>
-
-            <article class="process-step process-step--design" data-process-step data-step-slug="design" data-reveal>
-              <button class="process-step-button" id="process-step-design" aria-controls="process-detail-card" type="button">
-                <span class="process-step__badge">
-                  <span class="process-step__badge-num" aria-hidden="true">02</span>
-                  <span class="process-step__badge-label">Design</span>
-                </span>
-                <span class="process-step__title">Design the experience</span>
-                <span class="process-step__copy">Flows, prototypes, and system design make the product tangible fast.</span>
-              </button>
-            </article>
-
-            <article class="process-step process-step--build" data-process-step data-step-slug="build" data-reveal>
-              <button class="process-step-button" id="process-step-build" aria-controls="process-detail-card" type="button">
-                <span class="process-step__badge">
-                  <span class="process-step__badge-num" aria-hidden="true">03</span>
-                  <span class="process-step__badge-label">Build</span>
-                </span>
-                <span class="process-step__title">Ship in integrated sprints</span>
-                <span class="process-step__copy">Full-stack teams deliver production-ready slices with QA and automation baked in.</span>
-              </button>
-            </article>
-
-            <article class="process-step process-step--launch" data-process-step data-step-slug="launch" data-reveal>
-              <button class="process-step-button" id="process-step-launch" aria-controls="process-detail-card" type="button">
-                <span class="process-step__badge">
-                  <span class="process-step__badge-num" aria-hidden="true">04</span>
-                  <span class="process-step__badge-label">Launch</span>
-                </span>
-                <span class="process-step__title">Launch &amp; optimize</span>
-                <span class="process-step__copy">We orchestrate go-live, train teams, and monitor performance to iterate quickly.</span>
-              </button>
-            </article>
+          <div class="process__progress-track" data-process-progress-track>
+            <div class="process__progress-fill" data-process-progress-fill></div>
+            <span class="process__progress-indicator" data-process-progress-indicator></span>
+          </div>
+          <div class="process__progress-stops">
+            <span>0%</span>
+            <span>25%</span>
+            <span>50%</span>
+            <span>75%</span>
+            <span>100%</span>
           </div>
         </div>
 
-        <div class="process-detail">
-          <div
+        <div class="process__tilesRow" data-process-steps role="tablist" aria-label="SwiftSend delivery process">
+          <article class="process__tile is-active" data-process-step data-step="discover">
+            <button class="process__tileButton" id="process-step-discover" aria-controls="process-detail-card" aria-selected="true" tabindex="0" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">01</span>
+                <span class="process__tileBadge-label">Discover</span>
+              </span>
+              <span class="process__tileTitle">Align on the mission</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="design">
+            <button class="process__tileButton" id="process-step-design" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">02</span>
+                <span class="process__tileBadge-label">Design</span>
+              </span>
+              <span class="process__tileTitle">Design the experience</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="build">
+            <button class="process__tileButton" id="process-step-build" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">03</span>
+                <span class="process__tileBadge-label">Build</span>
+              </span>
+              <span class="process__tileTitle">Ship in integrated sprints</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="launch">
+            <button class="process__tileButton" id="process-step-launch" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">04</span>
+                <span class="process__tileBadge-label">Launch</span>
+              </span>
+              <span class="process__tileTitle">Launch &amp; optimize</span>
+            </button>
+          </article>
+        </div>
+
+        <div class="process__detail">
+          <article
             class="process-detail-card is-discover"
             id="process-detail-card"
-            data-reveal
             data-process-detail
-            role="region"
+            role="tabpanel"
             aria-live="polite"
             aria-labelledby="process-detail-title"
           >
-            <div class="process-detail-header">
+            <header class="process-detail-header">
               <span class="process-badge">
                 <span class="process-badge-num">01</span>
                 <span class="process-badge-label">DISCOVER</span>
               </span>
-            </div>
+            </header>
 
             <h3 id="process-detail-title" class="process-detail-title">Align on the mission</h3>
 
@@ -419,17 +425,16 @@
               <li>Technical + data audit</li>
               <li>Roadmap + estimate buy-in</li>
             </ul>
-          </div>
+          </article>
         </div>
 
         <aside class="process__cta" data-reveal>
           <div class="process__cta-text">
-            <h3 class="process__cta-title">Ready to run this playbook?</h3>
-            <p class="process__cta-copy">Kick off a discovery call and we’ll map your first sprint within days.</p>
+            <h3 class="process__cta-title">Ready to start your project?</h3>
           </div>
           <div class="process__cta-actions">
-            <a class="btn btn-primary" href="#contact">Book a Strategy Call</a>
-            <a class="btn btn-ghost" href="#services">Explore Services</a>
+            <a class="process__cta-primary" href="#contact">Let’s Get Started</a>
+            <a class="process__cta-link" href="#services">Explore Services</a>
           </div>
         </aside>
       </div>
