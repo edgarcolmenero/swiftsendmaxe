@@ -24,7 +24,7 @@
   inset: -15% -20% auto -20%;
   height: 160%;
   background: linear-gradient(125deg, rgba(255, 255, 255, 0) 20%, rgba(214, 60, 255, 0.18) 48%, rgba(255, 255, 255, 0) 80%);
-  opacity: 0.55;
+  opacity: 0.4;
   transform: translate3d(0, 0, 0);
   animation: processSweep var(--process-sweep-duration) linear infinite;
   pointer-events: none;
@@ -39,14 +39,19 @@
   opacity: 0.85;
 }
 
+/* // FIX: Ensure reveal targets stay visible without JS */
 [data-reveal] {
-  opacity: 0;
-  transform: translate3d(0, 10px, 0);
-  transition: opacity 360ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
-[data-reveal].is-in {
+body.is-process-js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+body.is-process-js [data-reveal].is-in {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
@@ -144,9 +149,8 @@
   height: 16px;
   border-radius: 999px;
   background: radial-gradient(circle, #ffffff 0%, rgba(214, 60, 255, 0.7) 65%, rgba(214, 60, 255, 0) 100%);
-  box-shadow: 0 0 14px rgba(214, 60, 255, 0.45);
+  box-shadow: 0 0 10px rgba(214, 60, 255, 0.32);
   transition: left 220ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform;
 }
 
 .process__progress-stops {
@@ -174,7 +178,7 @@
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: linear-gradient(165deg, rgba(28, 16, 50, 0.94), rgba(12, 6, 24, 0.92));
-  box-shadow: 0 14px 28px rgba(9, 3, 20, 0.28);
+  box-shadow: 0 10px 22px rgba(9, 3, 20, 0.22);
   transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow: hidden;
   --tile-hue: var(--step-hue, 265);
@@ -191,8 +195,8 @@
 }
 
 .process__tile:is(:hover, :focus-within) {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 18px 30px rgba(12, 6, 24, 0.34);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 26px rgba(12, 6, 24, 0.28);
 }
 
 .process__tile:is(:hover, :focus-within)::after {
@@ -200,9 +204,9 @@
 }
 
 .process__tile.is-active {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.05);
   border-color: hsla(var(--tile-hue), 95%, 70%, 0.55);
-  box-shadow: 0 20px 36px rgba(14, 6, 26, 0.36);
+  box-shadow: 0 18px 32px rgba(14, 6, 26, 0.3);
 }
 
 .process__tile.is-active::after {
@@ -289,7 +293,7 @@
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: linear-gradient(150deg, rgba(30, 16, 54, 0.95), rgba(12, 6, 26, 0.92));
-  box-shadow: 0 24px 48px rgba(9, 3, 20, 0.34);
+  box-shadow: 0 18px 38px rgba(9, 3, 20, 0.28);
   display: grid;
   gap: clamp(16px, 3vw, 24px);
   transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -387,9 +391,9 @@
   margin: 0 auto;
   padding: clamp(26px, 6vw, 34px);
   border-radius: 24px;
-  background: rgba(16, 7, 30, 0.72);
+  background: rgba(16, 7, 30, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 36px rgba(9, 3, 20, 0.3);
+  box-shadow: 0 16px 30px rgba(9, 3, 20, 0.26);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -427,8 +431,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform;
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .process__cta-primary::after {
@@ -436,8 +439,8 @@
   position: absolute;
   inset: -12px;
   border-radius: inherit;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 55%);
-  opacity: 0.7;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 55%);
+  opacity: 0.65;
   transform: scale(0.6);
   animation: processCtaSparkle 3s ease-in-out infinite;
   pointer-events: none;
@@ -487,6 +490,23 @@
 .process__cta-link:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.9);
   outline-offset: 4px;
+}
+
+/* // FIX: Debug helpers for quick visibility checks */
+body.debug .process *,
+body.debug .process *::before,
+body.debug .process *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+body.debug .process__tilesRow,
+body.debug .process__tile,
+body.debug .process-detail-card,
+body.debug .process__cta,
+body.debug .process__progress {
+  outline: 1px dashed rgba(255, 214, 102, 0.7);
+  outline-offset: 3px;
 }
 
 @media (min-width: 640px) {
@@ -571,12 +591,12 @@
     animation: none;
   }
 
-  [data-reveal] {
-    transition: opacity 180ms ease;
+  body.is-process-js [data-reveal] {
+    transition: opacity 150ms ease;
     transform: none;
   }
 
-  [data-reveal].is-in {
+  body.is-process-js [data-reveal].is-in {
     transform: none;
   }
 

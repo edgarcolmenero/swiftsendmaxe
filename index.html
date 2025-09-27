@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="./styles/process.css" />
 </head>
 <body>
+  <!-- // FIX: Added visible fallback notice for no-JS scenarios -->
+  <noscript class="noscript-note">SwiftSend works best with JavaScript enabled, but all key details are available above.</noscript>
   <!-- Header -->
   <header class="ss-header" data-header>
     <div class="container header-row">
@@ -447,6 +449,7 @@
   <script src="./scripts/services.js" type="module"></script>
   <script src="./scripts/portfolio.js" type="module"></script>
   <script src="./scripts/labs.js" type="module"></script>
-  <script src="./scripts/process.js" type="module"></script>
+  <!-- // FIX: Load guarded process script safely after styles -->
+  <script src="./scripts/process.js" defer></script>
 </body>
 </html>
