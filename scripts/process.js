@@ -326,9 +326,21 @@ function initProcess() {
         if (!entry) return;
         if (entry.isIntersecting && !hasRevealedProgress) {
           hasRevealedProgress = true;
+
+          // Tag slower first sweep
+          if (!prefersReduced) {
+            progressRoot.classList.add('is-revealing');
+          }
+
           // Start at 0 immediately, then animate to the step's percent
           setProgress(0, { immediate: true });
           safeRaf(() => setProgress(progressForIndex(activeIndex), { immediate: false }));
+
+          // Remove the 'is-revealing' flag after the long sweep ends
+          if (!prefersReduced) {
+            setTimeout(() => progressRoot.classList.remove('is-revealing'), 1000); // ~4× default (220ms → ~880ms + buffer)
+          }
+
           obs.disconnect();
         }
       }, { threshold: 0.35 });
