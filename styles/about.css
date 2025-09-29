@@ -134,6 +134,7 @@
   position: relative;
   width: var(--avatar-size);
   height: var(--avatar-size);
+  margin-top: -50px;  /* move the whole circle higher; tweak the value you want */
   border-radius: 50%;
   overflow: hidden;                 /* hard-clip image inside the circle */
   display: grid;
@@ -187,11 +188,6 @@
   opacity: 0.7;
   pointer-events: none;
   z-index: 0;
-}
-
-/* styles/about.css */
-.about__avatar {
-  margin-top: -50px;  /* move the whole circle higher; tweak the value you want */
 }
 
 /* Orbit wrapper/dots (REMOVED) — keep markup safe but hide entirely */
@@ -416,6 +412,7 @@ body.is-about-js [data-reveal].is-in { opacity: 1; transform: translate3d(0, 0, 
   overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; border: 0; padding: 0; margin: -1px;
 }
+
 
 
 
