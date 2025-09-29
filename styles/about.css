@@ -6,9 +6,8 @@
 
 :root {
   --about-orbit-duration: 22s;
-  --about-orbit-size: 14px;                 /* satellite dot size */
-  --about-orbit-radius: 118px;              /* distance from portrait center (outside the circle) */
-  --about-orbit-gap: 18px;                  /* extra spacing beyond the portrait edge (visual only) */
+  --about-orbit-size: 14px;     /* satellite dot size */
+  --about-orbit-radius: 118px;  /* default; overridden per-avatar for responsive */
   --about-gold: #f5c542;
 }
 
@@ -57,20 +56,20 @@
   animation: aboutTwinkle 6.6s ease-in-out infinite alternate;
 }
 
-/* bottom scatter: more visible density near bottom */
+/* bottom scatter: denser/clearer near bottom edge */
 .about::after {
   width: 3px; height: 3px; border-radius: 50%;
-  background: rgba(214,60,255,0.9);
-  filter: drop-shadow(0 0 6px rgba(214,60,255,0.45));
-  opacity: 0.65;
+  background: rgba(214,60,255,0.95);
+  filter: drop-shadow(0 0 7px rgba(214,60,255,0.55));
+  opacity: 0.75;
   box-shadow:
-    8vw 78vh 0 0 rgba(214,60,255,0.9),
-    20vw 82vh 0 0 rgba(255,150,43,0.9),
-    34vw 88vh 0 0 rgba(120,255,200,0.9),
-    48vw 84vh 0 0 rgba(214,60,255,0.85),
-    62vw 90vh 0 0 rgba(255,150,43,0.85),
-    76vw 86vh 0 0 rgba(120,255,200,0.9),
-    88vw 80vh 0 0 rgba(214,60,255,0.88);
+    6vw 82vh 0 0 rgba(214,60,255,0.95),
+    16vw 90vh 0 0 rgba(255,150,43,0.95),
+    28vw 86vh 0 0 rgba(120,255,200,0.95),
+    42vw 92vh 0 0 rgba(214,60,255,0.9),
+    58vw 88vh 0 0 rgba(255,150,43,0.9),
+    72vw 94vh 0 0 rgba(120,255,200,0.95),
+    86vw 84vh 0 0 rgba(214,60,255,0.92);
   animation: aboutTwinkle 7.4s ease-in-out infinite alternate;
   animation-delay: -3s;
 }
@@ -87,9 +86,7 @@
   gap: clamp(28px, 5vw, 44px);
 }
 
-.about__head {
-  text-align: center;
-}
+.about__head { text-align: center; }
 
 .about__title {
   margin: 0;
@@ -99,7 +96,6 @@
   line-height: 1.06;
   color: #ffffff;
 }
-
 .about__title-highlight {
   background: linear-gradient(90deg, #ff962b, #d63cff);
   -webkit-background-clip: text;
@@ -116,12 +112,8 @@
   gap: clamp(28px, 5vw, 56px);
   align-items: start;
 }
-
 @media (max-width: 960px) {
-  .about__inner {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
+  .about__inner { grid-template-columns: 1fr; justify-items: center; }
 }
 
 /* ------------------------------------------
@@ -132,22 +124,21 @@
   gap: clamp(14px, 3vw, 18px);
   justify-items: start;
 }
-
 @media (max-width: 960px) {
-  .about__profile {
-    justify-items: center;
-    text-align: center;
-  }
+  .about__profile { justify-items: center; text-align: center; }
 }
 
 /* Portrait frame: true circular crop + gradient ring + glow */
 .about__avatar {
+  --avatar-size: clamp(200px, 28vw, 260px);   /* explicit square to avoid any oval rounding */
+  /* compute orbit radius so dots always live OUTSIDE the ring */
+  --about-orbit-radius: calc(var(--avatar-size) / 2 + 18px);
+
   position: relative;
-  width: clamp(160px, 28vw, 220px);
-  aspect-ratio: 1 / 1;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
   border-radius: 50%;
-  /* allow orbits to render OUTSIDE the circle */
-  overflow: visible;
+  overflow: visible;                 /* orbits can render outside */
   display: grid;
   place-items: center;
   will-change: transform;
@@ -160,10 +151,18 @@
   border-radius: 50%;
   display: block;
   object-fit: cover;
-  object-position: 50% 32%; /* center on face */
-  transform: scale(1.06);   /* slight zoom to fill the circle */
+  object-position: 50% 32%;          /* center on face; tweak if needed */
+  clip-path: circle(50% at 50% 50%); /* HARD clamp → never oval */
+  transform: scale(1.04);
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   box-shadow: 0 10px 26px rgba(9, 3, 20, 0.35);
   z-index: 1;
+}
+
+/* tiny zoom on hover/focus */
+.about__avatar:hover img,
+.about__avatar:focus-within img {
+  transform: scale(1.08);
 }
 
 /* Gradient border ring (orange→magenta) with soft outer glow */
@@ -202,7 +201,7 @@
   pointer-events: none;
   transform: translateZ(0);
   animation: aboutOrbit var(--about-orbit-duration) linear infinite;
-  z-index: 3; /* ensure dots sit above the ring and never overlap inside image */
+  z-index: 3; /* above ring */
 }
 
 /* 4 satellites positioned at 0/90/180/270 degrees with tiny twinkle */
@@ -231,19 +230,8 @@
   color: #ffffff;
   text-shadow: 0 2px 12px rgba(0,0,0,0.35);
 }
-
-.about__role {
-  margin: 0;
-  font-weight: 700;
-  color: #ffb257; /* warm gold-ish */
-}
-
-.about__bio {
-  margin: 0;
-  max-width: 52ch;
-  color: rgba(244, 236, 255, 0.82);
-  line-height: 1.7;
-}
+.about__role { margin: 0; font-weight: 700; color: #ffb257; }
+.about__bio  { margin: 0; max-width: 52ch; color: rgba(244, 236, 255, 0.82); line-height: 1.7; }
 
 .about__quote {
   margin-top: clamp(10px, 2.6vw, 18px);
@@ -256,16 +244,12 @@
   font-weight: 600;
   font-style: italic;
 }
-
 .about__quote--long { max-width: 60ch; }
 
 /* ------------------------------------------
    Achievements column
 ------------------------------------------- */
-.about__achievements {
-  width: 100%;
-}
-
+.about__achievements { width: 100%; }
 .about__subhead {
   margin: 0 0 10px 0;
   font-size: 14px;
@@ -273,7 +257,6 @@
   text-transform: uppercase;
   color: rgba(247, 243, 255, 0.75);
 }
-
 .achv-list {
   margin: 0; padding: 0;
   list-style: none;
@@ -308,7 +291,6 @@
   transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   pointer-events: none;
 }
-
 /* Right edge glow bar */
 .achv-card::after {
   content: "";
@@ -323,7 +305,6 @@
   transition: opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   pointer-events: none;
 }
-
 .achv-card:hover,
 .achv-card:focus-visible {
   transform: translateY(-3px) scale(1.01);
@@ -335,10 +316,7 @@
 .achv-card:hover::after,
 .achv-card:focus-visible::after { opacity: 1; transform: translateX(0); }
 
-.achv-card:focus-visible {
-  outline: 2px solid rgba(255,255,255,0.9);
-  outline-offset: 3px;
-}
+.achv-card:focus-visible { outline: 2px solid rgba(255,255,255,0.9); outline-offset: 3px; }
 
 .achv-card__icon {
   width: 56px; height: 56px;
@@ -355,41 +333,30 @@
 .achv-card__icon svg {
   width: 28px; height: 28px;
   fill: none; stroke: currentColor; stroke-width: 1.6;
-  color: #ffffff;
-  opacity: 0.92;
+  color: #ffffff; opacity: 0.92;
 }
 
 .achv-card__text { display: grid; gap: 6px; }
-
 .achv-card__title {
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  font-size: 18px;
+  font-weight: 800; letter-spacing: -0.01em; font-size: 18px;
   transition: color 180ms ease;
 }
 .achv-card:hover .achv-card__title,
 .achv-card:focus-visible .achv-card__title { color: var(--about-gold); }
-
-.achv-card__sub {
-  font-size: 14px;
-  color: rgba(244,236,255,0.75);
-}
+.achv-card__sub { font-size: 14px; color: rgba(244,236,255,0.75); }
 
 /* Hover star/dot — fixed at right-center only (no pointer tracking) */
 .achv-card__status {
   position: absolute;
-  top: 50%;
-  right: 16px;
+  top: 50%; right: 16px;
   width: 10px; height: 10px;
   border-radius: 50%;
   pointer-events: none;
   background: radial-gradient(circle, #ffffff 0%, #ffd1f8 40%, #d63cff 70%, rgba(214,60,255,0) 75%);
   box-shadow: 0 0 10px rgba(214,60,255,0.45), 0 0 18px rgba(214,60,255,0.25);
-  opacity: 0;
-  transform: translate3d(0, -50%, 0) scale(0.8);
+  opacity: 0; transform: translate3d(0, -50%, 0) scale(0.8);
   transition: opacity 160ms ease, transform 160ms ease;
 }
-
 .achv-card:hover .achv-card__status,
 .achv-card:focus-within .achv-card__status {
   opacity: 1;
@@ -398,14 +365,14 @@
 }
 
 /* Optional tint per-variant (icon tile only) */
-.achv-card[data-variant="honors"]  .achv-card__icon { background: linear-gradient(135deg, #4f8fff, #7ad1ff); color: #0a0418; }
-.achv-card[data-variant="stem"]    .achv-card__icon { background: linear-gradient(135deg, #2dd68a, #4fe1b2); color: #0a0418; }
-.achv-card[data-variant="adidas"]  .achv-card__icon { background: linear-gradient(135deg, #b388ff, #d0b6ff); color: #0a0418; }
-.achv-card[data-variant="consult"] .achv-card__icon { background: linear-gradient(135deg, #ff962b, #ff7ad6); color: #0a0418; }
+.achv-card[data-variant="honors"]    .achv-card__icon { background: linear-gradient(135deg, #4f8fff, #7ad1ff); color: #0a0418; }
+.achv-card[data-variant="stem"]      .achv-card__icon { background: linear-gradient(135deg, #2dd68a, #4fe1b2); color: #0a0418; }
+.achv-card[data-variant="adidas"]    .achv-card__icon { background: linear-gradient(135deg, #b388ff, #d0b6ff); color: #0a0418; }
+.achv-card[data-variant="consult"]   .achv-card__icon { background: linear-gradient(135deg, #ff962b, #ff7ad6); color: #0a0418; }
 .achv-card[data-variant="swiftsend"] .achv-card__icon { background: linear-gradient(135deg, #ff6a6a, #ff9a50); color: #0a0418; }
 
 /* ------------------------------------------
-   Certificates grid (framed rectangles, NO borders)
+   Certificates grid (clean images, centered captions)
 ------------------------------------------- */
 .certs {
   margin-top: clamp(18px, 4vw, 28px);
@@ -414,125 +381,63 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
 }
-
-@media (max-width: 1024px) {
-  .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 560px) {
-  .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
+@media (max-width: 1024px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .cert {
   display: grid;
   gap: 8px;
-  border-radius: 16px;
-  /* remove all borders/gradient frames */
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: none; background: transparent; box-shadow: none;
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.cert:hover, .cert:focus-within { transform: translateY(-3px) scale(1.01); }
 
-.cert:hover,
-.cert:focus-within {
-  transform: translateY(-3px) scale(1.01);
-}
-
-/* framed media area (4:3) */
 .cert img {
-  display: block;
-  width: 100%;
+  display: block; width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 10px 22px rgba(9, 3, 20, 0.22);
 }
-
-/* caption link — centered under image */
 .cert__caption {
-  display: inline-block;
+  display: inline-block; justify-self: center; text-align: center;
   color: rgba(247,243,255,0.9);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  justify-self: center;
-  text-align: center;
+  font-weight: 600; letter-spacing: 0.01em; text-decoration: none;
 }
-
-.cert:hover .cert__caption,
-.cert:focus-within .cert__caption {
-  color: var(--about-gold);
-}
+.cert:hover .cert__caption, .cert:focus-within .cert__caption { color: var(--about-gold); }
 
 /* ------------------------------------------
    Reveal hooks (reuse global pattern)
 ------------------------------------------- */
-[data-reveal] {
-  opacity: 1;
-  transform: none;
-}
-
+[data-reveal] { opacity: 1; transform: none; }
 body.is-about-js [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 10px, 0);
   transition: opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
-body.is-about-js [data-reveal].is-in {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
+body.is-about-js [data-reveal].is-in { opacity: 1; transform: translate3d(0, 0, 0); }
 
 /* ------------------------------------------
    Animations
 ------------------------------------------- */
-@keyframes aboutOrbit {
-  0%   { transform: rotate(0deg) translateZ(0); }
-  100% { transform: rotate(360deg) translateZ(0); }
-}
-
-@keyframes aboutTwinkle {
-  0%, 100% { opacity: 0.45; transform: translateY(0); }
-  50%      { opacity: 0.9;  transform: translateY(-0.5px); }
-}
-
-@keyframes aboutPulse {
-  0%, 100% { transform: translate3d(0,-50%,0) scale(1);   opacity: 1;   }
-  50%      { transform: translate3d(0,-50%,0) scale(1.15); opacity: 0.85;}
-}
+@keyframes aboutOrbit { 0% { transform: rotate(0deg) translateZ(0); } 100% { transform: rotate(360deg) translateZ(0); } }
+@keyframes aboutTwinkle { 0%,100% { opacity: .45; transform: translateY(0); } 50% { opacity: .9; transform: translateY(-.5px); } }
+@keyframes aboutPulse { 0%,100% { transform: translate3d(0,-50%,0) scale(1); opacity: 1; } 50% { transform: translate3d(0,-50%,0) scale(1.15); opacity: .85; } }
 
 /* ------------------------------------------
    Reduced motion
 ------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .about::before,
-  .about::after { animation: none; }
-
-  .about__orbit { animation: none; }
-  .about__dot { animation: none; }
-
-  body.is-about-js [data-reveal] {
-    transition: opacity 150ms ease;
-    transform: none;
-  }
-
-  .achv-card,
-  .achv-card::before,
-  .achv-card::after,
-  .achv-card__status,
-  .cert {
-    transition: none;
-  }
+  .about::before, .about::after { animation: none; }
+  .about__orbit { animation: none; } .about__dot { animation: none; }
+  body.is-about-js [data-reveal] { transition: opacity 150ms ease; transform: none; }
+  .achv-card, .achv-card::before, .achv-card::after, .achv-card__status, .cert { transition: none; }
 }
 
 /* ------------------------------------------
    Desktop-only micro parallax (drift)
-   (transform applied inline by JS)
 ------------------------------------------- */
-@media (pointer: fine) and (min-width: 961px) {
-  .about__avatar { will-change: transform; }
-}
+@media (pointer: fine) and (min-width: 961px) { .about__avatar { will-change: transform; } }
 
 /* Utility */
 .visually-hidden {
