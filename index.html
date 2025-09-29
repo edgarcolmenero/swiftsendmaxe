@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="./styles/portfolio.css" />
   <link rel="stylesheet" href="./styles/labs.css" />
   <link rel="stylesheet" href="./styles/process.css" />
+  <link rel="stylesheet" href="./styles/about.css" />
 </head>
 <body>
   <!-- // FIX: Added visible fallback notice for no-JS scenarios -->
@@ -443,6 +444,137 @@
     </div>
   </section>
 
+ <section id="about" class="about" aria-labelledby="about-title">
+    <div class="about__container">
+      <header class="about__head" data-reveal data-reveal-index="0">
+        <h2 id="about-title" class="about__title">About <span class="about__title-highlight">SwiftSend</span>.</h2>
+      </header>
+
+      <div class="about__inner">
+        <div class="about__profile" data-reveal data-reveal-index="1">
+          <div class="about__avatar">
+            <img src="./images/profile.png" alt="Edgar Colmenero" loading="lazy" />
+            <div class="about__orbit orbit-spin" aria-hidden="true">
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+            </div>
+          </div>
+          <h3 class="about__name">Edgar Colmenero</h3>
+          <p class="about__role">Founder &amp; Full-Stack Developer</p>
+          <p class="about__bio">
+            Honors student active in STEM Club, studying at TCC, NCTC, and UTA. Employee of Adidas and Colmenero
+            Consulting.
+            <br />
+            Bilingual (English/Spanish). Passion for software that saves, empowers, and scales.
+          </p>
+          <div class="about__quote" data-reveal data-reveal-index="3">
+            <p>&ldquo;Never Stay Satisfied.&rdquo;</p>
+          </div>
+        </div>
+
+        <div class="about__achievements" data-reveal data-reveal-index="2">
+          <h3 class="about__subhead" aria-hidden="true">Experience &amp; Achievements</h3>
+          <ul class="achv-list" role="list">
+            <li class="achv-card" data-variant="honors" tabindex="0" role="listitem" aria-label="Honors Student, Academic Excellence">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M4 11.5 16 6l12 5.5-12 5.5-12-5.5Z"></path>
+                  <path d="M8 15.5v5c3 2 13 2 16 0v-5" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Honors Student</span>
+                <span class="achv-card__sub">Academic Excellence</span>
+              </div>
+            </li>
+            <li class="achv-card" data-variant="stem" tabindex="0" role="listitem" aria-label="STEM Club, Active Member">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <circle cx="16" cy="11" r="5"></circle>
+                  <path d="M6 26c1.6-5.2 6.6-6.5 10-6.5S24.4 20.8 26 26" stroke-linecap="round"></path>
+                  <path d="M6 11h4" stroke-linecap="round"></path>
+                  <path d="M22 11h4" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">STEM Club</span>
+                <span class="achv-card__sub">Active Member</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+            <li class="achv-card" data-variant="adidas" tabindex="0" role="listitem" aria-label="Adidas, Team Member">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <rect x="6" y="7" width="20" height="18" rx="4" ry="4"></rect>
+                  <path d="M10 12h12" stroke-linecap="round"></path>
+                  <path d="M10 17h12" stroke-linecap="round"></path>
+                  <path d="M10 22h12" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Adidas</span>
+                <span class="achv-card__sub">Team Member</span>
+              </div>
+            </li>
+            <li class="achv-card" data-variant="consult" tabindex="0" role="listitem" aria-label="Colmenero Consulting, Founder &amp; Full-Stack Developer">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M16 5 6 12v9l10 6 10-6v-9L16 5Z"></path>
+                  <path d="M16 14v9" stroke-linecap="round"></path>
+                  <path d="M12.5 17.5h7" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Colmenero Consulting</span>
+                <span class="achv-card__sub">Founder &amp; Full-Stack Developer</span>
+              </div>
+            </li>
+            <li class="achv-card" data-variant="swiftsend" tabindex="0" role="listitem" aria-label="SwiftSend, Founder">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M8 22.5c4-6 8-6.5 16-12.5l-5.5 12h5L16 27l3.5-7h-6L8 22.5Z"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">SwiftSend</span>
+                <span class="achv-card__sub">Founder</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="certs" data-reveal data-reveal-index="4">
+        <div class="cert">
+          <img src="./images/certs/google-data-analytics.png" alt="Google Data Analytics certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">Google Data Analytics</a>
+        </div>
+        <div class="cert">
+          <img src="./images/certs/google-ux.png" alt="Google UX Design certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">UX Design</a>
+        </div>
+        <div class="cert">
+          <img src="./images/certs/google-it-python.png" alt="Google IT Automation with Python certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">IT Automation with Python</a>
+        </div>
+        <div class="cert">
+          <img src="./images/certs/google-pm.png" alt="Google Project Management certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">Project Management</a>
+        </div>
+      </div>
+
+      <div class="about__quote about__quote--long" data-reveal data-reveal-index="5">
+        <p>
+          &ldquo;Every project is an opportunity to push boundaries, learn something new, and create solutions that make a real
+          difference. That&rsquo;s what drives me to never stay satisfied with the status quo.&rdquo;
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script src="./scripts/about.js" type="module"></script>
   <script src="./scripts/header.js" type="module"></script>
   <script src="./scripts/hero.js" type="module"></script>
   <!-- Services interactions -->
