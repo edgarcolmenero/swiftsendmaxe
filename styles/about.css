@@ -6,8 +6,9 @@
 
 :root {
   --about-orbit-duration: 22s;
-  --about-orbit-size: 14px;              /* satellite dot size */
-  --about-orbit-radius: 84px;            /* distance from portrait center */
+  --about-orbit-size: 14px;                 /* satellite dot size */
+  --about-orbit-radius: 118px;              /* distance from portrait center (outside the circle) */
+  --about-orbit-gap: 18px;                  /* extra spacing beyond the portrait edge (visual only) */
   --about-gold: #f5c542;
 }
 
@@ -138,11 +139,13 @@
   }
 }
 
+/* Portrait frame: true circular crop + gradient ring + glow */
 .about__avatar {
   position: relative;
   width: clamp(160px, 28vw, 220px);
-  height: clamp(160px, 28vw, 220px);
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
+  overflow: hidden;
   display: grid;
   place-items: center;
   will-change: transform;
@@ -154,25 +157,37 @@
   border-radius: 50%;
   display: block;
   object-fit: cover;
+  object-position: 50% 32%; /* center on face; tweak if needed */
   box-shadow: 0 10px 26px rgba(9, 3, 20, 0.35);
-  border: 3px solid rgba(255,255,255,0.12);
 }
 
-/* Neon ring glow using a pseudo-element (no extra DOM) */
+/* Gradient border ring (orange→magenta) with soft outer glow */
+.about__avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 5px; /* ring thickness */
+  background: linear-gradient(130deg, #ff962b, #d63cff);
+  -webkit-mask: 
+     linear-gradient(#000 0 0) content-box, 
+     linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
 .about__avatar::before {
   content: "";
   position: absolute;
-  inset: -10px;
+  inset: -8px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 60%),
-    conic-gradient(from 0deg, #ff962b, #d63cff, #ff962b);
-  filter: blur(14px);
-  opacity: 0.35;
+  background: radial-gradient(circle, rgba(214,60,255,0.28) 0%, rgba(214,60,255,0) 60%);
+  filter: blur(12px);
+  opacity: 0.7;
   pointer-events: none;
 }
 
-/* Orbit wrapper that spins slowly */
+/* Orbit wrapper that spins slowly — satellites stay OUTSIDE the portrait */
 .about__orbit {
   position: absolute;
   inset: 0;
@@ -191,10 +206,9 @@
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ffd1f8 25%, #d63cff 60%, rgba(214,60,255,0) 70%);
   box-shadow: 0 0 10px rgba(214,60,255,0.45), 0 0 20px rgba(214,60,255,0.25);
-  transform: translate(-50%, -50%) translate(var(--about-orbit-radius)) rotate(0deg);
+  transform: translate(-50%, -50%) rotate(0deg) translate(var(--about-orbit-radius));
   animation: aboutTwinkle 3.2s ease-in-out infinite alternate;
 }
-
 .about__dot:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg)   translate(var(--about-orbit-radius)); }
 .about__dot:nth-child(2) { transform: translate(-50%, -50%) rotate(90deg)  translate(var(--about-orbit-radius)); }
 .about__dot:nth-child(3) { transform: translate(-50%, -50%) rotate(180deg) translate(var(--about-orbit-radius)); }
@@ -275,12 +289,43 @@
   transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* Sweep highlight layer (subtle) */
+.achv-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(255,255,255,0) 0%, rgba(214,60,255,0.10) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-30%);
+  opacity: 0;
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Right edge glow bar */
+.achv-card::after {
+  content: "";
+  position: absolute;
+  top: 8px; bottom: 8px; right: 8px;
+  width: 12px;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, hsla(276,95%,70%,.9), hsla(276,95%,70%,0));
+  filter: blur(2px);
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 220ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
 .achv-card:hover,
 .achv-card:focus-visible {
   transform: translateY(-3px) scale(1.01);
   box-shadow: 0 16px 28px rgba(12, 6, 24, 0.28);
   border-color: rgba(255,255,255,0.18);
 }
+.achv-card:hover::before,
+.achv-card:focus-visible::before { opacity: 1; transform: translateX(0); }
+.achv-card:hover::after,
+.achv-card:focus-visible::after { opacity: 1; transform: translateX(0); }
 
 .achv-card:focus-visible {
   outline: 2px solid rgba(255,255,255,0.9);
@@ -294,7 +339,10 @@
   background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.16);
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+  transition: filter 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.achv-card:hover .achv-card__icon,
+.achv-card:focus-visible .achv-card__icon { filter: brightness(1.12) saturate(1.08); }
 
 .achv-card__icon svg {
   width: 28px; height: 28px;
@@ -309,33 +357,36 @@
   font-weight: 800;
   letter-spacing: -0.01em;
   font-size: 18px;
+  transition: color 180ms ease;
 }
+.achv-card:hover .achv-card__title,
+.achv-card:focus-visible .achv-card__title { color: var(--about-gold); }
 
 .achv-card__sub {
   font-size: 14px;
   color: rgba(244,236,255,0.75);
 }
 
-/* Hover star/dot — appears only on hovered/focused card.
-   Follows pointer using CSS variables --mx/--my when provided.
-   Falls back to right-center if no pointer data. */
+/* Hover star/dot — fixed at right-center only (no pointer tracking) */
 .achv-card__status {
   position: absolute;
-  top: 0; left: 0;
+  top: 50%;
+  right: 16px;
   width: 10px; height: 10px;
   border-radius: 50%;
   pointer-events: none;
   background: radial-gradient(circle, #ffffff 0%, #ffd1f8 40%, #d63cff 70%, rgba(214,60,255,0) 75%);
   box-shadow: 0 0 10px rgba(214,60,255,0.45), 0 0 18px rgba(214,60,255,0.25);
   opacity: 0;
-  transform: translate3d(calc(var(--mx, 92%) - 5px), calc(var(--my, 50%) - 5px), 0) scale(0.8);
+  transform: translate3d(0, -50%, 0) scale(0.8);
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
 .achv-card:hover .achv-card__status,
 .achv-card:focus-within .achv-card__status {
   opacity: 1;
-  transform: translate3d(calc(var(--mx, 92%) - 5px), calc(var(--my, 50%) - 5px), 0) scale(1);
+  transform: translate3d(0, -50%, 0) scale(1);
+  animation: aboutPulse 1.6s ease-in-out infinite;
 }
 
 /* Optional tint per-variant (icon tile only) */
@@ -344,6 +395,67 @@
 .achv-card[data-variant="adidas"]  .achv-card__icon { background: linear-gradient(135deg, #b388ff, #d0b6ff); color: #0a0418; }
 .achv-card[data-variant="consult"] .achv-card__icon { background: linear-gradient(135deg, #ff962b, #ff7ad6); color: #0a0418; }
 .achv-card[data-variant="swiftsend"] .achv-card__icon { background: linear-gradient(135deg, #ff6a6a, #ff9a50); color: #0a0418; }
+
+/* ------------------------------------------
+   Certificates grid (framed rectangles)
+------------------------------------------- */
+.certs {
+  margin-top: clamp(18px, 4vw, 28px);
+  display: grid;
+  gap: clamp(12px, 2.4vw, 18px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.cert {
+  display: grid;
+  gap: 8px;
+  border-radius: 16px;
+  border: 1px solid transparent; /* needed for border-box gradient trick */
+  background:
+    linear-gradient(180deg, #1b0f2f, #0f0820) padding-box,
+    linear-gradient(130deg, #ff962b, #d63cff) border-box;
+  box-shadow: 0 10px 22px rgba(9, 3, 20, 0.22);
+  padding: 2px; /* thin gradient border */
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cert:hover,
+.cert:focus-within {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 28px rgba(12, 6, 24, 0.28);
+}
+
+/* framed media area (4:3) */
+.cert img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px; /* inner radius (border - 2px) */
+}
+
+/* caption link */
+.cert__caption {
+  display: inline-block;
+  color: rgba(247,243,255,0.9);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.cert:hover .cert__caption,
+.cert:focus-within .cert__caption {
+  color: var(--about-gold);
+}
 
 /* ------------------------------------------
    Reveal hooks (reuse global pattern)
@@ -377,6 +489,11 @@ body.is-about-js [data-reveal].is-in {
   50%      { opacity: 0.9;  transform: translateY(-0.5px); }
 }
 
+@keyframes aboutPulse {
+  0%, 100% { transform: translate3d(0,-50%,0) scale(1);   opacity: 1;   }
+  50%      { transform: translate3d(0,-50%,0) scale(1.15); opacity: 0.85;}
+}
+
 /* ------------------------------------------
    Reduced motion
 ------------------------------------------- */
@@ -393,7 +510,12 @@ body.is-about-js [data-reveal].is-in {
   }
 
   .achv-card,
-  .achv-card__status { transition: none; }
+  .achv-card::before,
+  .achv-card::after,
+  .achv-card__status,
+  .cert {
+    transition: none;
+  }
 }
 
 /* ------------------------------------------
