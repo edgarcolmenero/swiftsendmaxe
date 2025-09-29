@@ -27,7 +27,7 @@
   overflow: hidden;
 }
 
-/* two sparse star clusters (top + bottom), twinkling slightly */
+/* top & bottom star clusters (sparse, twinkling) */
 .about::before,
 .about::after {
   content: "";
@@ -37,8 +37,8 @@
   z-index: 0;
 }
 
+/* top scatter: tiny white stars */
 .about::before {
-  /* top scatter: tiny white stars */
   width: 2px; height: 2px; border-radius: 50%;
   background: rgba(255,255,255,0.9);
   opacity: 0.7;
@@ -57,19 +57,20 @@
   animation: aboutTwinkle 6.6s ease-in-out infinite alternate;
 }
 
+/* bottom scatter: more visible density near bottom */
 .about::after {
-  /* bottom scatter: tinted micro-stars */
   width: 3px; height: 3px; border-radius: 50%;
   background: rgba(214,60,255,0.9);
   filter: drop-shadow(0 0 6px rgba(214,60,255,0.45));
-  opacity: 0.6;
-  transform: translateY(40%);
+  opacity: 0.65;
   box-shadow:
-    12vw 62vh 0 0 rgba(214,60,255,0.9),
-    28vw 70vh 0 0 rgba(255,150,43,0.9),
-    46vw 78vh 0 0 rgba(120,255,200,0.9),
-    64vw 68vh 0 0 rgba(214,60,255,0.85),
-    80vw 74vh 0 0 rgba(255,150,43,0.85);
+    8vw 78vh 0 0 rgba(214,60,255,0.9),
+    20vw 82vh 0 0 rgba(255,150,43,0.9),
+    34vw 88vh 0 0 rgba(120,255,200,0.9),
+    48vw 84vh 0 0 rgba(214,60,255,0.85),
+    62vw 90vh 0 0 rgba(255,150,43,0.85),
+    76vw 86vh 0 0 rgba(120,255,200,0.9),
+    88vw 80vh 0 0 rgba(214,60,255,0.88);
   animation: aboutTwinkle 7.4s ease-in-out infinite alternate;
   animation-delay: -3s;
 }
@@ -145,10 +146,12 @@
   width: clamp(160px, 28vw, 220px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  overflow: hidden;
+  /* allow orbits to render OUTSIDE the circle */
+  overflow: visible;
   display: grid;
   place-items: center;
   will-change: transform;
+  z-index: 1;
 }
 
 .about__avatar img {
@@ -157,8 +160,10 @@
   border-radius: 50%;
   display: block;
   object-fit: cover;
-  object-position: 50% 32%; /* center on face; tweak if needed */
+  object-position: 50% 32%; /* center on face */
+  transform: scale(1.06);   /* slight zoom to fill the circle */
   box-shadow: 0 10px 26px rgba(9, 3, 20, 0.35);
+  z-index: 1;
 }
 
 /* Gradient border ring (orange→magenta) with soft outer glow */
@@ -169,12 +174,13 @@
   border-radius: 50%;
   padding: 5px; /* ring thickness */
   background: linear-gradient(130deg, #ff962b, #d63cff);
-  -webkit-mask: 
-     linear-gradient(#000 0 0) content-box, 
-     linear-gradient(#000 0 0);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   pointer-events: none;
+  z-index: 2;
 }
 .about__avatar::before {
   content: "";
@@ -185,6 +191,7 @@
   filter: blur(12px);
   opacity: 0.7;
   pointer-events: none;
+  z-index: 0;
 }
 
 /* Orbit wrapper that spins slowly — satellites stay OUTSIDE the portrait */
@@ -195,6 +202,7 @@
   pointer-events: none;
   transform: translateZ(0);
   animation: aboutOrbit var(--about-orbit-duration) linear infinite;
+  z-index: 3; /* ensure dots sit above the ring and never overlap inside image */
 }
 
 /* 4 satellites positioned at 0/90/180/270 degrees with tiny twinkle */
@@ -397,7 +405,7 @@
 .achv-card[data-variant="swiftsend"] .achv-card__icon { background: linear-gradient(135deg, #ff6a6a, #ff9a50); color: #0a0418; }
 
 /* ------------------------------------------
-   Certificates grid (framed rectangles)
+   Certificates grid (framed rectangles, NO borders)
 ------------------------------------------- */
 .certs {
   margin-top: clamp(18px, 4vw, 28px);
@@ -419,19 +427,16 @@
   display: grid;
   gap: 8px;
   border-radius: 16px;
-  border: 1px solid transparent; /* needed for border-box gradient trick */
-  background:
-    linear-gradient(180deg, #1b0f2f, #0f0820) padding-box,
-    linear-gradient(130deg, #ff962b, #d63cff) border-box;
-  box-shadow: 0 10px 22px rgba(9, 3, 20, 0.22);
-  padding: 2px; /* thin gradient border */
+  /* remove all borders/gradient frames */
+  border: none;
+  background: transparent;
+  box-shadow: none;
   transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .cert:hover,
 .cert:focus-within {
   transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 14px 28px rgba(12, 6, 24, 0.28);
 }
 
 /* framed media area (4:3) */
@@ -440,16 +445,19 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 14px; /* inner radius (border - 2px) */
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(9, 3, 20, 0.22);
 }
 
-/* caption link */
+/* caption link — centered under image */
 .cert__caption {
   display: inline-block;
   color: rgba(247,243,255,0.9);
   font-weight: 600;
   letter-spacing: 0.01em;
   text-decoration: none;
+  justify-self: center;
+  text-align: center;
 }
 
 .cert:hover .cert__caption,
