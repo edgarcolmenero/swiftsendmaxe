@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./styles/labs.css" />
   <link rel="stylesheet" href="./styles/process.css" />
   <link rel="stylesheet" href="./styles/about.css" />
+  <link rel="stylesheet" href="./styles/packs.css" />
 </head>
 <body>
   <!-- // FIX: Added visible fallback notice for no-JS scenarios -->
@@ -332,6 +333,145 @@
     </div>
   </section>
 
+  <section id="packs" class="packs" aria-labelledby="packs-title" data-packs-section>
+    <div class="packs__inner">
+      <header class="packs__head" data-reveal data-reveal-index="0">
+        <h2 id="packs-title" class="packs__title">Choose Your <span class="grad-word">Pack</span></h2>
+        <p class="packs__lede">Transparent pricing for every stage of your digital journey</p>
+      </header>
+
+      <ul class="packs__grid" role="list" data-packs-grid data-reveal data-reveal-index="1">
+        <li>
+          <article class="pack" data-accent="starter" aria-labelledby="pack-starter-title" aria-describedby="pack-starter-price pack-starter-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M14 2.5 17 10h7l-5.8 4.2 2.2 7-6.4-4.5-6.4 4.5 2.2-7L4 10h7z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 id="pack-starter-title" class="pack__title">Starter</h3>
+            <p id="pack-starter-desc" class="pack__desc">Perfect for businesses getting online</p>
+            <p id="pack-starter-price" class="pack__price"><span class="val">$2,999</span> <span class="unit">/one-time</span></p>
+            <ul class="pack__list" role="list">
+              <li>Industry-specific website</li>
+              <li>CMS basics</li>
+              <li>Contact forms</li>
+              <li>Mobile responsive</li>
+              <li>3 months support</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Starter, $2,999 one-time">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack is-featured" data-accent="builder" aria-labelledby="pack-builder-title" aria-describedby="pack-builder-price pack-builder-desc" aria-label="Most Popular plan">
+            <div class="pack__badge" aria-hidden="true">Most Popular</div>
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M13.5 2v9.5H8L14.5 26V16.5H20L13.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 id="pack-builder-title" class="pack__title">Builder</h3>
+            <p id="pack-builder-desc" class="pack__desc">Advanced functionality and integrations</p>
+            <p id="pack-builder-price" class="pack__price"><span class="val">$7,999</span> <span class="unit">/project</span></p>
+            <ul class="pack__list" role="list">
+              <li>Custom APIs</li>
+              <li>Admin dashboards</li>
+              <li>CRM integration</li>
+              <li>Payment processing</li>
+              <li>Advanced analytics</li>
+              <li>6 months support</li>
+            </ul>
+            <a class="pack__cta pack__cta--primary" href="#contact" aria-label="Get started: Builder, $7,999 per project">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack" data-accent="engine" aria-labelledby="pack-engine-title" aria-describedby="pack-engine-price pack-engine-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M6 8.5c0-3.3 3.6-5.5 8-5.5s8 2.2 8 5.5-3.6 5.5-8 5.5-8-2.2-8-5.5Zm0 5c0 3.3 3.6 5.5 8 5.5s8-2.2 8-5.5M6 18.5c0 3.3 3.6 5.5 8 5.5s8-2.2 8-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <h3 id="pack-engine-title" class="pack__title">Engine</h3>
+            <p id="pack-engine-desc" class="pack__desc">Data-driven enterprise solutions</p>
+            <p id="pack-engine-price" class="pack__price"><span class="val">$15,999</span> <span class="unit">/project</span></p>
+            <ul class="pack__list" role="list">
+              <li>Data pipelines</li>
+              <li>Data warehouses</li>
+              <li>BI dashboards</li>
+              <li>Real-time analytics</li>
+              <li>Machine learning</li>
+              <li>12 months support</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Engine, $15,999 per project">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack" data-accent="growth" aria-labelledby="pack-growth-title" aria-describedby="pack-growth-price pack-growth-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M4 18.5 11.5 11l4 4L24 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M18 6h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3 id="pack-growth-title" class="pack__title">Growth</h3>
+            <p id="pack-growth-desc" class="pack__desc">Complete digital marketing solution</p>
+            <p id="pack-growth-price" class="pack__price"><span class="val">$12,999</span> <span class="unit">/campaign</span></p>
+            <ul class="pack__list" role="list">
+              <li>SEO optimization</li>
+              <li>Lead generation flows</li>
+              <li>Fee-smart checkout</li>
+              <li>Marketing automation</li>
+              <li>Analytics &amp; reporting</li>
+              <li>Ongoing optimization</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Growth, $12,999 per campaign">Get Started</a>
+          </article>
+        </li>
+      </ul>
+
+      <section class="addons" aria-labelledby="addons-title" data-reveal data-reveal-index="2">
+        <header class="addons__head">
+          <h3 id="addons-title" class="addons__title">Add-ons</h3>
+          <p class="addons__lede">Enhance your pack with additional features</p>
+        </header>
+
+        <ul class="addons__grid" role="list">
+          <li>
+            <article class="addon" data-accent="ai">
+              <h4 class="addon__title">AI Bot</h4>
+              <p class="addon__price">$1,999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="swiftpay">
+              <h4 class="addon__title">SwiftPay Mini</h4>
+              <p class="addon__price">$999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="app">
+              <h4 class="addon__title">App Shell</h4>
+              <p class="addon__price">$3,999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="devops">
+              <h4 class="addon__title">DevOps Setup</h4>
+              <p class="addon__price">$2,499</p>
+            </article>
+          </li>
+        </ul>
+
+        <div class="addons__ctaRow">
+          <p class="addons__prompt">Need a custom solution? Let’s talk about your specific requirements.</p>
+          <a class="addons__cta" href="#contact" aria-label="Request a custom quote">Get Custom Quote</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
   <section id="process" class="process" aria-labelledby="process-title" data-process-section>
     <div class="process-stars" aria-hidden="true"></div>
     <div class="process__inner">
@@ -589,6 +729,7 @@
   <script src="./scripts/services.js" type="module"></script>
   <script src="./scripts/portfolio.js" type="module"></script>
   <script src="./scripts/labs.js" type="module"></script>
+  <script src="./scripts/packs.js" type="module"></script>
   <!-- // FIX: Load guarded process script safely after styles -->
   <script src="./scripts/process.js" defer></script>
 </body>
