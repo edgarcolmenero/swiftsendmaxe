@@ -283,7 +283,7 @@ if (labsSection) {
         seen.add(entry.target);
 
         const index = Number(entry.target.dataset.revealIndex || 0);
-        const delay = Math.min(80 + index * 20, 220);
+        const delay = Math.min(60 + index * 18, 200);
 
         requestAnimationFrame(() => {
           window.setTimeout(() => {
@@ -298,7 +298,7 @@ if (labsSection) {
       });
     }, {
       rootMargin: '0px 0px -10%',
-      threshold: 0.3
+      threshold: 0.12
     });
 
     revealItems.forEach((item) => observer.observe(item));
