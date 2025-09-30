@@ -148,9 +148,13 @@
 }
 
 .labs-beta-cta {
+  position: sticky;
+  bottom: calc(clamp(20px, 5vw, 32px) + env(safe-area-inset-bottom));
   display: flex;
   justify-content: center;
   margin-top: clamp(36px, 6vw, 52px);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 3;
 }
 
 .labs-beta-button {
@@ -231,7 +235,7 @@
   box-shadow: 0 12px 28px rgba(10, 2, 28, 0.42);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .labs-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -240,6 +244,12 @@
 @media (min-width: 1200px) {
   .labs-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .labs-beta-cta {
+    position: static;
+    bottom: auto;
+    padding-bottom: 0;
   }
 }
 
