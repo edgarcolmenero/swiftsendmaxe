@@ -3,20 +3,23 @@
    Pixel-tuned to figma visuals
    ================================ */
 
+/* SECTION BACKDROP — darker top, tinted orange→magenta wash */
 .packs {
   position: relative;
   padding: clamp(68px, 10vw, 110px) 0 clamp(88px, 12vw, 130px);
   color: #f7f3ff;
-  /* Deeper magenta/purple space with warm accent wash */
   background:
-    radial-gradient(90% 120% at 16% 18%, rgba(255, 150, 43, 0.18), rgba(255, 150, 43, 0) 68%),
-    radial-gradient(95% 120% at 84% 86%, rgba(214, 60, 255, 0.30), rgba(214, 60, 255, 0) 72%),
-    linear-gradient(180deg, #0f0820 0%, #1a0e34 58%, #130825 100%);
+    /* subtle magenta glow upper-right */
+    radial-gradient(120% 140% at 82% 12%, rgba(214, 60, 255, 0.20), rgba(214, 60, 255, 0) 62%),
+    /* warm orange glow lower-left */
+    radial-gradient(120% 140% at 14% 88%, rgba(255, 150, 43, 0.18), rgba(255, 150, 43, 0) 64%),
+    /* main space gradient — darker at top, smooth into deep purple */
+    linear-gradient(180deg, #0b0616 0%, #120a24 34%, #170d31 62%, #180a2a 82%, #140824 100%);
   overflow: hidden;
   isolation: isolate;
 }
 
-/* Star fields (top + bottom) */
+/* STAR FIELDS — denser, still lightweight */
 .packs::before,
 .packs::after {
   content: "";
@@ -27,35 +30,54 @@
   background: rgba(255, 255, 255, 0.9);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.8;
+  opacity: 0.85;
   animation: packsTwinkle 7s ease-in-out infinite alternate;
 }
 
+/* Top cluster */
 .packs::before {
-  top: clamp(36px, 8vw, 100px);
-  left: clamp(48px, 10vw, 170px);
+  top: clamp(32px, 7.5vw, 96px);
+  left: clamp(40px, 9vw, 160px);
   box-shadow:
-    140px -30px 0 0 rgba(255, 255, 255, 0.7),
-    320px 20px 0 0 rgba(214, 60, 255, 0.55),
-    520px -60px 0 0 rgba(123, 206, 255, 0.5),
-    680px 40px 0 0 rgba(255, 150, 43, 0.45),
-    -120px 60px 0 0 rgba(214, 60, 255, 0.45),
-    60px 160px 0 0 rgba(255, 255, 255, 0.65);
+    140px -30px 0 0 rgba(255,255,255,0.75),
+    320px  20px 0 0 rgba(214,60,255,0.55),
+    520px -60px 0 0 rgba(123,206,255,0.50),
+    680px  40px 0 0 rgba(255,150, 43,0.45),
+   -120px  60px 0 0 rgba(214,60,255,0.45),
+     60px 160px 0 0 rgba(255,255,255,0.65),
+    /* extra stars */
+     90px -80px 0 0 rgba(255,255,255,0.6),
+    240px -10px 0 0 rgba(214,60,255,0.42),
+    410px -95px 0 0 rgba(255,255,255,0.55),
+    560px -10px 0 0 rgba(214,60,255,0.40),
+    740px -50px 0 0 rgba(255,255,255,0.55),
+    820px  30px 0 0 rgba(255,150, 43,0.38),
+    230px 100px 0 0 rgba(255,255,255,0.50),
+    350px 140px 0 0 rgba(214,60,255,0.38);
 }
 
+/* Bottom cluster */
 .packs::after {
   bottom: clamp(44px, 10vw, 120px);
   right: clamp(48px, 11vw, 180px);
   box-shadow:
-    -120px -30px 0 0 rgba(255, 255, 255, 0.72),
-    -280px -80px 0 0 rgba(214, 60, 255, 0.52),
-    -420px 10px 0 0 rgba(83, 235, 165, 0.42),
-    -560px -60px 0 0 rgba(255, 150, 43, 0.42),
-    100px -120px 0 0 rgba(255, 255, 255, 0.6),
-    -40px 80px 0 0 rgba(214, 60, 255, 0.5),
-    -220px 140px 0 0 rgba(255,255,255,0.45),
-    -360px 180px 0 0 rgba(214,60,255,0.4);
+   -120px -30px 0 0 rgba(255,255,255,0.72),
+   -280px -80px 0 0 rgba(214,60,255,0.52),
+   -420px  10px 0 0 rgba( 83,235,165,0.42),
+   -560px -60px 0 0 rgba(255,150, 43,0.42),
+    100px -120px 0 0 rgba(255,255,255,0.60),
+    -40px   80px 0 0 rgba(214,60,255,0.50),
+   -220px  140px 0 0 rgba(255,255,255,0.45),
+   -360px  180px 0 0 rgba(214,60,255,0.40),
+    /* extra stars */
+    -90px   20px 0 0 rgba(255,255,255,0.58),
+   -300px  210px 0 0 rgba(214,60,255,0.42),
+   -480px   90px 0 0 rgba(123,206,255,0.46),
+   -620px  150px 0 0 rgba(255,150, 43,0.40),
+   -740px   10px 0 0 rgba(255,255,255,0.48),
+   -520px -120px 0 0 rgba(214,60,255,0.38);
 }
+
 
 /* Inner container */
 .packs__inner {
