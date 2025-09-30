@@ -1,98 +1,71 @@
-const packsSection = document.querySelector('[data-packs-section]');
+// scripts/packs.js
+(() => {
+  const section = document.querySelector('[data-packs-section]');
+  if (!section) return;
 
-if (!packsSection) {
-  // No packs section present; abort.
-} else {
+  // Flag: JS enabled for this section
   document.body.classList.add('is-packs-js');
 
-  const revealTargets = Array.from(packsSection.querySelectorAll('[data-reveal]'));
-  const isReducedMotionQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  // Respect reduced motion
+  const mq = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
 
-  const setReducedMotionState = (event) => {
-    if (event.matches) {
-      document.body.classList.add('is-packs-reduced');
-    } else {
-      document.body.classList.remove('is-packs-reduced');
-    }
+  const syncReduced = (e) => {
+    document.body.classList.toggle('is-packs-reduced', !!(e && e.matches));
   };
 
-  if (isReducedMotionQuery) {
-    setReducedMotionState(isReducedMotionQuery);
-
-    if (typeof isReducedMotionQuery.addEventListener === 'function') {
-      isReducedMotionQuery.addEventListener('change', setReducedMotionState);
-    } else if (typeof isReducedMotionQuery.addListener === 'function') {
-      isReducedMotionQuery.addListener(setReducedMotionState);
+  if (mq) {
+    syncReduced(mq);
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', syncReduced);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(syncReduced);
     }
   }
 
+  // Reveal-on-view
+  const revealEls = Array.from(section.querySelectorAll('[data-reveal]'));
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       (entries, obs) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-in');
             obs.unobserve(entry.target);
           }
-        });
+        }
       },
-      {
-        threshold: 0.18,
-      },
+      { threshold: 0.16, rootMargin: '0px 0px -10% 0px' }
     );
-
-    revealTargets.forEach((target) => observer.observe(target));
+    revealEls.forEach((el) => io.observe(el));
   } else {
-    revealTargets.forEach((target) => target.classList.add('is-in'));
+    revealEls.forEach((el) => el.classList.add('is-in'));
   }
 
-  const setHoverState = (root, itemSelector) => {
-    if (!root) return;
+  // Hover/focus polish (lightweight, pointer-aware)
+  const bindHover = (card) => {
+    if (!card) return;
+    const enter = () => card.classList.add('is-hover');
+    const leave = () => card.classList.remove('is-hover');
 
-    const toggleHover = (target, shouldAdd) => {
-      if (!target) return;
-      target.classList[shouldAdd ? 'add' : 'remove']('is-hover');
-    };
-
-    root.addEventListener('mouseover', (event) => {
-      const card = event.target.closest(itemSelector);
-      if (!card || !root.contains(card)) return;
-      toggleHover(card, true);
-    });
-
-    root.addEventListener('mouseout', (event) => {
-      const card = event.target.closest(itemSelector);
-      if (!card || !root.contains(card)) return;
-      const related = event.relatedTarget;
-      if (related && card.contains(related)) {
-        return;
-      }
-      toggleHover(card, false);
-    });
-
-    root.addEventListener('focusin', (event) => {
-      const card = event.target.closest(itemSelector);
-      toggleHover(card, true);
-    });
-
-    root.addEventListener('focusout', (event) => {
-      const card = event.target.closest(itemSelector);
-      if (!card) return;
-      const nextFocus = event.relatedTarget;
-      if (nextFocus && card.contains(nextFocus)) {
-        return;
-      }
-      toggleHover(card, false);
+    // Only bind pointer hover on fine pointers (avoid sticky hover on touch)
+    if (window.matchMedia && window.matchMedia('(pointer:fine)').matches) {
+      card.addEventListener('mouseenter', enter, { passive: true });
+      card.addEventListener('mouseleave', leave, { passive: true });
+    }
+    // Keyboard focus support
+    card.addEventListener('focusin', enter);
+    card.addEventListener('focusout', (e) => {
+      if (!card.contains(e.relatedTarget)) leave();
     });
   };
 
-  setHoverState(packsSection.querySelector('[data-packs-grid]'), '.pack');
-  setHoverState(packsSection.querySelector('.addons__grid'), '.addon');
+  section.querySelectorAll('.pack').forEach(bindHover);
+  section.querySelectorAll('.addon').forEach(bindHover);
 
-  const ctas = packsSection.querySelectorAll('.pack__cta, .addons__cta');
-  ctas.forEach((cta) => {
-    if (cta.getAttribute('href') !== '#contact') {
-      cta.setAttribute('href', '#contact');
-    }
+  // Normalize CTAs to contact anchor
+  section.querySelectorAll('.pack__cta, .addons__cta').forEach((a) => {
+    if (a.getAttribute('href') !== '#contact') a.setAttribute('href', '#contact');
   });
-}
+})();
