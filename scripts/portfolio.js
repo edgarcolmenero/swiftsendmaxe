@@ -67,7 +67,7 @@
     const createObserver = () => new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: '0px 0px -12% 0px',
-      threshold: 0.35,
+      threshold: 0.12,
     });
 
     let observer = createObserver();
