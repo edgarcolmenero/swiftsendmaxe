@@ -37,7 +37,7 @@
             }
           }
         },
-        { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
+        { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
       );
       cards.forEach((c) => !c.classList.contains('is-inview') && io.observe(c));
     };
