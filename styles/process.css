@@ -682,6 +682,35 @@ body.debug .process__progress {
 /* ------------------------------------------
    Responsive
 ------------------------------------------- */
+@media (max-width: 639px) {
+  .process__tileButton {
+    gap: 12px;
+    padding: 18px;
+    place-content: center;
+  }
+
+  .process__tileBadge {
+    gap: 0.35rem;
+    padding: 0.3rem 0.45rem 0.3rem 0.32rem;
+  }
+
+  .process__tileBadge-num {
+    width: 28px;
+    height: 28px;
+    font-size: 15px;
+  }
+
+  .process__tileBadge-label {
+    padding: 0.22rem 0.5rem;
+    font-size: 10px;
+  }
+
+  .process__tileTitle {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+
 @media (min-width: 640px) {
   .process__layout {
     gap: clamp(32px, 5vw, 56px);
