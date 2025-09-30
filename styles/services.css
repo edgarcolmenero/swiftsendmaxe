@@ -91,12 +91,18 @@
     gap: clamp(24px, 2.8vw, 28px);
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-  
-  @media (min-width: 768px) {
-    .services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  @media (min-width: 640px) {
+    .services__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 36px);
+    }
   }
   @media (min-width: 1200px) {
-    .services__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .services__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(32px, 3vw, 40px);
+    }
   }
   @media (max-width: 767px) {
     .services__head { text-align: left; justify-items: flex-start; }
@@ -128,9 +134,10 @@
       0 6px 18px rgba(8, 2, 26, 0.22),
       0 28px 60px rgba(8, 2, 26, 0.30);
     backdrop-filter: blur(22px);
-  
+
     color: inherit;
     isolation: isolate;
+    contain: paint;
     overflow: hidden;
     will-change: transform, opacity;
     transform: translate3d(0, calc(var(--card-translate, 0px) + var(--card-hover-lift)), 0);
@@ -168,10 +175,8 @@
     mix-blend-mode: screen;
   }
   
-/* add inside .service-card */
-contain: paint;
-/* and only when hot/hovering, hint the compositor */
-.service-card.is-hot { will-change: transform, opacity; }
+  /* and only when hot/hovering, hint the compositor */
+  .service-card.is-hot { will-change: transform, opacity; }
 
 
   /* Icon badge — stronger/vibrant gradients */
