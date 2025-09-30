@@ -55,6 +55,9 @@ const hasDoc = typeof document !== 'undefined';
 const safeRaf = hasWindow && typeof window.requestAnimationFrame === 'function'
   ? window.requestAnimationFrame.bind(window)
   : (fn) => setTimeout(fn, 16);
+const safeCancelRaf = hasWindow && typeof window.cancelAnimationFrame === 'function'
+  ? window.cancelAnimationFrame.bind(window)
+  : (id) => clearTimeout(id);
 
 const getDebugEnabled = () => {
   if (!hasWindow) return false;
@@ -97,7 +100,7 @@ function initProcess() {
             ro.unobserve(e.target);
           }
         });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.12 });
       revealTargets.forEach((el) => ro.observe(el));
     } else {
       // Fallback: show immediately
@@ -183,18 +186,36 @@ function initProcess() {
   };
 
   // Progress helper
+  let pendingProgressFrame = null;
+  let pendingProgressPercent = null;
+  const applyProgressStyles = (value) => {
+    progressRoot.style.setProperty('--process-progress', String(value));
+    if (progressFill) progressFill.style.setProperty('width', `${value}%`);
+    if (progressIndicator) progressIndicator.style.setProperty('left', `${value}%`);
+    if (progressValue) progressValue.textContent = `${value}%`;
+  };
+  const flushPendingProgress = () => {
+    pendingProgressFrame = null;
+    if (pendingProgressPercent == null) return;
+    const latest = pendingProgressPercent;
+    pendingProgressPercent = null;
+    applyProgressStyles(latest);
+  };
   const setProgress = (percent, { immediate = false } = {}) => {
     if (!progressRoot) return;
-    const apply = () => {
-      progressRoot.style.setProperty('--process-progress', String(percent));
-      if (progressFill) progressFill.style.setProperty('width', `${percent}%`);
-      if (progressIndicator) progressIndicator.style.setProperty('left', `${percent}%`);
-      if (progressValue) progressValue.textContent = `${percent}%`;
-    };
     if (immediate || prefersReduced) {
-      apply();
-    } else {
-      safeRaf(apply); // let CSS transitions animate
+      if (pendingProgressFrame !== null) {
+        safeCancelRaf(pendingProgressFrame);
+        pendingProgressFrame = null;
+      }
+      pendingProgressPercent = null;
+      applyProgressStyles(percent);
+      return;
+    }
+
+    pendingProgressPercent = percent;
+    if (pendingProgressFrame === null) {
+      pendingProgressFrame = safeRaf(flushPendingProgress);
     }
   };
 
