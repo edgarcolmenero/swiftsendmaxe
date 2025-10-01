@@ -4,7 +4,7 @@
 
 .ss-header{
   /* Overlay the hero with a barely-there glass tint so the gradient shines through */
-  position:absolute;
+  position:sticky;
   top:0;
   left:0;
   right:0;
