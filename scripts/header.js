@@ -65,12 +65,61 @@ mobile?.addEventListener('click', (e) => { if (e.target === mobile) closeMenu();
 // Close after selecting a link
 mobile?.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', closeMenu));
 
-// -------- Active nav link (hash-based) --------
-function setActiveFromHash() {
-  const hash = window.location.hash || '#home';
-  document.querySelectorAll('.nav-pill').forEach(el => el.classList.remove('is-active'));
-  const target = document.querySelector(`.nav-pill[href="${hash}"]`);
-  if (target) target.classList.add('is-active');
-}
-window.addEventListener('hashchange', setActiveFromHash);
-setActiveFromHash();
+// -------- ScrollSpy for desktop & mobile nav --------
+(() => {
+  const links = Array.from(document.querySelectorAll('.nav-desktop a[href^="#"], .overlay-nav a[href^="#"]'));
+  if (!links.length) return;
+
+  const ids = links
+    .map(link => link.getAttribute('href') || '')
+    .map(href => href.trim())
+    .filter(href => href.startsWith('#') && href.length > 1)
+    .map(href => href.slice(1));
+
+  const sections = ids
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  const clearActive = () => {
+    links.forEach(link => {
+      link.classList.remove('is-active');
+      link.removeAttribute('aria-current');
+    });
+  };
+
+  const activateLink = (link) => {
+    if (!link) return;
+    clearActive();
+    link.classList.add('is-active');
+    link.setAttribute('aria-current', 'page');
+  };
+
+  const syncActiveLink = () => {
+    const scrollOffset = window.scrollY + 160;
+    let currentSection = sections[0];
+
+    for (const section of sections) {
+      if (section.offsetTop <= scrollOffset) {
+        currentSection = section;
+      } else {
+        break;
+      }
+    }
+
+    if (!currentSection) return;
+
+    const currentLink = links.find(link => link.getAttribute('href') === `#${currentSection.id}`);
+    activateLink(currentLink);
+  };
+
+  links.forEach(link => {
+    link.addEventListener('click', () => activateLink(link));
+  });
+
+  window.addEventListener('scroll', syncActiveLink, { passive: true });
+  window.addEventListener('resize', syncActiveLink);
+
+  syncActiveLink();
+})();
