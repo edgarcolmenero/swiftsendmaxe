@@ -3,24 +3,34 @@
    =========================== */
 
 .ss-header{
-  /* Overlay the hero so its gradient shows through the transparent header */
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:50;
+  position:relative;
+  z-index:12;
   width:100%;
-  background:transparent !important;   /* no bar */
-  border:none;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  transition:background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1);
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.82), rgba(255,255,255,.56));
+  border-bottom:1px solid rgba(255,255,255,.45);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow:0 12px 32px rgba(20,12,36,.16);
+  transition:background .25s cubic-bezier(.2,.8,.2,1), border-bottom-color .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1);
 }
 
-/* If JS adds .header-fade after long scroll, keep it barely visible */
-.ss-header.header-fade{
-  background:linear-gradient(90deg, rgba(25,16,40,.035), rgba(100,28,102,.035)) !important;
-  border-bottom:1px solid rgba(255,255,255,.045);
+.ss-header.header-fade,
+.ss-header.is-stuck,
+.ss-header.is-scrolled{
+  background:inherit !important;
+  border-bottom-color:inherit;
+  box-shadow:inherit;
+}
+
+body.has-sticky-header{padding-top:0;}
+
+@media (prefers-color-scheme: dark){
+  .ss-header{
+    background:linear-gradient(120deg, rgba(31,22,48,.85), rgba(20,12,36,.78));
+    border-bottom-color:rgba(146,120,193,.28);
+    box-shadow:0 18px 36px rgba(5,2,12,.42);
+  }
 }
   
   .header-row{
