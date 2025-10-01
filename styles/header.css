@@ -3,24 +3,33 @@
    =========================== */
 
 .ss-header{
-  /* Overlay the hero so its gradient shows through the transparent header */
+  /* Overlay the hero with a barely-there glass tint so the gradient shines through */
   position:absolute;
   top:0;
   left:0;
   right:0;
   z-index:50;
   width:100%;
-  background:transparent !important;   /* no bar */
-  border:none;
+  --header-glass-gradient:
+    linear-gradient(120deg, rgba(214,60,255,.08), rgba(25,16,40,.05));
+  --header-glass-border: rgba(214,60,255,.14);
+  --header-glass-shadow: 0 10px 28px rgba(18,11,35,.12);
+  background:var(--header-glass-gradient);
+  border:0;
+  border-bottom:1px solid var(--header-glass-border);
+  box-shadow:var(--header-glass-shadow);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  transition:background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1);
+  transition:background .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1);
 }
 
 /* If JS adds .header-fade after long scroll, keep it barely visible */
-.ss-header.header-fade{
-  background:linear-gradient(90deg, rgba(25,16,40,.035), rgba(100,28,102,.035)) !important;
-  border-bottom:1px solid rgba(255,255,255,.045);
+.ss-header.header-fade,
+.ss-header.is-stuck,
+.ss-header.is-scrolled{
+  background:var(--header-glass-gradient);
+  border-bottom-color:rgba(214,60,255,.18);
+  box-shadow:var(--header-glass-shadow);
 }
   
   .header-row{
@@ -36,7 +45,7 @@
     box-shadow:0 0 18px rgba(214,60,255,.28);
     font-weight:800;text-transform:lowercase
   }
-  .brand-text{font-weight:700;letter-spacing:.2px}
+  .brand-text{font-weight:700;letter-spacing:.2px;color:#fff;text-shadow:0 0 14px rgba(18,11,35,.38)}
   
   /* ===========================
      Desktop navigation — text-only, thinner
@@ -51,6 +60,7 @@
     font-weight:500;        /* sleek */
     letter-spacing:.05px;
     color:#f6f3fd;
+    text-shadow:0 0 14px rgba(18,11,35,.35);
     transition:opacity .2s ease, transform .2s ease;
   }
   .nav-desktop .nav-pill:hover{opacity:.92; transform:translateY(-1px)}
@@ -123,7 +133,19 @@
   .overlay-icons{
     display:flex; gap:10px; align-items:center; justify-content:center; padding-bottom:16px
   }
-  
+
   /* Keep active link readable */
   .nav-pill.is-active{color:#fff}
+
+  @media (prefers-color-scheme: dark){
+    .ss-header{
+      --header-glass-gradient:
+        linear-gradient(120deg, rgba(214,60,255,.14), rgba(17,10,32,.12));
+      --header-glass-border: rgba(214,60,255,.22);
+      --header-glass-shadow: 0 14px 40px rgba(5,2,14,.28);
+    }
+    .nav-desktop .nav-pill{color:#f9f5ff; text-shadow:0 0 16px rgba(5,2,14,.55);}
+    .icon-btn{color:#fff;}
+    .icon-btn svg{stroke:#fff;}
+  }
   
