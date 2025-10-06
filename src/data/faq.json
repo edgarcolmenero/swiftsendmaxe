@@ -1,0 +1,14 @@
+[
+  {
+    "id": "pricing",
+    "q": "How much does SwiftSend cost?",
+    "a": "SwiftSend packs start at $1,999 for the Launch package and scale based on project complexity.",
+    "tags": ["packs", "billing"]
+  },
+  {
+    "id": "timeline",
+    "q": "How fast can you ship a project?",
+    "a": "Most engagements move from kickoff to production in 2-6 weeks depending on scope.",
+    "tags": ["process", "delivery"]
+  }
+]

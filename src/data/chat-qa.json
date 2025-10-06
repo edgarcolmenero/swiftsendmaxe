@@ -1,0 +1,18 @@
+[
+  {
+    "id": "builder-pack",
+    "question": "Tell me about the Builder pack",
+    "synonyms": ["custom apis", "dashboards"],
+    "intents": ["pricing", "builder"],
+    "answer": "Builder unlocks bespoke software development with dedicated engineering time, prioritized roadmap, and integrated analytics.",
+    "tags": ["packs"]
+  },
+  {
+    "id": "book-meeting",
+    "question": "How do I book a meeting?",
+    "synonyms": ["schedule", "calendar"],
+    "intents": ["book", "meeting"],
+    "answer": "You can book a time directly on the SwiftSend calendar or email swift.send.marketing@gmail.com.",
+    "tags": ["contact"]
+  }
+]

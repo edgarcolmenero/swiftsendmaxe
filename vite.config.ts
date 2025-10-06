@@ -1,4 +1,5 @@
 import { resolve } from 'node:path';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 const root = resolve(__dirname, 'src/pages');
@@ -27,5 +28,6 @@ export default defineConfig({
       '@shared': resolve(__dirname, 'src/shared'),
       '@data': resolve(__dirname, 'src/data')
     }
-  }
+  },
+  plugins: [react()]
 });

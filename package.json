@@ -5,11 +5,51 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "npm run lint:eslint && npm run lint:stylelint",
+    "lint:eslint": "eslint --ext .ts,.tsx ./src",
+    "lint:stylelint": "stylelint \"src/**/*.{css,scss}\"",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:ui": "vitest",
+    "test:e2e": "playwright test",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.26.7",
+    "clsx": "^2.1.1",
+    "lodash-es": "^4.17.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.47.2",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.7.4",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.9",
+    "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "stylelint": "^16.8.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
     "typescript": "^5.4.5",
     "vite": "^5.4.8",
-    "@types/node": "^22.7.4"
+    "vitest": "^2.1.1"
   }
 }

@@ -1,0 +1,107 @@
+.calendar {
+  padding: clamp(60px, 8vw, 120px) 0;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(214, 60, 255, 0.12), transparent), #09041b;
+  color: #f6f0ff;
+  display: grid;
+  gap: 64px;
+}
+
+.calendar__section {
+  width: min(960px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.calendar__head h1,
+.calendar__head h2 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 44px);
+}
+
+.calendar__head p {
+  margin: 0;
+  color: rgba(246, 240, 255, 0.72);
+}
+
+.calendar__grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.calendar__day {
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(15, 8, 26, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  gap: 16px;
+}
+
+.calendar__day header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.calendar__day ul {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar__day button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 122, 24, 0.3), rgba(214, 60, 255, 0.38));
+  color: #fff;
+  font-weight: 600;
+}
+
+.calendar__timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.calendar__event {
+  display: grid;
+  gap: 8px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background: rgba(16, 8, 28, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar__event-date {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(246, 240, 255, 0.65);
+}
+
+.calendar__event-body h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.calendar__event-body p {
+  margin: 6px 0 0;
+  color: rgba(246, 240, 255, 0.78);
+}
+
+.calendar__badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}

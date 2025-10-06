@@ -1,7 +1,22 @@
 :root {
-  --ss-radius-lg: 20px;
-  --ss-radius-md: 12px;
-  --ss-radius-sm: 8px;
-  --ss-ease-snap: cubic-bezier(0.33, 1, 0.68, 1);
-  --ss-shadow-glow: 0 0 20px rgba(214, 60, 255, 0.35);
+  --ss-color-primary: #d63cff;
+  --ss-color-primary-dark: #a42dd6;
+  --ss-color-surface: #070117;
+  --ss-color-surface-alt: #14052d;
+  --ss-color-text: #ffffff;
+  --ss-color-muted: rgba(255, 255, 255, 0.75);
+  --ss-color-border: rgba(255, 255, 255, 0.12);
+  --ss-font-display: "Space Grotesk", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ss-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ss-transition-fast: 150ms ease;
+  --ss-transition-medium: 250ms ease;
+  --ss-radius-pill: 999px;
+  --ss-radius-card: 24px;
+  --ss-header-height: 84px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --ss-header-height: 72px;
+  }
 }

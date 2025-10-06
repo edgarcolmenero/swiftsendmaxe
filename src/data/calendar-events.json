@@ -1,0 +1,18 @@
+[
+  {
+    "id": "update-1",
+    "title": "SwiftPay Mini v2",
+    "date": "2025-11-15",
+    "type": "release",
+    "summary": "Launch of v2 with native tap-to-pay and instant reconciliation.",
+    "badge": "Update"
+  },
+  {
+    "id": "promo-blackfriday",
+    "title": "Black Friday Automation Sprint",
+    "date": "2025-11-29",
+    "type": "promo",
+    "summary": "Limited 1-week engagement to automate holiday campaigns.",
+    "badge": "Promo"
+  }
+]
