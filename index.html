@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwiftSend — Your Software. Your Stack. Your Savings.</title>
+  <meta name="theme-color" content="#d63cff" />
+  <link rel="stylesheet" href="./styles/global.css" />
+  <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="./styles/hero.css" />
+  <!-- Section styles -->
+  <link rel="stylesheet" href="./styles/about.css" />
+  <link rel="stylesheet" href="./styles/services.css" />
+  <link rel="stylesheet" href="./styles/portfolio.css" />
+  <link rel="stylesheet" href="./styles/labs.css" />
+  <link rel="stylesheet" href="./styles/packs.css" />
+  <link rel="stylesheet" href="./styles/process.css" />
+  <link rel="stylesheet" href="./styles/contact.css" />
+  <link rel="stylesheet" href="./styles/footer.css" />
+</head>
+<body>
+  <noscript class="noscript-note">SwiftSend works best with JavaScript enabled, but all key details are available above.</noscript>
+
+  <!-- ===================================== -->
+  <!-- Header -->
+  <!-- ===================================== -->
+  <header class="ss-header" data-header>
+    <div class="container header-row">
+      <a href="#home" class="brand" aria-label="SwiftSend">
+        <span class="brand-badge">S</span>
+        <span class="brand-text">SwiftSend</span>
+      </a>
+
+      <!-- Desktop nav ordered to match page flow -->
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#home" class="nav-pill is-active"><span>Home</span></a>
+        <a href="#about" class="nav-pill"><span>About</span></a>
+        <a href="#services" class="nav-pill"><span>Services</span></a>
+        <a href="#portfolio" class="nav-pill"><span>Work</span></a>
+        <a href="#labs" class="nav-pill"><span>Labs</span></a>
+        <a href="#packs" class="nav-pill"><span>Packs</span></a>
+        <a href="#contact" class="nav-pill"><span>Contact</span></a>
+      </nav>
+
+      <div class="header-icons">
+        <!-- search -->
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- phone -->
+        <a class="icon-btn" aria-label="Call" href="tel:+1">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2 4.11 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.2a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </a>
+
+        <!-- profile -->
+        <button class="icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 21a8 8 0 1 0-16 0"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+
+        <!-- Mobile toggle -->
+        <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div id="mobileMenu" class="mobile-overlay" hidden>
+      <div class="overlay-panel">
+        <div class="overlay-top">
+          <span class="brand-badge">S</span>
+          <button class="overlay-close" aria-label="Close menu">✕</button>
+        </div>
+
+        <nav class="overlay-nav" aria-label="Mobile">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#portfolio">Work</a>
+          <a href="#labs">Labs</a>
+          <a href="#packs">Packs</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="overlay-icons">
+          <!-- search -->
+          <button class="icon-btn" aria-label="Search (mobile)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <!-- phone -->
+          <a class="icon-btn" aria-label="Call (mobile)" href="tel:+1">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2 4.11 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.2a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </a>
+
+          <!-- profile -->
+          <button class="icon-btn" aria-label="Account (mobile)">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20 21a8 8 0 1 0-16 0"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================== -->
+  <!-- Hero -->
+  <!-- ===================================== -->
+  <section id="home" class="hero">
+    <canvas id="fx-stars" aria-hidden="true"></canvas>
+    <div class="spark-field" data-spark-field aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="tile-wrap" aria-hidden="true">
+        <div class="tile">
+          <span class="tile-s">s</span>
+          <span class="orbit o1"></span>
+          <span class="orbit o2"></span>
+          <span class="orbit o3"></span>
+        </div>
+      </div>
+
+      <h1 class="display">
+        Your Software.<br />
+        <span class="grad-word">Your</span> Stack.<br />
+        Your Savings.
+      </h1>
+
+      <p class="lede">
+        We craft software, engineer data, automate with AI, and grow digital presence — clean, modern, and fee-smart.
+      </p>
+
+      <div class="cta">
+        <a href="#contact" class="btn btn-primary">
+          <span>Start a Build</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" class="cta-arrow" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a href="#portfolio" class="btn btn-ghost underline-seq">See Our Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- About (moved directly after Hero for trust) -->
+  <!-- ===================================== -->
+  <section id="about" class="about" aria-labelledby="about-title">
+    <div class="about__container">
+      <header class="about__head" data-reveal data-reveal-index="0">
+        <h2 id="about-title" class="about__title">About <span class="about__title-highlight">SwiftSend</span></h2>
+      </header>
+
+      <div class="about__inner">
+        <div class="about__profile" data-reveal data-reveal-index="1">
+          <div class="about__avatar">
+            <img src="me1.jpg" alt="Edgar Colmenero" loading="lazy" />
+            <div class="about__orbit orbit-spin" aria-hidden="true">
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+              <span class="about__dot"></span>
+            </div>
+          </div>
+          <h3 class="about__name">Edgar Colmenero</h3>
+          <p class="about__role">Founder &amp; Full-Stack Developer</p>
+          <p class="about__bio">
+            Honors student active in STEM and TRIO Organization, studying at TCC, NCTC, and UTA. Employee of Adidas, Colmenero
+            Consulting, and SwiftSend.
+            <br />
+            Bilingual (English/Spanish). Strong Passion for software that saves, empowers, and scales.
+          </p>
+          <div class="about__quote" data-reveal data-reveal-index="3">
+            <p>&ldquo;Never Stay Satisfied.&rdquo;</p>
+          </div>
+        </div>
+
+        <div class="about__achievements" data-reveal data-reveal-index="2">
+          <h3 class="about__subhead" aria-hidden="true">Experience &amp; Achievements</h3>
+          <ul class="achv-list" role="list">
+            <li class="achv-card" data-variant="honors" tabindex="0" role="listitem" aria-label="Honors Student, Academic Excellence">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M4 11.5 16 6l12 5.5-12 5.5-12-5.5Z"></path>
+                  <path d="M8 15.5v5c3 2 13 2 16 0v-5" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Honors Student</span>
+                <span class="achv-card__sub">Academic Excellence</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+
+            <li class="achv-card" data-variant="stem" tabindex="0" role="listitem" aria-label="STEM Club, Active Member">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <circle cx="16" cy="11" r="5"></circle>
+                  <path d="M6 26c1.6-5.2 6.6-6.5 10-6.5S24.4 20.8 26 26" stroke-linecap="round"></path>
+                  <path d="M6 11h4" stroke-linecap="round"></path>
+                  <path d="M22 11h4" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">STEM Organization</span>
+                <span class="achv-card__sub">Engineering Scholar</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+
+            <li class="achv-card" data-variant="adidas" tabindex="0" role="listitem" aria-label="Adidas, Team Member">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <rect x="6" y="7" width="20" height="18" rx="4" ry="4"></rect>
+                  <path d="M10 12h12" stroke-linecap="round"></path>
+                  <path d="M10 17h12" stroke-linecap="round"></path>
+                  <path d="M10 22h12" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Adidas</span>
+                <span class="achv-card__sub">Brand Representative</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+
+            <li class="achv-card" data-variant="consult" tabindex="0" role="listitem" aria-label="Colmenero Consulting, Founder &amp; Full-Stack Developer">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M16 5 6 12v9l10 6 10-6v-9L16 5Z"></path>
+                  <path d="M16 14v9" stroke-linecap="round"></path>
+                  <path d="M12.5 17.5h7" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">Colmenero Consulting</span>
+                <span class="achv-card__sub">COO &amp; Full-Stack Developer</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+
+            <li class="achv-card" data-variant="swiftsend" tabindex="0" role="listitem" aria-label="SwiftSend, Founder">
+              <span class="achv-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+                  <path d="M8 22.5c4-6 8-6.5 16-12.5l-5.5 12h5L16 27l3.5-7h-6L8 22.5Z"></path>
+                </svg>
+              </span>
+              <div class="achv-card__text">
+                <span class="achv-card__title">SwiftSend</span>
+                <span class="achv-card__sub">Founder</span>
+              </div>
+              <span class="achv-card__status" aria-hidden="true"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="certs" data-reveal data-reveal-index="4">
+        <div class="cert">
+          <img src="color1.jpg" alt="Google Data Analytics certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">Google Data Analytics</a>
+        </div>
+        <div class="cert">
+          <img src="color2.jpg" alt="Google UX Design certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">UX Design</a>
+        </div>
+        <div class="cert">
+          <img src="color3.jpg" alt="Google IT Automation with Python certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">IT Automation with Python</a>
+        </div>
+        <div class="cert">
+          <img src="color4.jpg" alt="Google Project Management certificate" loading="lazy" />
+          <a class="cert__caption underline-seq" href="#" role="link">Project Management</a>
+        </div>
+      </div>
+
+      <div class="about__quote about__quote--long" data-reveal data-reveal-index="5">
+        <p>
+          &ldquo;Every project is an opportunity to push boundaries, learn something new, and create solutions that make a real
+          difference. That&rsquo;s what drives me to Never Stay Satisfied.&rdquo;
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Services -->
+  <!-- ===================================== -->
+  <section id="services" class="services">
+    <div class="services__inner">
+      <header class="services__head">
+        <h2 class="services__title">What We <span class="grad-word">Build</span></h2>
+        <p class="services__lede">Comprehensive solutions for modern digital challenges</p>
+      </header>
+
+      <div class="services__grid">
+        <!-- cards unchanged -->
+        <article class="service-card" data-accent="fullstack" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="11" rx="1.8" ry="1.8" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="M2.75 17h18.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M8.5 19.75h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">Full-Stack Development</span></h3>
+          <p class="service-card__copy">APIs, apps, dashboards, admin portals.</p>
+        </article>
+
+        <article class="service-card" data-accent="data" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <ellipse cx="12" cy="6.5" rx="7.5" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="M4.5 6.5v6c0 1.93 3.36 3.5 7.5 3.5s7.5-1.57 7.5-3.5v-6" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="M4.5 12.2c0 1.93 3.36 3.5 7.5 3.5s7.5-1.57 7.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">Data Engineering</span></h3>
+          <p class="service-card__copy">Pipelines, warehouses, metrics, and clean dashboards.</p>
+        </article>
+
+        <article class="service-card" data-accent="ai" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M9.75 4.5c-2.35 0-4.25 1.9-4.25 4.25 0 1.9-1.25 2.9-1.25 4.6 0 2.7 2.2 4.9 4.9 4.9h1.85c.83 0 1.5.67 1.5 1.5v.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M14.25 4.5c2.35 0 4.25 1.9 4.25 4.25 0 1.9 1.25 2.9 1.25 4.6 0 2.7-2.2 4.9-4.9 4.9H13c-.83 0-1.5.67-1.5 1.5v.25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <circle cx="9.75" cy="8.5" r="1" fill="currentColor" />
+              <circle cx="14.25" cy="8.5" r="1" fill="currentColor" />
+              <path d="M9 12.5c.4.6 1.1 1 2 1s1.6-.4 2-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">AI Automations &amp; Agents</span></h3>
+          <p class="service-card__copy">Voice + chatbots, intake copilots, smart workflows.</p>
+        </article>
+
+        <article class="service-card" data-accent="swiftpay" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="13" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="M3 10.5h18" stroke="currentColor" stroke-width="1.6" />
+              <rect x="6.5" y="12.5" width="5" height="2.5" rx="1.2" fill="currentColor" />
+              <path d="M16.5 13.75h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">SwiftPay Systems</span></h3>
+          <p class="service-card__copy">Fee-smart checkouts, subscriptions, and ACH routing — keep more of every dollar.</p>
+        </article>
+
+        <article class="service-card" data-accent="marketing" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <path d="M4 16.5 9.5 11l3.5 3.5 5-5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15 8h3v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M4 19h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">Digital Marketing</span></h3>
+          <p class="service-card__copy">Campaigns, funnels, ads, analytics → grow smarter.</p>
+        </article>
+
+        <article class="service-card" data-accent="growth" tabindex="0">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+              <circle cx="10" cy="10" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path d="m13.5 13.5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M8.75 9.75h2.5M10 8.5v2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3 class="service-card__title"><span class="service-card__title-text">Digital Growth (SEO &amp; CRM)</span></h3>
+          <p class="service-card__copy">SEO, CRM wiring, landing pages, reporting.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Work / Portfolio -->
+  <!-- ===================================== -->
+  <section id="portfolio" class="portfolio" aria-labelledby="portfolio-title">
+    <div class="portfolio__inner">
+      <header class="portfolio__head">
+        <h2 id="portfolio-title" class="portfolio__title">Work That <span class="grad">Stands Out</span></h2>
+        <p class="portfolio__lede">Real projects, real results, real impact.</p>
+      </header>
+
+      <div class="portfolio__grid">
+        <!-- cards unchanged -->
+        <article class="pf-card" data-key="realtor">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-realtor.jpg" alt="Real estate platform interface" loading="lazy">
+            <span class="pf-card__pill">Real Estate Platform</span>
+            <button class="pf-card__ext" type="button" aria-label="Open RealtorDemo case study">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">RealtorDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Traditional MLS listings with poor lead generation</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Modern property search with integrated lead capture system</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> <span>+32% leads</span> <span class="pf-card__trend" aria-hidden="true">▲</span></p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+
+        <article class="pf-card" data-key="nailtech">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-nailtech.jpg" alt="Beauty & wellness booking environment" loading="lazy">
+            <span class="pf-card__pill">Beauty & Wellness</span>
+            <button class="pf-card__ext" type="button" aria-label="Open NailTechDemo case study">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">NailTechDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Manual booking process losing potential clients</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Sleek booking system with integrated payments</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> Dark elegance meets functionality</p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+
+        <article class="pf-card" data-key="photographer">
+          <div class="pf-card__media" aria-hidden="true">
+            <img src="images/portfolio-photographer.jpg" alt="Professional camera and lens" loading="lazy">
+            <span class="pf-card__pill">Creative Services</span>
+            <button class="pf-card__ext" type="button" aria-label="Open PhotographerDemo case study">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></svg>
+            </button>
+          </div>
+          <div class="pf-card__body">
+            <h3 class="pf-card__title">PhotographerDemo</h3>
+            <p class="pf-card__row"><span class="label label--problem">Problem:</span> Cumbersome photo proofing and booking workflow</p>
+            <p class="pf-card__row"><span class="label label--build">Build:</span> Streamlined gallery with integrated booking system</p>
+            <p class="pf-card__row"><span class="label label--outcome">Outcome:</span> Creative-driven user experience</p>
+            <div class="pf-card__bar"><span class="pf-card__fill"></span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="portfolio__cta">
+        <a class="portfolio__link" href="#">View All Projects</a>
+        <div class="portfolio__cta-underline"><span class="fill"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Labs -->
+  <!-- ===================================== -->
+  <section id="labs" class="labs-section" aria-labelledby="labs-title">
+    <div class="labs-backdrop" aria-hidden="true"></div>
+    <div class="labs-inner">
+      <div class="labs-stars" aria-hidden="true">
+        <div class="labs-orb" data-labs-orb aria-hidden="true"></div>
+      </div>
+      <header class="labs-head">
+        <h2 id="labs-title" class="labs-title" data-reveal data-reveal-index="0">
+          SwiftSend <span class="labs-title-gradient">Labs</span>
+        </h2>
+        <div class="labs-subtitle" data-reveal data-reveal-index="1">
+          <p>Affordable, Personalized, Innovative</p>
+          <p>Labs = testing ground for affordable experiments clients can actually use.</p>
+        </div>
+      </header>
+
+      <ul class="labs-grid" role="list" data-labs-grid></ul>
+
+      <div class="labs-beta-cta" data-reveal data-reveal-index="8">
+        <a class="labs-beta-button" href="#contact">Join the Labs Beta Program</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Packs / Pricing -->
+  <!-- ===================================== -->
+  <section id="packs" class="packs" aria-labelledby="packs-title" data-packs-section>
+    <div class="packs__inner">
+      <header class="packs__head" data-reveal data-reveal-index="0">
+        <h2 id="packs-title" class="packs__title">Choose Your <span class="grad-word">Pack</span></h2>
+        <p class="packs__lede">Transparent pricing for every stage of your digital journey</p>
+      </header>
+
+      <ul class="packs__grid" role="list" data-packs-grid data-reveal data-reveal-index="1">
+        <!-- four packs unchanged -->
+        <li>
+          <article class="pack" data-accent="starter" aria-labelledby="pack-starter-title" aria-describedby="pack-starter-price pack-starter-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M14 2.5 17 10h7l-5.8 4.2 2.2 7-6.4-4.5-6.4 4.5 2.2-7L4 10h7z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 id="pack-starter-title" class="pack__title">Starter</h3>
+            <p id="pack-starter-desc" class="pack__desc">Perfect for businesses getting online</p>
+            <p id="pack-starter-price" class="pack__price"><span class="val">$2,999</span> <span class="unit">/one-time</span></p>
+            <ul class="pack__list" role="list">
+              <li>Industry-specific website</li>
+              <li>CMS basics</li>
+              <li>Contact forms</li>
+              <li>Mobile responsive</li>
+              <li>3 months support</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Starter, $2,999 one-time">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack is-featured" data-accent="builder" aria-labelledby="pack-builder-title" aria-describedby="pack-builder-price pack-builder-desc" aria-label="Most Popular plan">
+            <div class="pack__badge" aria-hidden="true">Most Popular</div>
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M13.5 2v9.5H8L14.5 26V16.5H20L13.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 id="pack-builder-title" class="pack__title">Builder</h3>
+            <p id="pack-builder-desc" class="pack__desc">Advanced functionality and integrations</p>
+            <p id="pack-builder-price" class="pack__price"><span class="val">$7,999</span> <span class="unit">/project</span></p>
+            <ul class="pack__list" role="list">
+              <li>Custom APIs</li>
+              <li>Admin dashboards</li>
+              <li>CRM integration</li>
+              <li>Payment processing</li>
+              <li>Advanced analytics</li>
+              <li>6 months support</li>
+            </ul>
+            <a class="pack__cta pack__cta--primary" href="#contact" aria-label="Get started: Builder, $7,999 per project">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack" data-accent="engine" aria-labelledby="pack-engine-title" aria-describedby="pack-engine-price pack-engine-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M6 8.5c0-3.3 3.6-5.5 8-5.5s8 2.2 8 5.5-3.6 5.5-8 5.5-8-2.2-8-5.5Zm0 5c0 3.3 3.6 5.5 8 5.5s8-2.2 8-5.5M6 18.5c0 3.3 3.6 5.5 8 5.5s8-2.2 8-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <h3 id="pack-engine-title" class="pack__title">Engine</h3>
+            <p id="pack-engine-desc" class="pack__desc">Data-driven enterprise solutions</p>
+            <p id="pack-engine-price" class="pack__price"><span class="val">$15,999</span> <span class="unit">/project</span></p>
+            <ul class="pack__list" role="list">
+              <li>Data pipelines</li>
+              <li>Data warehouses</li>
+              <li>BI dashboards</li>
+              <li>Real-time analytics</li>
+              <li>Machine learning</li>
+              <li>12 months support</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Engine, $15,999 per project">Get Started</a>
+          </article>
+        </li>
+
+        <li>
+          <article class="pack" data-accent="growth" aria-labelledby="pack-growth-title" aria-describedby="pack-growth-price pack-growth-desc">
+            <div class="pack__icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" width="28" height="28" role="img" aria-hidden="true">
+                <path d="M4 18.5 11.5 11l4 4L24 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M18 6h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3 id="pack-growth-title" class="pack__title">Growth</h3>
+            <p id="pack-growth-desc" class="pack__desc">Complete digital marketing solution</p>
+            <p id="pack-growth-price" class="pack__price"><span class="val">$12,999</span> <span class="unit">/campaign</span></p>
+            <ul class="pack__list" role="list">
+              <li>SEO optimization</li>
+              <li>Lead generation flows</li>
+              <li>Fee-smart checkout</li>
+              <li>Marketing automation</li>
+              <li>Analytics &amp; reporting</li>
+              <li>Ongoing optimization</li>
+            </ul>
+            <a class="pack__cta" href="#contact" aria-label="Get started: Growth, $12,999 per campaign">Get Started</a>
+          </article>
+        </li>
+      </ul>
+
+      <section class="addons" aria-labelledby="addons-title" data-reveal data-reveal-index="2">
+        <header class="addons__head">
+          <h3 id="addons-title" class="addons__title">Add-ons</h3>
+          <p class="addons__lede">Enhance your pack with additional features</p>
+        </header>
+
+        <ul class="addons__grid" role="list">
+          <li>
+            <article class="addon" data-accent="ai">
+              <h4 class="addon__title">AI Bot</h4>
+              <p class="addon__price">$1,999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="swiftpay">
+              <h4 class="addon__title">SwiftPay Mini</h4>
+              <p class="addon__price">$999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="app">
+              <h4 class="addon__title">App Shell</h4>
+              <p class="addon__price">$3,999</p>
+            </article>
+          </li>
+          <li>
+            <article class="addon" data-accent="devops">
+              <h4 class="addon__title">DevOps Setup</h4>
+              <p class="addon__price">$2,499</p>
+            </article>
+          </li>
+        </ul>
+
+        <div class="addons__ctaRow">
+          <p class="addons__prompt">Need a custom solution? Let’s talk about your specific requirements.</p>
+          <a class="addons__cta" href="#contact" aria-label="Request a custom quote">Get Custom Quote</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Process -->
+  <!-- ===================================== -->
+  <section id="process" class="process" aria-labelledby="process-title" data-process-section>
+    <div class="process-stars" aria-hidden="true"></div>
+    <div class="process__inner">
+      <header class="process__intro" data-reveal>
+        <h2 id="process-title" class="process__title">How We <span class="grad-word">Work</span></h2>
+        <p class="process__lede">A streamlined process designed for efficiency and excellence</p>
+      </header>
+
+      <div class="process__layout" data-reveal>
+        <div class="process__progress" aria-hidden="true">
+          <div class="process__progress-head">
+            <span class="process__progress-label">Progress</span>
+            <span class="process__progress-value" data-process-progress-value>0%</span>
+          </div>
+          <div class="process__progress-track" data-process-progress-track>
+            <div class="process__progress-fill" data-process-progress-fill></div>
+            <span class="process__progress-indicator" data-process-progress-indicator></span>
+          </div>
+          <div class="process__progress-stops">
+            <span>0%</span>
+            <span>25%</span>
+            <span>50%</span>
+            <span>75%</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <div class="process__tilesRow" data-process-steps role="tablist" aria-label="SwiftSend delivery process">
+          <article class="process__tile is-active" data-process-step data-step="discover">
+            <button class="process__tileButton" id="process-step-discover" aria-controls="process-detail-card" aria-selected="true" tabindex="0" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">01</span>
+                <span class="process__tileBadge-label">Discover</span>
+              </span>
+              <span class="process__tileTitle">Align on the mission</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="design">
+            <button class="process__tileButton" id="process-step-design" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">02</span>
+                <span class="process__tileBadge-label">Design</span>
+              </span>
+              <span class="process__tileTitle">Design the experience</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="build">
+            <button class="process__tileButton" id="process-step-build" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">03</span>
+                <span class="process__tileBadge-label">Build</span>
+              </span>
+              <span class="process__tileTitle">Ship in integrated sprints</span>
+            </button>
+          </article>
+
+          <article class="process__tile" data-process-step data-step="launch">
+            <button class="process__tileButton" id="process-step-launch" aria-controls="process-detail-card" aria-selected="false" tabindex="-1" type="button">
+              <span class="process__tileBadge">
+                <span class="process__tileBadge-num" aria-hidden="true">04</span>
+                <span class="process__tileBadge-label">Launch</span>
+              </span>
+              <span class="process__tileTitle">Launch &amp; optimize</span>
+            </button>
+          </article>
+        </div>
+
+        <div class="process__detail">
+          <article
+            class="process-detail-card is-discover"
+            id="process-detail-card"
+            data-process-detail
+            role="tabpanel"
+            aria-live="polite"
+            aria-labelledby="process-detail-title"
+          >
+            <header class="process-detail-header">
+              <span class="process-badge">
+                <span class="process-badge-num">01</span>
+                <span class="process-badge-label">DISCOVER</span>
+              </span>
+            </header>
+
+            <h3 id="process-detail-title" class="process-detail-title">Align on the mission</h3>
+
+            <p class="process-detail-body">
+              Stakeholder interviews, metrics, and constraints shape an achievable roadmap.
+            </p>
+
+            <ul class="process-detail-list">
+              <li>Business goals + constraints mapping</li>
+              <li>Technical + data audit</li>
+              <li>Roadmap + estimate buy-in</li>
+            </ul>
+          </article>
+        </div>
+
+        <aside class="process__cta" data-reveal>
+          <div class="process__cta-text">
+            <h3 class="process__cta-title">Ready to start your project?</h3>
+          </div>
+          <div class="process__cta-actions">
+            <a class="process__cta-primary" href="#contact">Let’s Get Started</a>
+            <a class="process__cta-link" href="#services">Explore Services</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Contact (final action) -->
+  <!-- ===================================== -->
+  <section id="contact" class="contact" aria-labelledby="contact-title" data-contact-section>
+    <canvas id="contact-stars" aria-hidden="true"></canvas>
+
+    <div class="contact__inner">
+      <header class="contact__head">
+        <h2 id="contact-title" class="contact__title">Let’s Build <span class="grad-word">Together</span></h2>
+        <p class="contact__lede">Ready to transform your vision into reality? Get in touch and let’s start building.</p>
+      </header>
+
+      <div class="contact__grid">
+        <!-- Left: Form card -->
+        <form class="cform cardlike" id="build-form" novalidate aria-describedby="form-status">
+          <div class="cform__row">
+            <label class="cform__label" for="name">Name</label>
+            <input class="cform__input" id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+          </div>
+
+          <div class="cform__row">
+            <label class="cform__label" for="email">Email</label>
+            <input class="cform__input" id="email" name="email" type="email" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+
+          <div class="cform__row">
+            <label class="cform__label" for="ptype">Project Type</label>
+            <div class="cform__selectWrap">
+              <select class="cform__input cform__select" id="ptype" name="ptype" required>
+                <option value="" selected disabled>Select project type</option>
+                <option>Starter</option>
+                <option>Builder</option>
+                <option>Engine</option>
+                <option>Growth</option>
+              </select>
+              <svg class="cform__chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+            </div>
+          </div>
+
+          <div class="cform__row">
+            <label class="cform__label" for="industry">Industry <span class="cform__opt">(optional)</span></label>
+            <input class="cform__input" id="industry" name="industry" type="text" placeholder="e.g., Real Estate, E-commerce, Healthcare" />
+          </div>
+
+          <div class="cform__row cform__row--area">
+            <label class="cform__label" for="message">Message</label>
+            <textarea class="cform__input cform__area" id="message" name="message" placeholder="Tell us about your project..." rows="6"></textarea>
+          </div>
+
+          <p id="form-status" class="cform__status" aria-live="polite"></p>
+
+          <button class="cform__submit" type="submit">
+            <span>Start a Build</span>
+            <svg viewBox="0 0 24 24" class="cform__spark" aria-hidden="true"><path fill="currentColor" d="M12 2l1.8 4.6L18 8l-4.2 1.4L12 14l-1.8-4.6L6 8l4.2-1.4L12 2z"/></svg>
+          </button>
+        </form>
+
+        <!-- Right: Estimator + Get in Touch stack -->
+        <div class="contact__stack" aria-hidden="false">
+          <!-- Savings Estimator -->
+          <section class="est cardlike" aria-labelledby="est-title">
+            <div class="est__icon" aria-hidden="true">
+              <span class="est__iconWrap">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm1 4v2h8V6H8zm0 4v2h8v-2H8zm0 4v2h5v-2H8z"/></svg>
+              </span>
+            </div>
+            <h3 id="est-title" class="est__title">Savings Estimator</h3>
+            <p class="est__lede">See how much you could save with SwiftSend</p>
+
+            <div class="est__panel" aria-live="polite">
+              <p class="est__placeholder">Select a project type above to estimate your savings</p>
+              <div class="est__result" hidden>
+                <span class="est__pill" data-est-pill></span>
+                <p class="est__note">Estimated savings vs. typical agency rates</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Get in Touch -->
+          <section class="touch cardlike" aria-labelledby="touch-title">
+            <h3 id="touch-title" class="touch__title">Get in Touch</h3>
+            <dl class="touch__list">
+              <div>
+                <dt>Email</dt>
+                <dd><a href="mailto:hello@swiftsend.dev">hello@swiftsend.dev</a></dd>
+              </div>
+              <div>
+                <dt>Instagram</dt>
+                <dd><a href="https://instagram.com/swiftsend.dev" target="_blank" rel="noopener">@swiftsend.dev</a></dd>
+              </div>
+              <div>
+                <dt>Response Time</dt>
+                <dd>Within 24 hours</dd>
+              </div>
+            </dl>
+            <blockquote class="touch__quote">“Building the future, one project at a time.”</blockquote>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== -->
+  <!-- Footer -->
+  <!-- ===================================== -->
+  <footer class="footer" data-footer>
+    <div class="footer__inner">
+      <section class="footer__brand">
+        <span class="f-logo" aria-hidden="true">
+          <span class="f-logo__grad">S</span>
+        </span>
+        <h3 class="f-name">SwiftSend</h3>
+        <p class="f-tag">Never Stay Satisfied.</p>
+        <p class="f-desc">Building the future of digital solutions, one project at a time.</p>
+      </section>
+
+      <nav class="footer__links" aria-label="Quick Links">
+        <h4 class="f-colTitle">Quick Links</h4>
+        <ul class="f-cols">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#portfolio">Work</a></li>
+          <li><a href="#packs">Packs</a></li>
+          <li><a href="#contact">Contact</a></li>
+
+          <li><a href="#services">Services</a></li>
+          <li><a href="#labs">Labs</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+
+      <section class="footer__contact" aria-label="Connect">
+        <h4 class="f-colTitle">Connect</h4>
+        <ul class="f-connect">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16v16H4z" opacity=".08"/><path fill="currentColor" d="M4 6l8 5 8-5v12H4z"/><path fill="currentColor" d="M20 6H4l8 5z"/></svg>
+            <a href="mailto:hello@swiftsend.dev">hello@swiftsend.dev</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" opacity=".08"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+            <a href="https://instagram.com/swiftsend.dev" target="_blank" rel="noopener">@swiftsend.dev</a>
+          </li>
+        </ul>
+
+        <div class="f-social">
+          <a class="f-icn" aria-label="Email" href="mailto:hello@swiftsend.dev"><span>✉️</span></a>
+          <a class="f-icn" aria-label="Instagram" href="https://instagram.com/swiftsend.dev" target="_blank" rel="noopener"><span>◎</span></a>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer__bar">
+      <p class="f-copy">© 2025 SwiftSend. All Rights Reserved.</p>
+      <nav class="f-legal" aria-label="Legal">
+        <a href="#" class="underline-seq">Privacy Policy</a>
+        <a href="#" class="underline-seq">Terms of Service</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Scripts (order doesn’t have to mirror sections, but kept logical) -->
+  <script src="./scripts/contact.js" type="module"></script>
+  <script src="./scripts/footer.js" type="module"></script>
+  <script src="./scripts/about.js" type="module"></script>
+  <script src="./scripts/header.js" type="module"></script>
+  <script src="./scripts/hero.js" type="module"></script>
+  <script src="./scripts/services.js" type="module"></script>
+  <script src="./scripts/portfolio.js" type="module"></script>
+  <script src="./scripts/labs.js" type="module"></script>
+  <script src="./scripts/packs.js" type="module"></script>
+  <script src="./scripts/process.js" defer></script>
+</body>
+</html>
